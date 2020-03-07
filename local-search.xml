@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<search>
+  
+  
+  
+  <entry>
+    <title>使用Hexo搭建Blog</title>
+    <link href="/2020/03/06/%E4%BD%BF%E7%94%A8Hexo%E6%90%AD%E5%BB%BABlog/"/>
+    <url>/2020/03/06/%E4%BD%BF%E7%94%A8Hexo%E6%90%AD%E5%BB%BABlog/</url>
+    
+    <content type="html"><![CDATA[<p><img src="https://i.loli.net/2020/03/06/cOUwFstAaTeyGQk.jpg" srcset="/img/loading.gif" alt="Hexo&amp;GithubPage.jpg"></p><h3 id="1-相关网站"><a href="#1-相关网站" class="headerlink" title="1. 相关网站"></a>1. 相关网站</h3><ul><li>[Github]: <a href="https://github.com/" target="_blank" rel="noopener">https://github.com/</a></li><li>[Hexo]: <a href="https://hexo.io/" target="_blank" rel="noopener">https://hexo.io/</a></li><li>[Hexo Theme]: <a href="https://hexo.io/themes/" target="_blank" rel="noopener">https://hexo.io/themes/</a></li><li>[Hexo Docs]: <a href="https://hexo.io/docs/" target="_blank" rel="noopener">https://hexo.io/docs/</a></li></ul><h3 id="2-创建Github-Key"><a href="#2-创建Github-Key" class="headerlink" title="2. 创建Github Key"></a>2. 创建Github Key</h3><p>设置你的用户名称与邮件地址，如果是第一次使用git的话</p><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ git config --global user.name <span class="string">"John Doe"</span></span><br><span class="line">$ git config --global user.email johndoe@example.com</span><br></pre></td></tr></table></figure><p>使用ssh-keygen生成私钥和公钥<br>命令如下：</p><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ ssh-keygen -t rsa</span><br></pre></td></tr></table></figure><p>然后到你GitHub 设置里面添加你刚才生成的xx.pub的内容到Key里面.</p><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ ssh -T git@github.com</span><br></pre></td></tr></table></figure><p>登录Github，点击头像下的settings，添加ssh,新建一个new ssh key，将id_rsa.pub文件里的内容复制上去。</p><p>输入ssh -T <a href="mailto:git@github.com">git@github.com</a>，测试添加ssh是否成功。如果看到Hi后面是你的用户名，就说明成功了。</p><p>这里你可以去创建一个public的仓库来存储等下Hexo相关的文件.</p><h3 id="3-安装NPM和Hexo"><a href="#3-安装NPM和Hexo" class="headerlink" title="3. 安装NPM和Hexo"></a>3. 安装NPM和Hexo</h3><ul><li>[NodeJS网站]: <a href="http://nodejs.cn/" target="_blank" rel="noopener">http://nodejs.cn/</a></li></ul><p>通过上面的网站下载对应的系统版本的NodeJS安装包.</p><ol><li><strong>设置NPM源到淘宝源</strong></li></ol>   <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">npm config <span class="built_in">set</span> registry https://registry.npmjs.org/</span><br></pre></td></tr></table></figure><ol start="2"><li><p><strong>NPM安装HexoCli</strong></p><p>输入npm install hexo -g，开始安装Hexo</p></li></ol>   <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">npm install hexo -g</span><br></pre></td></tr></table></figure><ol start="3"><li><p><strong>初始化Hexo</strong></p><p>输入hexo -v，检查hexo是否安装成功</p><p>输入hexo init，初始化该文件夹（有点漫长的等待…）看到后面的“Start blogging with Hexo！”就说明初始化好了</p><p>输入npm install，安装所需要的组件</p></li></ol><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo -v</span><br><span class="line">$ hexo init</span><br><span class="line">$ hexo install</span><br></pre></td></tr></table></figure><h3 id="4-配置config-yml文件"><a href="#4-配置config-yml文件" class="headerlink" title="4.配置config.yml文件"></a>4.配置config.yml文件</h3><p><strong>PS:这里根据自己需要自己配置，你可以去查询官方文档！！</strong></p><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">deploy:</span><br><span class="line">  <span class="built_in">type</span>: git</span><br><span class="line">  repo: git@github.com:Deencode/ibyte.me.git</span><br><span class="line">  branch: master</span><br></pre></td></tr></table></figure><h3 id="5-生成静态文件-amp-上传到GitHub仓库"><a href="#5-生成静态文件-amp-上传到GitHub仓库" class="headerlink" title="5.生成静态文件&amp;上传到GitHub仓库"></a>5.生成静态文件&amp;上传到GitHub仓库</h3><p><strong>🎉: 到了这一步就差不多了，运行下面命令就可以生成文件了.</strong></p><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment">#生成文件</span></span><br><span class="line">$ hexo generate</span><br><span class="line"><span class="comment">#监视文件变动Hexo 能够监视文件变动并立即重新生成静态文件，在生成时会比对文件的 SHA1 checksum，只有变动的文件才会写入。</span></span><br><span class="line">$ hexo generate --watch</span><br><span class="line"><span class="comment"># 本地运行</span></span><br><span class="line">$ hexo server</span><br><span class="line"><span class="comment">#您可执行下列的其中一个命令，让 Hexo 在生成完毕后自动部署网站，两个命令的作用是相同的。</span></span><br><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>]]></content>
+    
+    
+    
+    <tags>
+      
+      <tag>Hexo</tag>
+      
+      <tag>github</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  
+</search>
