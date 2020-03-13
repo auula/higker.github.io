@@ -176,7 +176,7 @@
         <div class="post-content mx-auto" id="post">
           
           <div class="markdown-body">
-            <p><img src="https://miro.medium.com/max/3200/1*8bPiDNL1K1ZdK9O_T5IVKw.png" srcset="/img/loading.gif" alt="Golang"></p>
+            <p><img src="https://i.loli.net/2020/03/13/JYRMzrxeKlLNp26.jpg" srcset="/img/loading.gif" alt="Golang"></p>
 <blockquote>
 <p><strong>📝本篇文章记录我本人在Mac上配置Go开发环境的笔记📒</strong></p>
 </blockquote>
@@ -211,36 +211,28 @@ export PATH=$PATH:$GOBIN:$GOPATH/bin:GO111MODULE:GOPROXY</code></pre>
 </ul>
 <h2 id="VSCode配置"><a href="#VSCode配置" class="headerlink" title="VSCode配置"></a>VSCode配置</h2><p>我个人使用vscode比较多一点,Goland在开发大型项目才使用<br><strong>VS Code官方下载地址：<a href="https://code.visualstudio.com/Download" target="_blank" rel="noopener">https://code.visualstudio.com/Download</a></strong><br>三大主流平台都支持，请根据自己的电脑平台选择对应的安装包。双击下载好的安装文件，双击安装即可。</p>
 <ul>
-<li><h4 id="安装Go语言开发工具包"><a href="#安装Go语言开发工具包" class="headerlink" title="安装Go语言开发工具包"></a>安装Go语言开发工具包</h4><ol>
-<li>在座Go语言开发的时候为我们提供诸如代码提示、代码自动补全等功能。<br>Windows平台按下Ctrl+Shift+P，Mac平台按Command+Shift+P，这个时候VS Code界面会弹出一个输入框，如下图：<br><img src="https://www.liwenzhou.com/images/Go/00_config_VSCode/15535662106193.jpg" srcset="/img/loading.gif" alt="GO"></li>
-<li>我们在这个输入框中输入<code>&gt;go:install</code>，下面会自动搜索相关命令，我们选择<code>Go:Install/Update Tools</code>这个命令<br><img src="https://www.liwenzhou.com/images/Go/00_config_VSCode/15535659707162.jpg" srcset="/img/loading.gif" alt="GOINSTALL"></li>
-<li>选中并会回车执行该命令（或者使用鼠标点击该命令）<br><img src="https://www.liwenzhou.com/images/Go/00_config_VSCode/15535665573387.jpg" srcset="/img/loading.gif" alt="golang"></li>
-</ol>
+<li><h4 id="安装Go语言开发工具包"><a href="#安装Go语言开发工具包" class="headerlink" title="安装Go语言开发工具包"></a>安装Go语言开发工具包</h4><p>在座Go语言开发的时候为我们提供诸如代码提示、代码自动补全等功能。<br>Windows平台按下Ctrl+Shift+P，Mac平台按Command+Shift+P，这个时候VS Code界面会弹出一个输入框，如下图：<br><img src="https://www.liwenzhou.com/images/Go/00_config_VSCode/15535662106193.jpg" srcset="/img/loading.gif" alt="GO"><br>我们在这个输入框中输入<code>&gt;go:install</code>，下面会自动搜索相关命令，我们选择<code>Go:Install/Update Tools</code>这个命令<br><img src="https://www.liwenzhou.com/images/Go/00_config_VSCode/15535659707162.jpg" srcset="/img/loading.gif" alt="GOINSTALL"><br>选中并会回车执行该命令（或者使用鼠标点击该命令）<br><img src="https://www.liwenzhou.com/images/Go/00_config_VSCode/15535665573387.jpg" srcset="/img/loading.gif" alt="golang"></p>
 </li>
-<li><h4 id="配置代码片段快捷键"><a href="#配置代码片段快捷键" class="headerlink" title="配置代码片段快捷键"></a>配置代码片段快捷键</h4><ol>
-<li>还是按Ctrl/Command+Shift+P,按下图输入<code>&gt;snippets</code>，选择命令并执行：<br><img src="https://www.liwenzhou.com/images/Go/00_config_VSCode/15535687503862.jpg" srcset="/img/loading.gif" alt="GO"></li>
-<li>配置<code>snippets</code>代码片段模本<br><img src="https://www.liwenzhou.com/images/Go/00_config_VSCode/15535688890224.jpg" srcset="/img/loading.gif" alt="GO SNIPPETS"></li>
-<li>大家可以简单看下上面的注释，介绍了主要用法：<pre><code class="json"> “这里放个名字”:{
-   &quot;prefix&quot;: &quot;这个是快捷键&quot;,
-   &quot;body&quot;: &quot;这里是按快捷键插入的代码片段&quot;,
-   &quot;description&quot;: &quot;这里放提示信息的描述&quot;
- }</code></pre>
-</li>
-<li>其中<code>$0</code>表示最终光标提留的位置。举个例子，我这里创建了两个快捷方式，一个是输入<code>pln</code>就会在编辑器中插入<code>fmt.Println()</code>代码；输入<code>plf</code>，就会插入<code>fmt.Printf(&quot;&quot;)</code>代码。<pre><code class="json">{
- &quot;println&quot;:{
-   &quot;prefix&quot;: &quot;pln&quot;,
-   &quot;body&quot;:&quot;fmt.Println($0)&quot;,
-   &quot;description&quot;: &quot;println&quot;
- },
- &quot;printf&quot;:{
-   &quot;prefix&quot;: &quot;plf&quot;,
-   &quot;body&quot;: &quot;fmt.Printf(\&quot;$0\&quot;)&quot;,
-   &quot;description&quot;: &quot;printf&quot;
- }
-}</code></pre>
-</li>
-<li>添加如上配置后，保存。 我们打开一个go文件，测试一下效果：<br><img src="https://www.liwenzhou.com/images/Go/00_config_VSCode/demo1.gif" srcset="/img/loading.gif" alt="fmt.println"></li>
-</ol>
+<li><h4 id="配置代码片段快捷键"><a href="#配置代码片段快捷键" class="headerlink" title="配置代码片段快捷键"></a>配置代码片段快捷键</h4><p>还是按Ctrl/Command+Shift+P,按下图输入<code>&gt;snippets</code>，选择命令并执行<br><img src="https://www.liwenzhou.com/images/Go/00_config_VSCode/15535687503862.jpg" srcset="/img/loading.gif" alt="GO"><br>配置<code>snippets</code>代码片段模本<br><img src="https://www.liwenzhou.com/images/Go/00_config_VSCode/15535688890224.jpg" srcset="/img/loading.gif" alt="GO SNIPPETS"><br>大家可以简单看下上面的注释，介绍了主要用法：</p>
+<pre><code class="json">    “这里放个名字”:{
+      &quot;prefix&quot;: &quot;这个是快捷键&quot;,
+      &quot;body&quot;: &quot;这里是按快捷键插入的代码片段&quot;,
+      &quot;description&quot;: &quot;这里放提示信息的描述&quot;
+    }</code></pre>
+<p> 其中<code>$0</code>表示最终光标提留的位置。举个例子，我这里创建了两个快捷方式，一个是输入<code>pln</code>就会在编辑器中插入<code>fmt.Println()</code>代码；输入<code>plf</code>，就会插入<code>fmt.Printf(&quot;&quot;)</code>代码。</p>
+<pre><code class="json">  {
+    &quot;println&quot;:{
+      &quot;prefix&quot;: &quot;pln&quot;,
+      &quot;body&quot;:&quot;fmt.Println($0)&quot;,
+      &quot;description&quot;: &quot;println&quot;
+    },
+    &quot;printf&quot;:{
+      &quot;prefix&quot;: &quot;plf&quot;,
+      &quot;body&quot;: &quot;fmt.Printf(\&quot;$0\&quot;)&quot;,
+      &quot;description&quot;: &quot;printf&quot;
+    }
+  }</code></pre>
+<p>添加如上配置后，保存。 我们打开一个go文件，测试一下效果：<br> <img src="https://www.liwenzhou.com/images/Go/00_config_VSCode/demo1.gif" srcset="/img/loading.gif" alt="fmt.println"></p>
 </li>
 </ul>
 <p><strong>好了配置完成,开始愉快的coding吧👨‍💻‍Good luck~😜</strong>   </p>
