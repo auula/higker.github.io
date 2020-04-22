@@ -4,6 +4,31 @@
   
   
   <entry>
+    <title>Go之goroutine浅入了解</title>
+    <link href="/2020/04/22/Go%E4%B9%8Bgoroutine%E6%B5%85%E5%85%A5%E4%BA%86%E8%A7%A3/"/>
+    <url>/2020/04/22/Go%E4%B9%8Bgoroutine%E6%B5%85%E5%85%A5%E4%BA%86%E8%A7%A3/</url>
+    
+    <content type="html"><![CDATA[<h1 id="1-什么goroutine"><a href="#1-什么goroutine" class="headerlink" title="1.什么goroutine?"></a>1.什么goroutine?</h1><p>goroutine是Go并行设计的核心。goroutine说到底其实就是协程，它比线程更小，十几个goroutine可能体现在底层就是五六个线程，Go语言内部帮你实现了这些goroutine之间的内存共享。执行goroutine只需极少的栈内存(大概是4~5KB)，当然会根据相应的数据伸缩。也正因为如此，可同时运行成千上万个并发任务。goroutine比thread更易用、更高效、更轻便。<br>一般情况下，一个普通计算机跑几十个线程就有点负载过大了，但是同样的机器却可以轻松地让成百上千个goroutine进行资源竞争。</p><p>Goroutine是建立在线程之上的轻量级的抽象。它允许我们以非常低的代价在同一个地址空间中并行地执行多个函数或者方法。相比于线程，它的创建和销毁的代价要小很多，并且它的调度是独立于线程的。在golang中创建一个goroutine非常简单，使用“go”关键字即可：</p><pre><code class="go">// Copyright (c) 2020 HigKer// Open Source: MIT License// Author: SDing &lt;deen.job@qq.com&gt;// Date: 2020/4/21 - 6:09 下午package mainimport (    &quot;fmt&quot;    &quot;math/rand&quot;    &quot;sync&quot;    &quot;time&quot;)var (    //这个是go里面用来配置goroutine使用的    //只能操作指针 因为他是一个struct 值类型！！！    wg sync.WaitGroup    //存放我们for的数字方便观察    sls []int)//go语言中的多个goroutine//WaitGroupfunc main() {    fmt.Println(&quot;goroutine begin:&quot;, sls)    for i := 0; i &lt;= 10; i++ {        // fatal error: all goroutines are asleep - deadlock!        //注意这里加的1不是i如果是i的话每次都是加的不一样然后出现👆的异常！！！        wg.Add(1)        go task(i)    }    fmt.Println(&quot;InService:&quot;, sls)    wg.Wait()    fmt.Println(&quot;End Over:&quot;, sls)}// fatal error: all goroutines are asleep - deadlock!func task(num int) {    defer func() {        wg.Done()    }()    //随机休眠几毫秒    time.Sleep(duration())    //将for循环的i存入到切片中我们等下好观察,    //打印控制台太慢了回漏掉    sls = append(sls, num) //不安全}//生成一个随机的等待时间 = 毫秒func duration() time.Duration {    rand.Seed(time.Now().UnixNano())    return time.Millisecond * time.Duration(rand.Intn(3000))}</code></pre><h3 id="output"><a href="#output" class="headerlink" title="output"></a>output</h3><pre><code class="shell">goroutine begin: []InService: []End Over: [4 10 9 8 6 1 0 3 2]</code></pre><blockquote><p>会出现一个问题多次运行你会发现有时候结果的slice会少一个数,这是因为，和线程一样，golang的主函数（其实也跑在一个goroutine中）并不会等待其它goroutine结束。如果主goroutine结束了，所有其它goroutine都将结束,所有后面我们就会将到go的channel来解决问题~数据竞争和数据共享,多个goroutine之间的通讯问题。</p></blockquote><h3 id="Goroutine与线程的区别"><a href="#Goroutine与线程的区别" class="headerlink" title="Goroutine与线程的区别"></a>Goroutine与线程的区别</h3><p>许多人认为goroutine比线程运行得更快，这是一个误解。Goroutine并不会更快，它只是增加了更多的并发性。当一个goroutine被阻塞（比如等待IO），golang的scheduler会调度其它可以执行的goroutine运行。与线程相比，它有以下几个优点：</p><h3 id="内存消耗更少："><a href="#内存消耗更少：" class="headerlink" title="内存消耗更少："></a>内存消耗更少：</h3><p>Goroutine所需要的内存通常只有2kb，而线程则需要1Mb（500倍）。<br>内存消耗更少：</p><h3 id="创建与销毁的开销更小"><a href="#创建与销毁的开销更小" class="headerlink" title="创建与销毁的开销更小"></a>创建与销毁的开销更小</h3><p>由于线程创建时需要向操作系统申请资源，并且在销毁时将资源归还，因此它的创建和销毁的开销比较大。相比之下，goroutine的创建和销毁是由go语言在运行时自己管理的，因此开销更低。</p><p><img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1ge2mjdldsfj30hs0a5q3h.jpg" srcset="/img/loading.gif" alt=""></p><h3 id="切换开销更小"><a href="#切换开销更小" class="headerlink" title="切换开销更小"></a>切换开销更小</h3><p>这是goroutine于线程的主要区别，也是golang能够实现高并发的主要原因。线程的调度方式是抢占式的，如果一个线程的执行时间超过了分配给它的时间片，就会被其它可执行的线程抢占。在线程切换的过程中需要保存/恢复所有的寄存器信息，比如16个通用寄存器，PC（Program Counter），SP（Stack Pointer），段寄存器等等。</p><p>而goroutine的调度是协同式的，它不会直接地与操作系统内核打交道。当goroutine进行切换的时候，之后很少量的寄存器需要保存和恢复（PC和SP）。因此gouroutine的切换效率更高。</p><h3 id="Goroutine的调度"><a href="#Goroutine的调度" class="headerlink" title="Goroutine的调度"></a>Goroutine的调度</h3><p>真如前面提到的，goroutine的调度方式是协同式的。在协同式调度中，没有时间片的概念。为了并行执行goroutine，调度器会在以下几个时间点对其进行切换：</p><h3 id="Channel接受或者发送会造成阻塞的消息"><a href="#Channel接受或者发送会造成阻塞的消息" class="headerlink" title="Channel接受或者发送会造成阻塞的消息"></a>Channel接受或者发送会造成阻塞的消息</h3><p>当一个新的goroutine被创建时<br>可以造成阻塞的系统调用，如文件和网络操作<br>垃圾回收<br>下面让我们来看一下调度器具体是如何工作的。Golang调度器中有三个概念</p><ul><li>Processor（P）</li><li>OSThread（M）</li><li>Goroutines（G）</li></ul><p>在一个Go程序中，可用的线程数是通过GOMAXPROCS来设置的，默认值是可用的CPU核数。我们可以用runtime包动态改变这个值。OSThread调度在processor上，goroutines调度在OSThreads上<br><img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1ge2ml5ze1wj30hs08at98.jpg" srcset="/img/loading.gif" alt=""><br>Golang的调度器可以利用多processor资源，在任意时刻，M个goroutine需要被调度到N个OS threads上，同时这些threads运行在至多GOMAXPROCS个processor上（N &lt;= GOMAXPROCS）。Go scheduler将可运行的goroutines分配到多个运行在一个或多个processor上的OS threads上。</p><p>每个processor有一个本地goroutine队列。同时有一个全局的goroutine队列。每个OSThread都会被分配给一个processor。最多只能有GOMAXPROCS个processor，每个processor同时只能执行一个OSThread。Scheculer可以根据需要创建OSThread。<br><img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1ge2mlz0si1j30hs08j74l.jpg" srcset="/img/loading.gif" alt=""><br>在每一轮调度中，scheduler找到一个可以运行的goroutine并执行直到其被阻塞,由此可见，操作系统的一个线程下可以并发执行上千个goroutine，每个goroutine所占用的资源和切换开销都很小，因此，goroutine是golang适合高并发场景的重要原因。</p>]]></content>
+    
+    
+    
+    <tags>
+      
+      <tag>go</tag>
+      
+      <tag>golang</tag>
+      
+      <tag>goroutine</tag>
+      
+      <tag>channel</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>Mac上配置Golang开发环境</title>
     <link href="/2020/03/13/Mac%E4%B8%8A%E9%85%8D%E7%BD%AEGolang%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83/"/>
     <url>/2020/03/13/Mac%E4%B8%8A%E9%85%8D%E7%BD%AEGolang%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83/</url>

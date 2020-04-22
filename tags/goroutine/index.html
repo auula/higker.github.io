@@ -18,7 +18,7 @@
   <meta name="description" content="一个乐于分享技术和知识的程序员博客.">
   <meta name="author" content="Ding Shuo">
   <meta name="keywords" content="爱代码,爱折腾,Java,Go,Golang,Linux,程序员,iByte">
-  <title>iByte📚</title>
+  <title>标签 - goroutine - 💗Love code, love toss | iByte📚</title>
 
   <link  rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/5.12.1/css/all.min.css" />
 <link  rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/css/bootstrap.min.css" />
@@ -44,7 +44,7 @@
 
 
 <body>
-  <header style="height: 100vh;">
+  <header style="height: 80vh;">
     <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
   <div class="container">
     <a class="navbar-brand"
@@ -125,10 +125,6 @@
           </div>
 
           
-            <div class="scroll-down-bar">
-              <i class="fas fa-angle-down scroll-down-arrow"></i>
-            </div>
-          
         </div>
       </div>
     </div>
@@ -144,219 +140,20 @@
               <div class="col-12 col-md-10 m-auto">
                 
 
-
-  <div class="row mx-auto index-card">
+<div class="list-group">
+<!--  <p class="h4">共计 1 篇文章</p>-->
+  <hr>
+  
     
+      
+      <p class="h5">2020</p>
     
-      <div class="col-12 col-md-4 m-auto">
-        <a href="/2020/04/22/Go%E4%B9%8Bgoroutine%E6%B5%85%E5%85%A5%E4%BA%86%E8%A7%A3/" target="_self">
-          <img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1ge2m3yutmsj319p0u01be.jpg" srcset="/img/loading.gif" alt="Go之goroutine浅入了解"
-               class="index-img img-fluid rounded index-thumbnails">
-        </a>
-      </div>
-    
-    <div class="col-12 col-md-8 mx-auto index-info">
-      <a href="/2020/04/22/Go%E4%B9%8Bgoroutine%E6%B5%85%E5%85%A5%E4%BA%86%E8%A7%A3/">
-        <p class="h4 index-header">Go之goroutine浅入了解</p>
-      </a>
-
-      <a href="/2020/04/22/Go%E4%B9%8Bgoroutine%E6%B5%85%E5%85%A5%E4%BA%86%E8%A7%A3/">
-        
-        
-          
-        
-        <div class="index-excerpt" >
-          <div class="index-text mb-1">1.什么goroutine?goroutine是Go并行设计的核心。goroutine说到底其实就是协程，它比线程更小，十几个goroutine可能体现在底层就是五六个线程，Go语言内部帮你实现了这些goroutine之间的内存共享。执行goroutine只需极少的栈内存(大概是4~5KB)，当然会根据相应的数据伸缩。也正因为如此，可同时运行成千上万个并发任务。goroutine比thread更易用、更高效、更轻便。一般情况下，一个普通计算机跑几十个线程就有点负载过大了，但是同样的机器却可以轻松地让成百上千个goroutine进行资源竞争。
-Goroutine是建立在线程之上的轻量级的抽象。它</div>
-        </div>
-      </a>
-
-      <div class="index-btm">
-        
-          <i class="iconfont icon-riqi2"></i>&nbsp;2020-04-22&nbsp;&nbsp;
-        
-        
-        
-          <i class="iconfont icon-tag"></i>
-          
-            <a href="/tags/go/">go</a>&nbsp;
-          
-            <a href="/tags/golang/">golang</a>&nbsp;
-          
-            <a href="/tags/goroutine/">goroutine</a>&nbsp;
-          
-            <a href="/tags/channel/">channel</a>&nbsp;
-          
-        
-      </div>
-    </div>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-      <div class="col-12 col-md-4 m-auto">
-        <a href="/2020/03/13/Mac%E4%B8%8A%E9%85%8D%E7%BD%AEGolang%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83/" target="_self">
-          <img src="https://i.loli.net/2020/03/13/JYRMzrxeKlLNp26.jpg" srcset="/img/loading.gif" alt="Mac上配置Golang开发环境"
-               class="index-img img-fluid rounded index-thumbnails">
-        </a>
-      </div>
-    
-    <div class="col-12 col-md-8 mx-auto index-info">
-      <a href="/2020/03/13/Mac%E4%B8%8A%E9%85%8D%E7%BD%AEGolang%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83/">
-        <p class="h4 index-header">Mac上配置Golang开发环境</p>
-      </a>
-
-      <a href="/2020/03/13/Mac%E4%B8%8A%E9%85%8D%E7%BD%AEGolang%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83/">
-        
-        
-          
-        
-        <div class="index-excerpt" >
-          <div class="index-text mb-1">
-
-📝本篇文章记录我本人在Mac上配置Go开发环境的笔记📒
-
-前言
-Go Source Code
-Go是Google开发的一种静态强类型、编译型、并发型，并具有垃圾回收功能的编程语言。 罗伯特·格瑞史莫，罗勃·派克及肯·汤普逊于2007年9月开始设计Go，稍后Ian Lance Taylor、Russ Cox加入项目。Go是基于Inferno操作系统所开发的。
-Go的语法接近C语言，但对于变量的声明有所不同。Go支持垃圾回收功能。Go的并行计算模型是以东尼·霍尔的通信顺序进程（CSP）为基础，采取类似模型的其他语言包括Occam和Limbo，[2]，但它也具有pipeline模型的特征，比</div>
-        </div>
-      </a>
-
-      <div class="index-btm">
-        
-          <i class="iconfont icon-riqi2"></i>&nbsp;2020-03-13&nbsp;&nbsp;
-        
-        
-        
-          <i class="iconfont icon-tag"></i>
-          
-            <a href="/tags/Go/">Go</a>&nbsp;
-          
-            <a href="/tags/Golang/">Golang</a>&nbsp;
-          
-            <a href="/tags/Mac/">Mac</a>&nbsp;
-          
-        
-      </div>
-    </div>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-      <div class="col-12 col-md-4 m-auto">
-        <a href="/2020/03/08/Hexo%E9%9B%86%E6%88%90gitalk%E8%AF%84%E8%AE%BA%E7%BB%84%E4%BB%B6/" target="_self">
-          <img src="https://cdn.jsdelivr.net/gh/BayMRX/Blog_source@master/img/hexo.jpg" srcset="/img/loading.gif" alt="Hexo集成gitalk评论组件"
-               class="index-img img-fluid rounded index-thumbnails">
-        </a>
-      </div>
-    
-    <div class="col-12 col-md-8 mx-auto index-info">
-      <a href="/2020/03/08/Hexo%E9%9B%86%E6%88%90gitalk%E8%AF%84%E8%AE%BA%E7%BB%84%E4%BB%B6/">
-        <p class="h4 index-header">Hexo集成gitalk评论组件</p>
-      </a>
-
-      <a href="/2020/03/08/Hexo%E9%9B%86%E6%88%90gitalk%E8%AF%84%E8%AE%BA%E7%BB%84%E4%BB%B6/">
-        
-        
-          
-        
-        <div class="index-excerpt" >
-          <div class="index-text mb-1">
-
-一个基于 Github Issue 和 Preact 开发的评论插件,下面我们就来使用gitalk来实现hexo的评论功能。
-
-相关链接
-Gitalk开源地址
-
-特性
-使用 GitHub 登录
-支持多语言 [en, zh-CN, zh-TW, es-ES, fr, ru]
-支持个人或组织
-无干扰模式（设置 distractionFreeMode 为 true 开启）
-快捷键提交评论 （cmd|ctrl + enter）
-
-Readme在线示例
-安装两种方式
-
-直接引入
-
-  &lt;link rel=&quot;stylesheet&quot; href=&quot;https://cdn</div>
-        </div>
-      </a>
-
-      <div class="index-btm">
-        
-          <i class="iconfont icon-riqi2"></i>&nbsp;2020-03-08&nbsp;&nbsp;
-        
-        
-        
-          <i class="iconfont icon-tag"></i>
-          
-            <a href="/tags/Hexo/">Hexo</a>&nbsp;
-          
-            <a href="/tags/gitalk/">gitalk</a>&nbsp;
-          
-        
-      </div>
-    </div>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-      <div class="col-12 col-md-4 m-auto">
-        <a href="/2020/03/06/%E4%BD%BF%E7%94%A8Hexo%E6%90%AD%E5%BB%BABlog/" target="_self">
-          <img src="https://i.loli.net/2020/03/06/cOUwFstAaTeyGQk.jpg" srcset="/img/loading.gif" alt="使用Hexo搭建Blog"
-               class="index-img img-fluid rounded index-thumbnails">
-        </a>
-      </div>
-    
-    <div class="col-12 col-md-8 mx-auto index-info">
-      <a href="/2020/03/06/%E4%BD%BF%E7%94%A8Hexo%E6%90%AD%E5%BB%BABlog/">
-        <p class="h4 index-header">使用Hexo搭建Blog</p>
-      </a>
-
-      <a href="/2020/03/06/%E4%BD%BF%E7%94%A8Hexo%E6%90%AD%E5%BB%BABlog/">
-        
-        
-          
-        
-        <div class="index-excerpt" >
-          <div class="index-text mb-1">
-1. 相关网站
-[Github]: https://github.com/
-[Hexo]: https://hexo.io/
-[Hexo Theme]: https://hexo.io/themes/
-[Hexo Docs]: https://hexo.io/docs/
-
-2. 创建Github Key设置你的用户名称与邮件地址，如果是第一次使用git的话
-$ git config --global user.name &quot;John Doe&quot;
-$ git config --global user.email johndoe@example.com
-使用ssh-keygen生</div>
-        </div>
-      </a>
-
-      <div class="index-btm">
-        
-          <i class="iconfont icon-riqi2"></i>&nbsp;2020-03-06&nbsp;&nbsp;
-        
-        
-        
-          <i class="iconfont icon-tag"></i>
-          
-            <a href="/tags/Hexo/">Hexo</a>&nbsp;
-          
-            <a href="/tags/github/">github</a>&nbsp;
-          
-        
-      </div>
-    </div>
-  </div>
-
-
+    <a href="/2020/04/22/Go%E4%B9%8Bgoroutine%E6%B5%85%E5%85%A5%E4%BA%86%E8%A7%A3/" class="list-group-item list-group-item-action">
+      <span class="archive-post-title">Go之goroutine浅入了解</span>
+      <span style="float: right;">04-22</span>
+    </a>
+  
+</div>
 
 
 
@@ -483,7 +280,7 @@ $ git config --global user.email johndoe@example.com
     var typed = new Typed('#subtitle', {
       strings: [
         '  ',
-        "一个乐于分享技术和知识的程序员博客.👨‍💻‍&nbsp;",
+        "标签 - goroutine&nbsp;",
       ],
       cursorChar: "_",
       typeSpeed: 120,
