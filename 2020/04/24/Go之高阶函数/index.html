@@ -134,7 +134,7 @@
                   
                   <span class="post-meta">
                     <i class="far fa-chart-bar"></i>
-                    515 字
+                    531 字
                   </span>
                 
 
@@ -178,15 +178,25 @@
           <div class="markdown-body">
             <h1 id="什么是高阶函数-？"><a href="#什么是高阶函数-？" class="headerlink" title="什么是高阶函数??？"></a>什么是高阶函数??？</h1><p>一个函数可以接收另一个函数作为参数，这种函数就称之为高阶函数，编写高阶函数，就是让函数的参，能够接收别的函数，函数式编程就是指这种高度抽象的编程范式。</p>
 <h1 id="高阶函数的特点"><a href="#高阶函数的特点" class="headerlink" title="高阶函数的特点"></a>高阶函数的特点</h1><ul>
-<li>变量可以指向函数<br><code>函数本身也可以赋值给变量，即：变量可以指向函数</code><pre><code class="go">package main
-</code></pre>
-</li>
+<li>变量可以指向函数</li>
 </ul>
-<p>//go语言导包<br>import (<br>    m “Lets_Go/lets_18_package/math” //起别名  自定义包名也就是给“math“起个别名<br>    “fmt”<br>)</p>
-<p>func main() {<br>    multip := m.SimpleCompute(“+”)<br>    fmt.Println(multip(2, 8))<br>}</p>
-<pre><code>- 返回值也是函数
-```go
-/*
+<p><code>函数本身也可以赋值给变量，即：变量可以指向函数</code></p>
+<pre><code class="go">package main
+
+//go语言导包
+import (
+    m &quot;Lets_Go/lets_18_package/math&quot; //起别名  自定义包名也就是给“math“起个别名
+    &quot;fmt&quot;
+)
+
+func main() {
+    multip := m.SimpleCompute(&quot;+&quot;)
+    fmt.Println(multip(2, 8))
+}</code></pre>
+<ul>
+<li>返回值也是函数</li>
+</ul>
+<pre><code class="go">/*
     闭包高阶函数
 */
 func SimpleCompute(Symbol string) func(n, m int) int {
@@ -210,17 +220,43 @@ func SimpleCompute(Symbol string) func(n, m int) int {
     default:
         panic(&quot;compute symbol invalid.&quot;)
     }
-}</code></pre><ul>
-<li>函数可作为参数<br><code>既然变量可以指向函数，函数的参数能接收变量，那么一个函数就可以接收另一个函数作为参数一个最简单的高阶函数</code><pre><code class="go">package main
-</code></pre>
-</li>
+}</code></pre>
+<ul>
+<li>函数可作为参数</li>
 </ul>
-<p>import “fmt”</p>
-<p>//go语言中的闭包操作<br>func main() {<br>    f1(f3(f2, 5, 5))<br>}</p>
-<p>//1.限制函数类型的函数<br>func f1(f func()) {<br>    f()<br>}</p>
-<p>//2.现在的需求就要把我们的f2函数传递到f1函数里面进行调用<br>func f2(a, b int) int {<br>    fmt.Println(“f2() am f1() exec succeed”)<br>    fmt.Println(“a + b = ? 在f3中的匿名函数中调用:”)<br>    return a + b<br>}</p>
-<p>//3.通过闭包解决<br>func f3(fn func(int, int) int, a, b int) (Rf func()) { //返回值名字必须是“Rf” 不想用就不需要写直接写返回值类型<br>    //这个就是取一个中间变量存储 并且 在函数里面声明一个匿名无返回值的函数<br>    // := 这里如果函数返回值已经在函数名上写着了 就不能使用 := 因为已经在创建函数时已经声明了<br>    Rf = func() {<br>        sum := fn(a, b) //接受返回值 然后打印<br>        fmt.Println(“sum=”, sum)<br>    }<br>    return Rf<br>}</p>
-<pre><code></code></pre>
+<p><code>既然变量可以指向函数，函数的参数能接收变量，那么一个函数就可以接收另一个函数作为参数一个最简单的高阶函数</code></p>
+<pre><code class="go">package main
+
+import &quot;fmt&quot;
+
+//go语言中的闭包操作
+func main() {
+    f1(f3(f2, 5, 5))
+}
+
+//1.限制函数类型的函数
+func f1(f func()) {
+    f()
+}
+
+//2.现在的需求就要把我们的f2函数传递到f1函数里面进行调用
+func f2(a, b int) int {
+    fmt.Println(&quot;f2() am f1() exec succeed&quot;)
+    fmt.Println(&quot;a + b = ? 在f3中的匿名函数中调用:&quot;)
+    return a + b
+}
+
+//3.通过闭包解决
+func f3(fn func(int, int) int, a, b int) (Rf func()) { //返回值名字必须是“Rf” 不想用就不需要写直接写返回值类型
+    //这个就是取一个中间变量存储 并且 在函数里面声明一个匿名无返回值的函数
+    // := 这里如果函数返回值已经在函数名上写着了 就不能使用 := 因为已经在创建函数时已经声明了
+    Rf = func() {
+        sum := fn(a, b) //接受返回值 然后打印
+        fmt.Println(&quot;sum=&quot;, sum)
+    }
+    return Rf
+}</code></pre>
+
             <hr>
           </div>
           <br>
