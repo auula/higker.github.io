@@ -18,7 +18,7 @@
   <meta name="description" content="一个乐于分享技术和知识的程序员博客.">
   <meta name="author" content="Ding Shuo">
   <meta name="keywords" content="爱代码,爱折腾,Java,Go,Golang,Linux,程序员,iByte">
-  <title>关于 - 💗Love code, love toss | iByte📚</title>
+  <title>谈谈并发和并行 - 💗Love code, love toss | iByte📚</title>
 
   <link  rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/5.12.1/css/all.min.css" />
 <link  rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/css/bootstrap.min.css" />
@@ -44,7 +44,7 @@
 
 
 <body>
-  <header style="height: 80vh;">
+  <header style="height: 70vh;">
     <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
   <div class="container">
     <a class="navbar-brand"
@@ -111,8 +111,8 @@
   </div>
 </nav>
 
-    <div class="view intro-2" id="background" parallax=true
-         style="background: url('/img/about.jpg') no-repeat center center;
+    <div class="view intro-2" id="background" false
+         style="background: url('/img/default.png') no-repeat center center;
            background-size: cover;">
       <div class="full-bg-img">
         <div class="mask rgba-black-light flex-center">
@@ -121,6 +121,40 @@
               
             </span>
 
+            
+              
+                <p class="mt-3 post-meta">
+                  <i class="fas fa-calendar-alt" aria-hidden="true"></i>
+                  星期五, 五月 8日 2020, 8:59 晚上
+                </p>
+              
+
+              <p class="mt-1">
+                
+                  
+                  <span class="post-meta">
+                    <i class="far fa-chart-bar"></i>
+                    1k 字
+                  </span>
+                
+
+                
+                  
+                  <span class="post-meta">
+                      <i class="far fa-clock"></i>
+                      3 分钟
+                  </span>
+                
+
+                
+                  <!-- 不蒜子统计文章PV -->
+                  
+                  <span id="busuanzi_container_page_pv" class="post-meta" style="display: none">
+                    <i class="far fa-eye" aria-hidden="true"></i>
+                    <span id="busuanzi_value_page_pv"></span> 次
+                  </span>
+                
+              </p>
             
           </div>
 
@@ -132,58 +166,113 @@
 
   <main>
     
-      <div class="container nopadding-md">
-        <div class="py-5 z-depth-3" id="board">
-          
-            <div class="about-avatar">
-              <img src="/img/soul_my_1.png" srcset="/img/loading.gif"
-                   class="img-fluid z-depth-1 rounded-circle"
-                   alt="avatar">
-            </div>
-          
-          <div class="container">
-            <div class="row">
-              <div class="col-12 col-md-10 m-auto">
-                
+      
 
-<div class="text-center">
-  <p class="h3">higker</p>
-  <p>Golang / Java / 菜鸟后端一枚</p>
-  
-    
-    
-    
-    <a href="https://github.com/higker" target="_blank" rel="noopener" class="h4 px-1 false">
-      <i class="fab fa-github" aria-hidden="true"></i>
-      
-    </a>
-  
-    
-    
-    
-    <a href="https://twitter.com" target="_blank" rel="noopener" class="h4 px-1 false">
-      <i class="fab fa-twitter" aria-hidden="true"></i>
-      
-    </a>
-  
-    
-    
-</div>
-<div class="mt-5 markdown-body">
-  <h1 id="自我介绍‍"><a href="#自我介绍‍" class="headerlink" title="自我介绍‍"></a>自我介绍‍</h1><ul>
-<li>居住在上海.</li>
-<li>1999年算是90后的末班车了.</li>
-<li>平时不怎么爱说话,所有朋友也不多.</li>
-<li>平时也就喜欢撸撸代码和研究一下自己喜欢的车.</li>
+<div class="container-fluid">
+  <div class="row">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-md">
+      <div class="py-5 z-depth-3" id="board">
+        <div class="post-content mx-auto" id="post">
+          
+          <div class="markdown-body">
+            <h2 id="什么是并发？"><a href="#什么是并发？" class="headerlink" title="什么是并发？"></a>什么是并发？</h2><p> 就是在一段时间里来回切换做多个事情，就像一个快递员在一分钟内送完我的快递又继续去送的快递，干活的就只要一个快递员(这个例子有点不好还是看下面图片吧)。<code>并发(concurrency)</code>：指在同一时刻只能有一条指令执行，但多个进程指令被快速的轮换执行，使得在宏观上具有多个进程同时执行的效果，但在微观上并不是同时执行的，只是把时间分成若干段，使多个进程快速交替的执行。<br><img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1gelclh44mgj308704j74e.jpg" srcset="/img/loading.gif" alt=""></p>
+<h2 id="什么并行？"><a href="#什么并行？" class="headerlink" title="什么并行？"></a>什么并行？</h2><p>在同一时刻内处理多个事情，就像一个2个快递员在同时时间内分别给你我送快递。(他们2个在同一个时间内同时干活，效率高)。<code>并行(parallel)：</code>指在同一时刻，有多条指令在多个处理器上同时执行。所以无论从微观还是从宏观来看，二者都是一起执行的。</p>
+<h2 id="什么区别？"><a href="#什么区别？" class="headerlink" title="什么区别？"></a>什么区别？</h2><p>并行在多处理器系统中存在，而并发可以在单处理器和多处理器系统中都存在，并发能够在单处理器系统中存在是因为并发是并行的假象，并行要求程序能够同时执行多个操作，而并发只是要求程序假装同时执行多个操作（每个小时间片执行一个操作，多个操作快速切换执行）。</p>
+<p>当有多个线程在操作时，如果系统只有一个 CPU，则它根本不可能真正同时进行一个以上的线程，它只能把 CPU 运行时间划分成若干个时间段，再将时间段分配给各个线程执行，在一个时间段的线程代码运行时,其它线程处于挂起状态.这种方式我们称之为并发（Concurrent）。</p>
+<p>当系统有一个以上 CPU 时，则线程的操作有可能非并发。当一个 CPU 执行一个线程时，另一个 CPU 可以执行另一个线程，两个线程互不抢占 CPU 资源，可以同时进行，这种方式我们称之为并行（Parallel）。<br><img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1geld285ybjj30i40ea750.jpg" srcset="/img/loading.gif" alt=""></p>
+<p><strong>看图非常容易理解：</strong><br><img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1geld3btporj30o909faaz.jpg" srcset="/img/loading.gif" alt=""><br>上图中将一个任务中的三个步骤取柴、运柴、卸柴划分成了独立的小任务，有取柴的老鼠，有运柴的老鼠，有卸柴烧火的老鼠。<br>如果上图中所有的老鼠都是同一只，那么是串行并发的，如果是不同的多只老鼠，那么是并行并发的。</p>
+<h4 id="并行和串行："><a href="#并行和串行：" class="headerlink" title="并行和串行："></a>并行和串行：</h4><ul>
+<li>串行：一次只能取得一个任务并执行这一个任务</li>
+<li>并行：可以同时通过多进程/多线程的方式取得多个任务，并以多进程或多线程的方式同时执行这些任务</li>
+<li>注意点：<ul>
+<li>如果是单进程/单线程的并行，那么效率比串行更差</li>
+<li>如果只有单核cpu，多进程并行并没有提高效率</li>
+<li>从任务队列上看，由于同时从队列中取得多个任务并执行，相当于将一个长任务队列变成了短队列</li>
+</ul>
+</li>
+</ul>
+<h3 id="并发："><a href="#并发：" class="headerlink" title="并发："></a>并发：</h3><ul>
+<li>并发是一种现象：同时运行多个程序或多个任务需要被处理的现象</li>
+<li>这些任务可能是并行执行的，也可能是串行执行的，和CPU核心数无关，是操作系统进程调度和CPU上下文切换达到的结果</li>
+<li>解决大并发的一个思路是将大任务分解成多个小任务：</li>
+<li>可能要使用一些数据结构来避免切分成多个小任务带来的问题</li>
+<li>可以多进程/多线程并行的方式去执行这些小任务达到高效率</li>
+<li>或者以单进程/单线程配合多路复用执行这些小任务来达到高效率</li>
 </ul>
 
-</div>
-
-              </div>
-            </div>
+            <hr>
+          </div>
+          <br>
+          <div>
+            <p>
+            
+              
+              <span>
+                <i class="iconfont icon-tag"></i>
+                
+                  <a class="hover-with-bg" href="/tags/Go/">Go</a>
+                
+                  <a class="hover-with-bg" href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%9F%A5%E8%AF%86/">计算机知识</a>
+                
+              </span>
+            
+            </p>
+            
+              <p class="note note-warning">本博客所有文章除特别声明外，均采用 <a href="https://zh.wikipedia.org/wiki/Wikipedia:CC_BY-SA_3.0%E5%8D%8F%E8%AE%AE%E6%96%87%E6%9C%AC" target="_blank" rel="nofollow noopener noopener">CC BY-SA 3.0协议</a> 。转载请注明出处！</p>
+            
           </div>
         </div>
       </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container">
+        <div id="toc">
+  <p class="h5"><i class="far fa-list-alt"></i>&nbsp;目录</p>
+  <div id="tocbot"></div>
+</div>
+      </div>
+    
+  </div>
+</div>
+
+<!-- custom -->
+
+
+<!-- Comments -->
+<div class="col-lg-7 mx-auto nopadding-md">
+  <div class="container comments mx-auto" id="comments">
+    
+      <br><br>
+      
+      
+  <div id="gitalk-container"></div>
+  <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+  <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/blueimp-md5@2.11.1/js/md5.min.js"></script>
+  <script type="text/javascript">
+    var gitalk = new Gitalk({
+      clientID: '22468b62936ae5d73a0b',
+      clientSecret: '918618299c36b1430a0501cd976b82fd48cbfe0c',
+      repo: 'higker.github.io',
+      owner: 'higker',
+      admin: 'higker',
+      id: md5(location.pathname),
+      language: 'zh-CN',
+      perPage: 15,
+      pagerDirection: 'last',
+      createIssueManually: 'true',
+      distractionFreeMode: 'false'
+    });
+
+    gitalk.render('gitalk-container')
+  </script>
+
+
+    
+  </div>
+</div>
+
     
   </main>
 
@@ -274,6 +363,52 @@
 
 
 
+  
+  <script  src="https://cdn.staticfile.org/tocbot/4.10.0/tocbot.min.js" ></script>
+  <script>
+    $(document).ready(function () {
+      var navHeight = $('#navbar').height();
+      var toc = $('#toc');
+      var main = $('main');
+      var tocT = navHeight + (toc.offset().top - main.offset().top);
+      var tocLimMin = main.offset().top - navHeight;
+      var tocLimMax = $('#comments').offset().top - navHeight;
+      $(window).scroll(function () {
+        var scroH = document.body.scrollTop + document.documentElement.scrollTop;
+        if (tocLimMin <= scroH && scroH <= tocLimMax) {
+          toc.css({
+            'display': 'block',
+            'position': 'fixed',
+            'top': tocT,
+          });
+        } else if (scroH <= tocLimMin) {
+          toc.css({
+            'position': '',
+            'top': '',
+          });
+        } else if (scroH > tocLimMax) {
+          toc.css('display', 'none');
+        }
+      });
+      tocbot.init({
+        tocSelector: '#tocbot',
+        contentSelector: '.post-content',
+        headingSelector: 'h1,h2,h3,h4,h5,h6',
+        linkClass: 'tocbot-link',
+        activeLinkClass: 'tocbot-active-link',
+        listClass: 'tocbot-list',
+        isCollapsedClass: 'tocbot-is-collapsed',
+        collapsibleClass: 'tocbot-is-collapsible',
+        scrollSmooth: true,
+      });
+      if ($('.toc-list-item').length > 0) {
+        $('#toc > p').css('visibility', 'visible');
+      }
+    });
+  </script>
+
+
+
 
 
 
@@ -302,7 +437,7 @@
     var typed = new Typed('#subtitle', {
       strings: [
         '  ',
-        "关于&nbsp;",
+        "谈谈并发和并行&nbsp;",
       ],
       cursorChar: "_",
       typeSpeed: 120,

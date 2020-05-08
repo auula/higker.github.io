@@ -18,7 +18,7 @@
   <meta name="description" content="一个乐于分享技术和知识的程序员博客.">
   <meta name="author" content="Ding Shuo">
   <meta name="keywords" content="爱代码,爱折腾,Java,Go,Golang,Linux,程序员,iByte">
-  <title>关于 - 💗Love code, love toss | iByte📚</title>
+  <title>iByte📚</title>
 
   <link  rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/5.12.1/css/all.min.css" />
 <link  rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/css/bootstrap.min.css" />
@@ -44,7 +44,7 @@
 
 
 <body>
-  <header style="height: 80vh;">
+  <header style="height: 100vh;">
     <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
   <div class="container">
     <a class="navbar-brand"
@@ -112,7 +112,7 @@
 </nav>
 
     <div class="view intro-2" id="background" parallax=true
-         style="background: url('/img/about.jpg') no-repeat center center;
+         style="background: url('/img/default.png') no-repeat center center;
            background-size: cover;">
       <div class="full-bg-img">
         <div class="mask rgba-black-light flex-center">
@@ -125,6 +125,10 @@
           </div>
 
           
+            <div class="scroll-down-bar">
+              <i class="fas fa-angle-down scroll-down-arrow"></i>
+            </div>
+          
         </div>
       </div>
     </div>
@@ -135,49 +139,79 @@
       <div class="container nopadding-md">
         <div class="py-5 z-depth-3" id="board">
           
-            <div class="about-avatar">
-              <img src="/img/soul_my_1.png" srcset="/img/loading.gif"
-                   class="img-fluid z-depth-1 rounded-circle"
-                   alt="avatar">
-            </div>
-          
           <div class="container">
             <div class="row">
               <div class="col-12 col-md-10 m-auto">
                 
 
-<div class="text-center">
-  <p class="h3">higker</p>
-  <p>Golang / Java / 菜鸟后端一枚</p>
-  
-    
-    
-    
-    <a href="https://github.com/higker" target="_blank" rel="noopener" class="h4 px-1 false">
-      <i class="fab fa-github" aria-hidden="true"></i>
-      
-    </a>
-  
-    
-    
-    
-    <a href="https://twitter.com" target="_blank" rel="noopener" class="h4 px-1 false">
-      <i class="fab fa-twitter" aria-hidden="true"></i>
-      
-    </a>
-  
-    
-    
-</div>
-<div class="mt-5 markdown-body">
-  <h1 id="自我介绍‍"><a href="#自我介绍‍" class="headerlink" title="自我介绍‍"></a>自我介绍‍</h1><ul>
-<li>居住在上海.</li>
-<li>1999年算是90后的末班车了.</li>
-<li>平时不怎么爱说话,所有朋友也不多.</li>
-<li>平时也就喜欢撸撸代码和研究一下自己喜欢的车.</li>
-</ul>
 
-</div>
+  <div class="row mx-auto index-card">
+    
+    
+      <div class="col-12 col-md-4 m-auto">
+        <a href="/2020/03/06/%E4%BD%BF%E7%94%A8Hexo%E6%90%AD%E5%BB%BABlog/" target="_self">
+          <img src="https://i.loli.net/2020/03/06/cOUwFstAaTeyGQk.jpg" srcset="/img/loading.gif" alt="使用Hexo搭建Blog"
+               class="index-img img-fluid rounded index-thumbnails">
+        </a>
+      </div>
+    
+    <div class="col-12 col-md-8 mx-auto index-info">
+      <a href="/2020/03/06/%E4%BD%BF%E7%94%A8Hexo%E6%90%AD%E5%BB%BABlog/">
+        <p class="h4 index-header">使用Hexo搭建Blog</p>
+      </a>
+
+      <a href="/2020/03/06/%E4%BD%BF%E7%94%A8Hexo%E6%90%AD%E5%BB%BABlog/">
+        
+        
+          
+        
+        <div class="index-excerpt" >
+          <div class="index-text mb-1">
+1. 相关网站
+[Github]: https://github.com/
+[Hexo]: https://hexo.io/
+[Hexo Theme]: https://hexo.io/themes/
+[Hexo Docs]: https://hexo.io/docs/
+
+2. 创建Github Key设置你的用户名称与邮件地址，如果是第一次使用git的话
+$ git config --global user.name &quot;John Doe&quot;
+$ git config --global user.email johndoe@example.com
+使用ssh-keygen生</div>
+        </div>
+      </a>
+
+      <div class="index-btm">
+        
+          <i class="iconfont icon-riqi2"></i>&nbsp;2020-03-06&nbsp;&nbsp;
+        
+        
+        
+          <i class="iconfont icon-tag"></i>
+          
+            <a href="/tags/Hexo/">Hexo</a>&nbsp;
+          
+            <a href="/tags/github/">github</a>&nbsp;
+          
+        
+      </div>
+    </div>
+  </div>
+
+
+
+  <nav aria-label="index posts navigation">
+    <span class="pagination pg-blue justify-content-center mt-5" id="pagination">
+      <a class="extend prev" rel="prev" href="/"><i class="fas fa-angle-double-left"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span>
+    </span>
+  </nav>
+  
+  <script>
+    for (ele of document.getElementById("pagination").getElementsByClassName("page-number")) {
+      ele.href += '#board';
+    }
+  </script>
+
+
 
               </div>
             </div>
@@ -302,7 +336,7 @@
     var typed = new Typed('#subtitle', {
       strings: [
         '  ',
-        "关于&nbsp;",
+        "一个乐于分享技术和知识的程序员博客.👨‍💻‍&nbsp;",
       ],
       cursorChar: "_",
       typeSpeed: 120,
