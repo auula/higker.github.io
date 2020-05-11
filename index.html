@@ -149,6 +149,58 @@
     
     
       <div class="col-12 col-md-4 m-auto">
+        <a href="/2020/05/11/TCP%E7%B2%98%E5%8C%85-%E9%BB%8F%E5%8C%85/" target="_self">
+          <img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1geooqincbgj30xc0b4t93.jpg" srcset="/img/loading.gif" alt="TCP粘包(粘包)"
+               class="index-img img-fluid rounded index-thumbnails">
+        </a>
+      </div>
+    
+    <div class="col-12 col-md-8 mx-auto index-info">
+      <a href="/2020/05/11/TCP%E7%B2%98%E5%8C%85-%E9%BB%8F%E5%8C%85/">
+        <p class="h4 index-header">TCP粘包(粘包)</p>
+      </a>
+
+      <a href="/2020/05/11/TCP%E7%B2%98%E5%8C%85-%E9%BB%8F%E5%8C%85/">
+        
+        
+          
+        
+        <div class="index-excerpt" >
+          <div class="index-text mb-1">什么是TCP粘包?
+通常我在自己写程序的时候写一个基于tcp协议通讯的程序时就会发生这种问题。
+我们在Client端快速发送数据包并且这个包数据是随机,时间间隔也很短,然后tcp的Server拿到数据就会是我们之前Client发送的多条数据包合在的一起的，导致我们不能区分具体是哪个数据包的。
+为什么会产生这种原因就是因为tcp在传输的是字节流协议。
+上面是我个人自学习过程中总结的大家可以看看这个链接上的解释:https://www.liwenzhou.com/posts/Go/15_socket/
+
+
+
+为什么会出现粘包主要原因就是tcp数据传递模式是流模式，在保持长连接的时候可以进行多次的收</div>
+        </div>
+      </a>
+
+      <div class="index-btm">
+        
+          <i class="iconfont icon-riqi2"></i>&nbsp;2020-05-11&nbsp;&nbsp;
+        
+        
+        
+          <i class="iconfont icon-tag"></i>
+          
+            <a href="/tags/Go/">Go</a>&nbsp;
+          
+            <a href="/tags/tcp/">tcp</a>&nbsp;
+          
+            <a href="/tags/socket/">socket</a>&nbsp;
+          
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+      <div class="col-12 col-md-4 m-auto">
         <a href="/2020/05/08/%E8%B0%88%E8%B0%88%E5%B9%B6%E5%8F%91%E5%92%8C%E5%B9%B6%E8%A1%8C/" target="_self">
           <img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1gelcdzh8wbj30o909faaz.jpg" srcset="/img/loading.gif" alt="谈谈并发和并行"
                class="index-img img-fluid rounded index-thumbnails">
@@ -383,67 +435,6 @@ Go的语法接近C语言，但对于变量的声明有所不同。Go支持垃圾
             <a href="/tags/Golang/">Golang</a>&nbsp;
           
             <a href="/tags/Mac/">Mac</a>&nbsp;
-          
-        
-      </div>
-    </div>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-      <div class="col-12 col-md-4 m-auto">
-        <a href="/2020/03/08/Hexo%E9%9B%86%E6%88%90gitalk%E8%AF%84%E8%AE%BA%E7%BB%84%E4%BB%B6/" target="_self">
-          <img src="https://cdn.jsdelivr.net/gh/BayMRX/Blog_source@master/img/hexo.jpg" srcset="/img/loading.gif" alt="Hexo集成gitalk评论组件"
-               class="index-img img-fluid rounded index-thumbnails">
-        </a>
-      </div>
-    
-    <div class="col-12 col-md-8 mx-auto index-info">
-      <a href="/2020/03/08/Hexo%E9%9B%86%E6%88%90gitalk%E8%AF%84%E8%AE%BA%E7%BB%84%E4%BB%B6/">
-        <p class="h4 index-header">Hexo集成gitalk评论组件</p>
-      </a>
-
-      <a href="/2020/03/08/Hexo%E9%9B%86%E6%88%90gitalk%E8%AF%84%E8%AE%BA%E7%BB%84%E4%BB%B6/">
-        
-        
-          
-        
-        <div class="index-excerpt" >
-          <div class="index-text mb-1">
-
-一个基于 Github Issue 和 Preact 开发的评论插件,下面我们就来使用gitalk来实现hexo的评论功能。
-
-相关链接
-Gitalk开源地址
-
-特性
-使用 GitHub 登录
-支持多语言 [en, zh-CN, zh-TW, es-ES, fr, ru]
-支持个人或组织
-无干扰模式（设置 distractionFreeMode 为 true 开启）
-快捷键提交评论 （cmd|ctrl + enter）
-
-Readme在线示例
-安装两种方式
-
-直接引入
-
-  &lt;link rel=&quot;stylesheet&quot; href=&quot;https://cdn</div>
-        </div>
-      </a>
-
-      <div class="index-btm">
-        
-          <i class="iconfont icon-riqi2"></i>&nbsp;2020-03-08&nbsp;&nbsp;
-        
-        
-        
-          <i class="iconfont icon-tag"></i>
-          
-            <a href="/tags/Hexo/">Hexo</a>&nbsp;
-          
-            <a href="/tags/gitalk/">gitalk</a>&nbsp;
           
         
       </div>
