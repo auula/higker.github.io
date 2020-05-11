@@ -134,7 +134,7 @@
                   
                   <span class="post-meta">
                     <i class="far fa-chart-bar"></i>
-                    1.1k 字
+                    1.3k 字
                   </span>
                 
 
@@ -142,7 +142,7 @@
                   
                   <span class="post-meta">
                       <i class="far fa-clock"></i>
-                      4 分钟
+                      5 分钟
                   </span>
                 
 
@@ -312,6 +312,12 @@ func Decode(reader *bufio.Reader) (string, error) {
     return string(pack[4:]), nil
 }</code></pre>
 <p><strong>接下来在服务端和客户端分别使用上面定义的Decode和Encode函数处理数据。Good Luck~😜</strong></p>
+<h2 id="附加知识点"><a href="#附加知识点" class="headerlink" title="附加知识点"></a>附加知识点</h2><blockquote>
+<p>为什么udp不会粘包?<br><a href="https://zhuanlan.zhihu.com/p/41709589?utm_source=wechat_session" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/41709589?utm_source=wechat_session</a></p>
+</blockquote>
+<p>1.TCP协议是面向流的协议，UDP是面向消息的协议</p>
+<p>UDP段都是一条消息，应用程序必须以消息为单位提取数据，不能一次提取任意字节的数据</p>
+<p>UDP具有保护消息边界，在每个UDP包中就有了消息头（消息来源地址，端口等信息），这样对于接收端来说就容易进行区分处理了。传输协议把数据当作一条独立的消息在网上传输，接收端只能接收独立的消息。接收端一次只能接收发送端发出的一个数据包,如果一次接受数据的大小小于发送端一次发送的数据大小，就会丢失一部分数据，即使丢失，接受端也不会分两次去接收</p>
 
             <hr>
           </div>
