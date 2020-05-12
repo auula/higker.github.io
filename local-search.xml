@@ -4,6 +4,31 @@
   
   
   <entry>
+    <title>sync.Mutex&amp;RWMutex笔记</title>
+    <link href="/2020/05/12/sync-Mutex-RWMutex%E7%AC%94%E8%AE%B0/"/>
+    <url>/2020/05/12/sync-Mutex-RWMutex%E7%AC%94%E8%AE%B0/</url>
+    
+    <content type="html"><![CDATA[<h2 id="Go-中锁的使用"><a href="#Go-中锁的使用" class="headerlink" title="Go 中锁的使用"></a>Go 中锁的使用</h2><ol><li>互斥锁</li><li>读写锁</li></ol><p><img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1gepy9opn7vj30ge0gq3yz.jpg" srcset="/img/loading.gif" alt=""></p><h2 id="互斥锁"><a href="#互斥锁" class="headerlink" title="互斥锁"></a>互斥锁</h2><p>并发程序对公共资源访问的限制最常见的就是使用互斥锁的方式。在Go中，sync.Mutex 提供了互斥锁的实现。</p><p>简单使用示例：</p><pre><code class="go">func main() {var mutex sync.Mutexcount := 0for r := 0; r &lt; 50; r++ {   go func() {           mutex.Lock()           count += 1           mutex.Unlock()       }()   }   time.Sleep(time.Second)   fmt.Println(&quot;the count is : &quot;, count)}</code></pre><p>当执行了 <code>mutex.Lock()</code> 操作后，如果有另外一个 <code>goroutine</code> 又执行了上锁操作，那么该操作被被阻塞，直到该互斥锁恢复到解锁状态。</p><h2 id="读写锁"><a href="#读写锁" class="headerlink" title="读写锁"></a>读写锁</h2><p>顾名思义，读写锁是对读写操作进行加锁。需要注意的是多个读操作之间不存在互斥关系，这样提高了对共享资源的访问效率。</p><p>Go中读写锁由 <code>sync.RWMutex</code>提供，主要包括：</p><ul><li><p><code>func (rw *RWMutex) Lock()</code></p></li><li><p><code>func (rw *RWMutex) RLock()</code></p></li><li><p><code>func (rw *RWMutex) RLocker() Locker</code></p></li><li><p><code>func (rw *RWMutex) RUnlock()</code></p></li><li><p><code>func (rw *RWMutex) Unlock()</code></p></li></ul><p>其中 <code>Lock()</code> 即“写锁定”，调用了“写锁定”后，不能有其他<code>goroutine</code>进行读或者写操作。 <code>Unlock()</code> 即“写解锁”，调用了“写解锁”后会唤醒所有因为要进行“读锁定（即:<code>RLock()</code>）” 而被阻塞的 <code>goroutine</code>。</p><p><code>RLock()</code>为“读锁定”，调用“读锁定”后，不能有其他<code>goroutine</code>进行写操作，但是可以进行读操作。<code>RUnlock()</code> 为“读解锁”，调用“读解锁”后，会唤醒一个因为要进行“写锁定”而被阻塞的<code>goroutine</code>。</p><p>简单使用示例：</p><pre><code class="go">package mainimport (&quot;fmt&quot;&quot;sync&quot;&quot;time&quot;)func main() {    var mutex sync.RWMutex    arr := []int{1, 2, 3}    go func() {       fmt.Println(&quot;Try to lock writing operation.&quot;)       mutex.Lock()       fmt.Println(&quot;Writing operation is locked.&quot;)       arr = append(arr, 4)       fmt.Println(&quot;Try to unlock writing operation.&quot;)       mutex.Unlock()       fmt.Println(&quot;Writing operation is unlocked.&quot;)   }()   go func() {       fmt.Println(&quot;Try to lock reading operation.&quot;)       mutex.RLock()       fmt.Println(&quot;The reading operation is locked.&quot;)       fmt.Println(&quot;The len of arr is : &quot;, len(arr))       fmt.Println(&quot;Try to unlock reading operation.&quot;)       mutex.RUnlock()       fmt.Println(&quot;The reading operation is unlocked.&quot;)   }()   time.Sleep(time.Second * 2)   return}</code></pre><p>运行以上示例，观察输出结果，你将能够比较直观的感受到读写锁的作用。</p>]]></content>
+    
+    
+    
+    <tags>
+      
+      <tag>Go</tag>
+      
+      <tag>读写锁</tag>
+      
+      <tag>Mutex</tag>
+      
+      <tag>RWMutex</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>TCP黏包</title>
     <link href="/2020/05/11/TCP%E9%BB%8F%E5%8C%85/"/>
     <url>/2020/05/11/TCP%E9%BB%8F%E5%8C%85/</url>
