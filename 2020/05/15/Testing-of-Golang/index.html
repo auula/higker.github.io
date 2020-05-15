@@ -134,7 +134,7 @@
                   
                   <span class="post-meta">
                     <i class="far fa-chart-bar"></i>
-                    694 字
+                    1.3k 字
                   </span>
                 
 
@@ -142,7 +142,7 @@
                   
                   <span class="post-meta">
                       <i class="far fa-clock"></i>
-                      3 分钟
+                      5 分钟
                   </span>
                 
 
@@ -296,7 +296,50 @@ PASS
 ok      command-line-arguments  0.004s
 </code></pre>
 <blockquote>
-<p>如果是子测试可以加 <code>-run=funcName/TestCase</code>来进行子测试。<br>Good luck😜~</p>
+<p>如果是子测试可以加 <code>-run=funcName/TestCase</code>来进行子测试</p>
+</blockquote>
+<h2 id="测试覆盖率"><a href="#测试覆盖率" class="headerlink" title="测试覆盖率"></a>测试覆盖率</h2><p>测试覆盖率是你的代码被测试套件覆盖的百分比。通常我们使用的都是语句的覆盖率，也就是在测试中至少被运行一次的代码占总代码的比例。Go提供内置功能来检查你的代码覆盖率。我们可以使用<code>go test -cover</code>来查看测试覆盖率，例如：</p>
+<pre><code class="go">$: go test -cover
+PASS
+coverage: 100.0% of statements
+ok      Lets_Go/lets_36_testing 0.004s</code></pre>
+<p><strong>可以看到我的代码测试覆盖率是百分之百的~</strong></p>
+<p>Go还提供了一个额外的<code>go test -cover -coverprofile</code>参数，用来将覆盖率相关的记录信息输出到一个文件里:</p>
+<pre><code class="go">$: go test -cover -coverprofile=testInfo.out
+[50 50 50 50 50 50]
+PASS
+coverage: 100.0% of statements
+ok      Lets_Go/lets_36_testing 0.005s
+</code></pre>
+<p><strong>这样我们就把测试的信息输出到一个指定的<code>testInfo.out</code>文件里面了,然后我们通过go语言内置<code>tool</code>工具就可以生产可视化的代码覆盖率检查视图了，使用命令<code>go tool cover -html=testInfo.out</code>例如:</strong><br><img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1getd9mki8bj313u0u0dve.jpg" srcset="/img/loading.gif" alt=""></p>
+<h2 id="基准测试"><a href="#基准测试" class="headerlink" title="基准测试"></a>基准测试</h2><p>基准测试是给你的程序做运行性能的测试,以Benchmark为前缀，需要一个*testing.B类型的参数b，基准测试必须要执行b.N次，这样的测试才有对照性，b.N的值是系统根据实际情况去调整的，从而保证测试的稳定性。</p>
+<pre><code class="go">func BenchmarkAdd(b *testing.B) {
+    for i:=0;i&lt;b.N;i++ {
+        Add(i, b.N)
+        //fmt.Println(add)
+    }
+}</code></pre>
+<p><strong>增加<code>-bench</code>参数，所以我们通过执行<code>go test -bench=Add</code>命令执行基准测试，输出结果如下</strong></p>
+<pre><code class="go">$: go test -bench=Add
+goos: darwin
+goarch: amd64
+pkg: Lets_Go/lets_36_testing
+BenchmarkAdd-4          1000000000               0.281 ns/op
+PASS
+ok      Lets_Go/lets_36_testing 0.320s</code></pre>
+<p><strong>其中BenchmarkAdd-4表示对Split函数进行基准测试，数字4表示GOMAXPROCS的值，这个对于并发基准测试很重要。10000000和203ns/op表示每次调用Add函数耗时0.281ns，这个结果是10000000次调用的平均值。</strong></p>
+<p>还可以添加<code>-benchmem</code>参数来查看被查内存使用情况:</p>
+<pre><code class="go">$: go test -bench=Add -benchmem
+goos: darwin
+goarch: amd64
+pkg: Lets_Go/lets_36_testing
+BenchmarkAdd-4          1000000000               0.292 ns/op           0 B/op          0 allocs/op
+PASS
+ok      Lets_Go/lets_36_testing 0.335s
+</code></pre>
+<p><strong><code>0 B/op</code>表示每次操作内存分配了<code>0</code>字节，<code>0 allocs/op</code>则表示每次操作进行了<code>0</code>次内存分配,因为我写的就是一个简单加法函数😁</strong></p>
+<blockquote>
+<p>Good luck😜~</p>
 </blockquote>
 
             <hr>
