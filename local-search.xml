@@ -4,6 +4,27 @@
   
   
   <entry>
+    <title>Testing of Golang</title>
+    <link href="/2020/05/15/Testing-of-Golang/"/>
+    <url>/2020/05/15/Testing-of-Golang/</url>
+    
+    <content type="html"><![CDATA[<h2 id="GoLang的单元测试"><a href="#GoLang的单元测试" class="headerlink" title="GoLang的单元测试"></a>GoLang的单元测试</h2><p>在我们写代码的过程中要养成一个写注释和写单元测试的习惯，这样可以提高我们的代码健壮性和可读性，今天我们就来介绍一下<code>golang</code>的<code>test</code>这个工具。</p><h2 id="go-test命令介绍"><a href="#go-test命令介绍" class="headerlink" title="go test命令介绍"></a><code>go test</code>命令介绍</h2><p>Go语言中的测试依赖<code>go test</code>命令。编写测试代码和编写普通的Go代码过程是类似的，并不需要学习新的语法、规则或工具。</p><p><code>go test</code>命令是一个按照一定约定和组织的测试代码的驱动程序。在包目录内，所有以<code>_test.go</code>为后缀名的源代码文件都是<code>go test</code>测试的一部分，不会被<code>go build</code>编译到最终的可执行文件中。</p><p>在<code>*_test.go</code>文件中有三种类型的函数，单元测试函数、基准测试函数和示例函数。</p><table><thead><tr><th>类型</th><th>格式</th><th>作用</th></tr></thead><tbody><tr><td>测试函数</td><td>函数名前缀为<code>Test</code></td><td>测试程序的一些逻辑行为是否正确</td></tr><tr><td>基准函数</td><td>函数名前缀为<code>Benchmark</code></td><td>测试函数的性能</td></tr><tr><td>示例函数</td><td>函数名前缀为<code>Example</code></td><td>为文档提供示例文档</td></tr></tbody></table><h2 id="测试函数"><a href="#测试函数" class="headerlink" title="测试函数"></a>测试函数</h2><blockquote><p>基本测试的一些方法说明在文档里:<a href="https://studygolang.com/static/pkgdoc/pkg/testing.htm" target="_blank" rel="noopener">https://studygolang.com/static/pkgdoc/pkg/testing.htm</a></p></blockquote><p><strong>本测试的函数<code>math.go</code></strong></p><pre><code class="go">// Copyright (c) 2020 HigKer// Open Source: MIT License// Author: SDing &lt;deen.job@qq.com&gt;// Date: 2020/5/15 - 4:16 下午package lets_36_testingfunc init() {    Math := make(map[string]func(n, m int) int, 4)    Math[&quot;add&quot;] = Add    Math[&quot;sub&quot;] = Sub    Math[&quot;multi&quot;] = Multi    Math[&quot;div&quot;] = Div}func Add(n, m int) int {    return n + m}func Sub(n, m int) int {    return n - m}func Multi(n, m int) int {    return n * m}func Div(n, m int) int {    return n / m}</code></pre><p><strong>测试函数<code>math_test.go</code>遵循官方命名规范</strong></p><pre><code class="go">// Copyright (c) 2020 HigKer// Open Source: MIT License// Author: SDing &lt;deen.job@qq.com&gt;// Date: 2020/5/15 - 4:21 下午package lets_36_testingimport &quot;testing&quot;func TestMath(t *testing.T) {    // 自定义测试结构体    type MathCase struct {        n, m, result int    }    // 自定义子测试map    testGroup := map[string]MathCase{        &quot;add&quot;:   {1, 2, 3},        &quot;sub&quot;:   {3, 1, 2},        &quot;multi&quot;: {3, 2, 6},        &quot;div&quot;:   {6, 2, 3},    }    // 测试执行函数    for name, mathCase := range testGroup {        t.Run(name, func(t *testing.T) {            s := -1            switch name {            case &quot;add&quot;:                s = Add(mathCase.n, mathCase.m)            case &quot;sub&quot;:                s = Sub(mathCase.n, mathCase.m)            case &quot;multi&quot;:                s = Multi(mathCase.n, mathCase.m)            case &quot;div&quot;:                s = Div(mathCase.n, mathCase.m)            default:                t.Fatalf(&quot;No executable testing name :%s&quot;, name)            }            if mathCase.result != s {                t.Fatalf(&quot; add computer result error， want %d , got %d&quot;, mathCase.result, s)            }        })    }}</code></pre><p><strong>在自己的terminal输入<code>go test</code>即可看到测试结果</strong></p><pre><code class="go">=== RUN   TestMath=== RUN   TestMath/sub=== RUN   TestMath/multi=== RUN   TestMath/div=== RUN   TestMath/add--- PASS: TestMath (0.00s)    --- PASS: TestMath/sub (0.00s)    --- PASS: TestMath/multi (0.00s)    --- PASS: TestMath/div (0.00s)    --- PASS: TestMath/add (0.00s)PASSok      command-line-arguments  0.004s</code></pre><blockquote><p>如果是子测试可以加 <code>-run=funcName/TestCase</code>来进行子测试。<br>Good luck😜~</p></blockquote>]]></content>
+    
+    
+    
+    <tags>
+      
+      <tag>Go</tag>
+      
+      <tag>Golang</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>sync.Mutex&amp;RWMutex笔记</title>
     <link href="/2020/05/12/sync-Mutex-RWMutex%E7%AC%94%E8%AE%B0/"/>
     <url>/2020/05/12/sync-Mutex-RWMutex%E7%AC%94%E8%AE%B0/</url>
