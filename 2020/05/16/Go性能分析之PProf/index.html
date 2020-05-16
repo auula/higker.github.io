@@ -1,0 +1,663 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/apple-touch-icon.png">
+  <link rel="icon" type="image/png" href="/img/icons8-d-1000.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+  
+  <meta name="description" content="一个乐于分享技术和知识的程序员博客.">
+  <meta name="author" content="Ding Shuo">
+  <meta name="keywords" content="爱代码,爱折腾,Java,Go,Golang,Linux,程序员,iByte">
+  <title>Go性能分析之PProf - 💗Love code, love toss | iByte📚</title>
+
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/5.12.1/css/all.min.css" />
+<link  rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/css/bootstrap.min.css" />
+<link  rel="stylesheet" href="https://cdn.staticfile.org/mdbootstrap/4.13.0/css/mdb.min.css" />
+<link  rel="stylesheet" href="https://cdn.staticfile.org/github-markdown-css/3.0.1/github-markdown.min.css" />
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1067060_qzomjdt8bmp.css">
+
+
+
+  <link  rel="stylesheet" href="/lib/prettify/tranquil-heart.min.css" />
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+<!-- 自定义样式保持在最底部 -->
+
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>iByte📚</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/">首页</a>
+          </li>
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/archives/">归档</a>
+          </li>
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/categories/">分类</a>
+          </li>
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/tags/">标签</a>
+          </li>
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/about/">关于</a>
+          </li>
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="view intro-2" id="background" false
+         style="background: url('/img/default.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask rgba-black-light flex-center">
+          <div class="container text-center white-text fadeInUp">
+            <span class="h2" id="subtitle">
+              
+            </span>
+
+            
+              
+                <p class="mt-3 post-meta">
+                  <i class="fas fa-calendar-alt" aria-hidden="true"></i>
+                  星期六, 五月 16日 2020, 1:04 下午
+                </p>
+              
+
+              <p class="mt-1">
+                
+                  
+                  <span class="post-meta">
+                    <i class="far fa-chart-bar"></i>
+                    1k 字
+                  </span>
+                
+
+                
+                  
+                  <span class="post-meta">
+                      <i class="far fa-clock"></i>
+                      4 分钟
+                  </span>
+                
+
+                
+                  <!-- 不蒜子统计文章PV -->
+                  
+                  <span id="busuanzi_container_page_pv" class="post-meta" style="display: none">
+                    <i class="far fa-eye" aria-hidden="true"></i>
+                    <span id="busuanzi_value_page_pv"></span> 次
+                  </span>
+                
+              </p>
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-md">
+      <div class="py-5 z-depth-3" id="board">
+        <div class="post-content mx-auto" id="post">
+          
+          <div class="markdown-body">
+            <h2 id="PProf是个啥？？？"><a href="#PProf是个啥？？？" class="headerlink" title="PProf是个啥？？？"></a>PProf是个啥？？？</h2><p><code>pprof</code>是用于可视化和分析性能分析数据的工具,<code>pprof</code>以 <code>profile.proto</code> 读取分析样本的集合，并生成报告以可视化并帮助分析数据（支持文本和图形报告）<br><code>profile.proto</code> 是一个<code>Protocol Buffer v3</code>的描述文件，它描述了一组 <code>callstack</code>和 <code>symbolization</code>信息， 作用是表示统计分析的一组采样的调用栈，是很常见的 <code>stacktrace</code>配置文件格式。</p>
+<ol>
+<li>支持什么使用模式<ul>
+<li><code>Report generation</code>：报告生成</li>
+<li><code>Interactive terminal use</code>：交互式终端使用</li>
+<li><code>Web interface</code>：<code>Web</code> 界面</li>
+</ul>
+</li>
+<li>可以做什么<ul>
+<li><code>CPU Profiling</code>：<code>CPU</code> 分析，按照一定的频率采集所监听的应用程序 <code>CPU</code>（含寄存器）的使用情况，可确定应用程序在主动消耗 <code>CPU</code> 周期时花费时间的位置</li>
+<li><code>Memory Profiling</code>：内存分析，在应用程序进行堆分配时记录堆栈跟踪，用于监视当前和历史内存使用情况，以及检查内存泄漏</li>
+<li><code>Block Profiling</code>：阻塞分析，记录 <code>goroutine</code> 阻塞等待同步（包括定时器通道）的位置</li>
+<li><code>Mutex Profiling</code>：互斥锁分析，报告互斥锁的竞争情况</li>
+</ul>
+</li>
+</ol>
+<h2 id="一个例子🌰"><a href="#一个例子🌰" class="headerlink" title="一个例子🌰"></a>一个例子🌰</h2><p><strong>想要进行性能优化，首先瞩目在 Go 自身提供的工具链来作为分析依据，本文将带你学习、使用 Go 后花园，涉及如下：</strong></p>
+<ul>
+<li><code>runtime/pprof</code>：采集程序（<code>非 Server</code>）的运行数据进行分析</li>
+<li><code>net/http/pprof</code>：采集 <code>HTTP Server</code> 的运行时数据进行分析</li>
+</ul>
+<pre><code class="go">// Copyright (c) 2020 HigKer
+// Open Source: MIT License
+// Author: SDing &lt;deen.job@qq.com&gt;
+// Date: 2020/5/16 - 12:53 下午
+
+package main
+
+import (
+    &quot;flag&quot;
+    &quot;fmt&quot;
+    &quot;os&quot;
+    &quot;runtime/pprof&quot;
+    &quot;time&quot;
+)
+
+// 一段有问题的代码
+func logicCode() {
+    var c chan int
+    for {
+        select {
+        case v := &lt;-c:
+            fmt.Printf(&quot;recv from chan, value:%v\n&quot;, v)
+        default:
+
+        }
+    }
+}
+
+func main() {
+    var isCPUPprof bool
+    var isMemPprof bool
+
+    flag.BoolVar(&amp;isCPUPprof, &quot;cpu&quot;, false, &quot;turn cpu pprof on&quot;)
+    flag.BoolVar(&amp;isMemPprof, &quot;mem&quot;, false, &quot;turn mem pprof on&quot;)
+    flag.Parse()
+
+    if isCPUPprof { 
+        file, err := os.Create(&quot;./cpu.pprof&quot;)
+        if err != nil {
+            fmt.Printf(&quot;create cpu pprof failed, err:%v\n&quot;, err)
+            return
+        }
+        pprof.StartCPUProfile(file)
+        defer pprof.StopCPUProfile()
+    }
+    for i := 0; i &lt; 8; i++ {
+        go logicCode()
+    }
+    time.Sleep(20 * time.Second)
+    if isMemPprof {
+        file, err := os.Create(&quot;./mem.pprof&quot;)
+        if err != nil {
+            fmt.Printf(&quot;create mem pprof failed, err:%v\n&quot;, err)
+            return
+        }
+        pprof.WriteHeapProfile(file)
+        file.Close()
+    }
+}
+</code></pre>
+<p><strong>可以看到👆上面的那个<code>select</code>代码块里面的channel没有初始化，会一直阻塞着。这样一个简单的代码可以通过我们肉眼出来了，但是如果是复杂的我们就需要使用<code>pprof</code>工具了。</strong></p>
+<pre><code class="shell">$: go tool pprof cpu.pprof 
+Type: cpu
+Time: May 16, 2020 at 12:59pm (CST)
+Duration: 20.14s, Total samples = 56.90s (282.48%)
+Entering interactive mode (type &quot;help&quot; for commands, &quot;o&quot; for options)
+(pprof) top3
+Showing nodes accounting for 51.91s, 91.23% of 56.90s total
+Dropped 7 nodes (cum &lt;= 0.28s)
+Showing top 3 nodes out of 4
+      flat  flat%   sum%        cum   cum%
+    23.04s 40.49% 40.49%     45.18s 79.40%  runtime.selectnbrecv
+    17.26s 30.33% 70.83%     18.93s 33.27%  runtime.chanrecv
+    11.61s 20.40% 91.23%     56.83s 99.88%  main.logicCode //❎这里已经通过工具分析出来了！！！
+</code></pre>
+<p><strong>工具就可以分析出来了我们的<code>logicCode</code>函数有问题！</strong></p>
+<pre><code class="shell">$: go tool pprof cpu.pprof 
+Type: cpu
+Time: May 16, 2020 at 12:59pm (CST)
+Duration: 20.14s, Total samples = 56.90s (282.48%)
+Entering interactive mode (type &quot;help&quot; for commands, &quot;o&quot; for options)
+(pprof) top3
+Showing nodes accounting for 51.91s, 91.23% of 56.90s total
+Dropped 7 nodes (cum &lt;= 0.28s)
+Showing top 3 nodes out of 4
+      flat  flat%   sum%        cum   cum%
+    23.04s 40.49% 40.49%     45.18s 79.40%  runtime.selectnbrecv
+    17.26s 30.33% 70.83%     18.93s 33.27%  runtime.chanrecv
+    11.61s 20.40% 91.23%     56.83s 99.88%  main.logicCode
+(pprof) list logicCode
+Total: 56.90s
+ROUTINE ======================== main.logicCode in /Users/ding/Documents/GO_CODE_DEV/src/Lets_Go/lets_37_pprof/main.go
+    11.61s     56.83s (flat, cum) 99.88% of Total
+         .          .     16:// 一段有问题的代码
+         .          .     17:func logicCode() {
+         .          .     18:   var c chan int
+         .          .     19:   for {
+         .          .     20:           select {
+    11.61s     56.83s     21:           case v := &lt;-c:
+         .          .     22:                   fmt.Printf(&quot;recv from chan, value:%v\n&quot;, v)
+         .          .     23:           default:
+         .          .     24:
+         .          .     25:           }
+         .          .     26:   }
+(pprof) 
+</code></pre>
+<p><strong>通过<code>list funcName</code>就可以定位到哪行代码的问题了！当然<code>PProf</code>工具的用途多的是这里就是一个简单的例子，我这篇博文就写到这里，有兴趣的后面再更新，或者关注我的公众号:<code>go_code</code>谢谢里面有干货哦<del>~</del>🤩</strong></p>
+
+            <hr>
+          </div>
+          <br>
+          <div>
+            <p>
+            
+              
+              <span>
+                <i class="iconfont icon-tag"></i>
+                
+                  <a class="hover-with-bg" href="/tags/Go/">Go</a>
+                
+                  <a class="hover-with-bg" href="/tags/PPorf/">PPorf</a>
+                
+              </span>
+            
+            </p>
+            
+              <p class="note note-warning">本博客所有文章除特别声明外，均采用 <a href="https://zh.wikipedia.org/wiki/Wikipedia:CC_BY-SA_3.0%E5%8D%8F%E8%AE%AE%E6%96%87%E6%9C%AC" target="_blank" rel="nofollow noopener noopener">CC BY-SA 3.0协议</a> 。转载请注明出处！</p>
+            
+          </div>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container">
+        <div id="toc">
+  <p class="h5"><i class="far fa-list-alt"></i>&nbsp;目录</p>
+  <div id="tocbot"></div>
+</div>
+      </div>
+    
+  </div>
+</div>
+
+<!-- custom -->
+
+
+<!-- Comments -->
+<div class="col-lg-7 mx-auto nopadding-md">
+  <div class="container comments mx-auto" id="comments">
+    
+      <br><br>
+      
+      
+  <div id="gitalk-container"></div>
+  <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+  <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/blueimp-md5@2.11.1/js/md5.min.js"></script>
+  <script type="text/javascript">
+    var gitalk = new Gitalk({
+      clientID: '22468b62936ae5d73a0b',
+      clientSecret: '918618299c36b1430a0501cd976b82fd48cbfe0c',
+      repo: 'higker.github.io',
+      owner: 'higker',
+      admin: 'higker',
+      id: md5(location.pathname),
+      language: 'zh-CN',
+      perPage: 15,
+      pagerDirection: 'last',
+      createIssueManually: 'true',
+      distractionFreeMode: 'false'
+    });
+
+    gitalk.render('gitalk-container')
+  </script>
+
+
+    
+  </div>
+</div>
+
+    
+  </main>
+
+  
+    <a class="z-depth-1" id="scroll-top-button" href="#" role="button">
+      <i class="fa fa-chevron-up scroll-top-arrow" aria-hidden="true"></i>
+    </a>
+  
+
+  
+    <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+  
+
+  
+
+  
+
+  <!--
+ * @Author: BinScholl
+ * @Date: 2020-03-07 11:18:30
+ * @LastEditors: BinScholl
+ * @LastEditTime: 2020-03-07 11:58:12
+ * @Description: 
+ * @Github: https://github.com/BinScholl
+ -->
+<footer class="mt-5">
+  <div class="text-center py-3">
+    <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><b>Hexo</b></a>
+    <i class="iconfont icon-love"></i>
+    <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"> <b>Fluid</b></a>
+
+    
+  <div>
+    
+      <!-- 不蒜子统计PV -->
+      
+      <span id="busuanzi_container_site_pv" style="display: none">
+      总访问量 <span id="busuanzi_value_site_pv"></span> 次
+    </span>
+    
+    
+      <!-- 不蒜子统计UV -->
+      
+      <span id="busuanzi_container_site_uv" style="display: none">
+      总访客数 <span id="busuanzi_value_site_uv"></span> 人
+    </span>
+    
+  </div>
+
+
+    
+
+    <!-- cnzz Analytics icon -->
+    
+    <p>iByte is maintained by Deen.</p>
+  </div>
+</footer>
+
+<!-- SCRIPTS -->
+<script  src="https://cdn.staticfile.org/jquery/3.4.1/jquery.min.js" ></script>
+<script  src="https://cdn.staticfile.org/popper.js/1.16.1/umd/popper.min.js" ></script>
+<script  src="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/js/bootstrap.min.js" ></script>
+<script  src="https://cdn.staticfile.org/mdbootstrap/4.13.0/js/mdb.min.js" ></script>
+<script  src="/js/main.js" ></script>
+
+
+  <script  src="/js/lazyload.js" ></script>
+
+
+
+  
+  <script  src="https://cdn.staticfile.org/tocbot/4.10.0/tocbot.min.js" ></script>
+  <script>
+    $(document).ready(function () {
+      var navHeight = $('#navbar').height();
+      var toc = $('#toc');
+      var main = $('main');
+      var tocT = navHeight + (toc.offset().top - main.offset().top);
+      var tocLimMin = main.offset().top - navHeight;
+      var tocLimMax = $('#comments').offset().top - navHeight;
+      $(window).scroll(function () {
+        var scroH = document.body.scrollTop + document.documentElement.scrollTop;
+        if (tocLimMin <= scroH && scroH <= tocLimMax) {
+          toc.css({
+            'display': 'block',
+            'position': 'fixed',
+            'top': tocT,
+          });
+        } else if (scroH <= tocLimMin) {
+          toc.css({
+            'position': '',
+            'top': '',
+          });
+        } else if (scroH > tocLimMax) {
+          toc.css('display', 'none');
+        }
+      });
+      tocbot.init({
+        tocSelector: '#tocbot',
+        contentSelector: '.post-content',
+        headingSelector: 'h1,h2,h3,h4,h5,h6',
+        linkClass: 'tocbot-link',
+        activeLinkClass: 'tocbot-active-link',
+        listClass: 'tocbot-list',
+        isCollapsedClass: 'tocbot-is-collapsed',
+        collapsibleClass: 'tocbot-is-collapsible',
+        scrollSmooth: true,
+      });
+      if ($('.toc-list-item').length > 0) {
+        $('#toc > p').css('visibility', 'visible');
+      }
+    });
+  </script>
+
+
+
+
+
+
+
+  <script defer src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+<!-- Plugins -->
+
+
+
+  <script  src="https://cdn.staticfile.org/prettify/188.0.0/prettify.min.js" ></script>
+  <script>
+    $(document).ready(function () {
+      $('pre').addClass('prettyprint  ');
+      prettyPrint();
+    })
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/typed.js/2.0.11/typed.min.js" ></script>
+  <script>
+    var typed = new Typed('#subtitle', {
+      strings: [
+        '  ',
+        "Go性能分析之PProf&nbsp;",
+      ],
+      cursorChar: "_",
+      typeSpeed: 120,
+      loop: true,
+    });
+    typed.stop();
+    $(document).ready(function () {
+      $(".typed-cursor").addClass("h2");
+      typed.start();
+    });
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/anchor-js/4.2.2/anchor.min.js" ></script>
+  <script>
+    anchors.options = {
+      placement: "right",
+      visible: "hover",
+      
+      icon: "✨"
+      
+    };
+    var el = "h1,h2,h3,h4,h5,h6".split(",");
+    var res = [];
+    for (item of el) {
+      res.push(".markdown-body > " + item)
+    }
+    anchors.add(res.join(", "))
+  </script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+  <script>
+    var path = "/local-search.xml";
+    var inputArea = document.querySelector("#local-search-input");
+    inputArea.onclick = function () {
+      getSearchFile(path);
+      this.onclick = null
+    }
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.js" ></script>
+  <script>
+    $("#post img:not(.no-zoom img, img[no-zoom])").each(
+      function () {
+        var element = document.createElement("a");
+        $(element).attr("data-fancybox", "images");
+        $(element).attr("href", $(this).attr("src"));
+        $(this).wrap(element);
+      }
+    );
+  </script>
+
+
+
+
+
+  
+  
+    <script type="text/javascript">
+      //定义获取词语下标
+      var a_idx = 0;
+      jQuery(document).ready(function ($) {
+        //点击body时触发事件
+        $("body").click(function (e) {
+          //需要显示的词语
+          var a = new Array("富强", "民主", "文明", "和谐", "自由", "平等", "公正", "法治", "爱国", "敬业", "诚信", "友善");
+          //设置词语给span标签
+          var $i = $("<span/>").text(a[a_idx]);
+          //下标等于原来下标+1  余 词语总数
+          a_idx = (a_idx + 1) % a.length;
+          //获取鼠标指针的位置，分别相对于文档的左和右边缘。
+          //获取x和y的指针坐标
+          var x = e.pageX, y = e.pageY;
+          //在鼠标的指针的位置给$i定义的span标签添加css样式
+          $i.css({
+            "z-index": 999,
+            "top": y - 20,
+            "left": x,
+            "position": "absolute",
+            "font-weight": "bold",
+            "color": rand_color()
+          });
+          // 随机颜色
+          function rand_color() {
+            return "rgb(" + ~~(255 * Math.random()) + "," + ~~(255 * Math.random()) + "," + ~~(255 * Math.random()) + ")"
+          }
+          //在body添加这个标签
+          $("body").append($i);
+          //animate() 方法执行 CSS 属性集的自定义动画。
+          //该方法通过CSS样式将元素从一个状态改变为另一个状态。CSS属性值是逐渐改变的，这样就可以创建动画效果。
+          //详情请看http://www.w3school.com.cn/jquery/effect_animate.asp
+          $i.animate({
+            //将原来的位置向上移动180
+            "top": y - 180,
+            "opacity": 0
+            //1500动画的速度
+          }, 1500, function () {
+            //时间到了自动删除
+            $i.remove();
+          });
+        });
+      })
+      ;
+    </script>
+  
+
+
+
+
+
+
+
+</body>
+</html>
