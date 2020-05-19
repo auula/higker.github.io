@@ -184,14 +184,8 @@
 </ul>
 <h2 id="什么是消息队列"><a href="#什么是消息队列" class="headerlink" title="什么是消息队列?"></a>什么是消息队列?</h2><p>通俗地解释一下消息队列，你想象一个场景：你到报社订阅了一份报纸，报社每日生产一份新报纸，便将新报纸发往邮局并告诉邮局你的地址，邮递员将你的报纸送往你的邮箱，你便可以愉快地阅读今天的时事新闻了。当然，可能一个人订阅了好几家报社，一家报社也可以被多个人订阅。在这个场景中，消息队列就担任了，邮箱、邮局、邮递员的角色。</p>
 <h2 id="消息队列的作用？"><a href="#消息队列的作用？" class="headerlink" title="消息队列的作用？"></a>消息队列的作用？</h2><ul>
-<li><ol>
 <li>是减少相应所需的时间和削峰</li>
-</ol>
-</li>
-<li><ol start="2">
 <li>降低系统耦合性解耦或提升系统的可拓展性）</li>
-</ol>
-</li>
 </ul>
 <p><strong>如图下场景:</strong><br><img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1gextpsdc8qj313e0u0wja.jpg" srcset="/img/loading.gif" alt="nsq"><br><strong>通过使用消息队列将不同的业务逻辑解耦，降低系统间的耦合，提高系统的健壮性。后续有其他业务要使用订单数据可直接订阅消息队列，提高系统的灵活性。</strong><br><img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1gextqm9slzj30wi0jg409.jpg" srcset="/img/loading.gif" alt="nsq"><br><strong>还可以帮大并发做流量抗压处理，类似秒杀（大秒）等场景下，某一时间可能会产生大量的请求，使用消息队列能够为后端处理请求提供一定的缓冲区，保证后端服务的稳定性。</strong><br><img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1gextrsvl7uj30xc08uwf9.jpg" srcset="/img/loading.gif" alt="nsq"></p>
 <h2 id="开始NSQ弹射起步🚀"><a href="#开始NSQ弹射起步🚀" class="headerlink" title="开始NSQ弹射起步🚀"></a>开始<code>NSQ</code>弹射起步🚀</h2><p><strong>NSQ工作模式👇</strong><br><img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1gexu2qzvroj31480u0792.jpg" srcset="/img/loading.gif" alt="nsq"></p>
