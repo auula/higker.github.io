@@ -18,7 +18,7 @@
   <meta name="description" content="一个乐于分享技术和知识的程序员博客.">
   <meta name="author" content="Ding Shuo">
   <meta name="keywords" content="爱代码,爱折腾,Java,Go,Golang,Linux,程序员,iByte">
-  <title>归档 - 💗Love code, love toss | iByte📚</title>
+  <title>iByte📚</title>
 
   <link  rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/5.12.1/css/all.min.css" />
 <link  rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/css/bootstrap.min.css" />
@@ -44,7 +44,7 @@
 
 
 <body>
-  <header style="height: 80vh;">
+  <header style="height: 100vh;">
     <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
   <div class="container">
     <a class="navbar-brand"
@@ -125,6 +125,10 @@
           </div>
 
           
+            <div class="scroll-down-bar">
+              <i class="fas fa-angle-down scroll-down-arrow"></i>
+            </div>
+          
         </div>
       </div>
     </div>
@@ -140,36 +144,64 @@
               <div class="col-12 col-md-10 m-auto">
                 
 
-<div class="list-group">
-  <p class="h4">共计 13 篇文章</p>
-  <hr>
-  
+
+  <div class="row mx-auto index-card">
     
-      
-      <p class="h5">2020</p>
     
-    <a href="/2020/05/19/NSQ%E4%B9%8B%E5%BC%B9%E5%B0%84%E8%B5%B7%E6%AD%A5/" class="list-group-item list-group-item-action">
-      <span class="archive-post-title">NSQ之弹射起步</span>
-      <span style="float: right;">05-19</span>
-    </a>
-  
+      <div class="col-12 col-md-4 m-auto">
+        <a href="/2020/03/06/%E4%BD%BF%E7%94%A8Hexo%E6%90%AD%E5%BB%BABlog/" target="_self">
+          <img src="https://i.loli.net/2020/03/06/cOUwFstAaTeyGQk.jpg" srcset="/img/loading.gif" alt="使用Hexo搭建Blog"
+               class="index-img img-fluid rounded index-thumbnails">
+        </a>
+      </div>
     
-    <a href="/2020/05/17/Gohper%E7%9A%84300%E9%97%AE/" class="list-group-item list-group-item-action">
-      <span class="archive-post-title">Gohper成长秘籍</span>
-      <span style="float: right;">05-17</span>
-    </a>
-  
-    
-    <a href="/2020/05/16/Go%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90%E4%B9%8BPProf/" class="list-group-item list-group-item-action">
-      <span class="archive-post-title">Go性能分析之PProf</span>
-      <span style="float: right;">05-16</span>
-    </a>
-  
-</div>
+    <div class="col-12 col-md-8 mx-auto index-info">
+      <a href="/2020/03/06/%E4%BD%BF%E7%94%A8Hexo%E6%90%AD%E5%BB%BABlog/">
+        <p class="h4 index-header">使用Hexo搭建Blog</p>
+      </a>
+
+      <a href="/2020/03/06/%E4%BD%BF%E7%94%A8Hexo%E6%90%AD%E5%BB%BABlog/">
+        
+        
+          
+        
+        <div class="index-excerpt" >
+          <div class="index-text mb-1">
+1. 相关网站
+[Github]: https://github.com/
+[Hexo]: https://hexo.io/
+[Hexo Theme]: https://hexo.io/themes/
+[Hexo Docs]: https://hexo.io/docs/
+
+2. 创建Github Key设置你的用户名称与邮件地址，如果是第一次使用git的话
+$ git config --global user.name &quot;John Doe&quot;
+$ git config --global user.email johndoe@example.com
+使用ssh-keygen生</div>
+        </div>
+      </a>
+
+      <div class="index-btm">
+        
+          <i class="iconfont icon-riqi2"></i>&nbsp;2020-03-06&nbsp;&nbsp;
+        
+        
+        
+          <i class="iconfont icon-tag"></i>
+          
+            <a href="/tags/Hexo/">Hexo</a>&nbsp;
+          
+            <a href="/tags/github/">github</a>&nbsp;
+          
+        
+      </div>
+    </div>
+  </div>
+
+
 
   <nav aria-label="index posts navigation">
     <span class="pagination pg-blue justify-content-center mt-5" id="pagination">
-      <span class="page-number current">1</span><a class="page-number" href="/archives/page/2/">2</a><a class="page-number" href="/archives/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/archives/page/5/">5</a><a class="extend next" rel="next" href="/archives/page/2/"><i class="fas fa-angle-double-right"></i></a>
+      <a class="extend prev" rel="prev" href="/page/2/"><i class="fas fa-angle-double-left"></i></a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span>
     </span>
   </nav>
   
@@ -178,6 +210,7 @@
       ele.href += '#board';
     }
   </script>
+
 
 
               </div>
@@ -303,7 +336,7 @@
     var typed = new Typed('#subtitle', {
       strings: [
         '  ',
-        "归档&nbsp;",
+        "一个乐于分享技术和知识的程序员博客.👨‍💻‍&nbsp;",
       ],
       cursorChar: "_",
       typeSpeed: 120,
