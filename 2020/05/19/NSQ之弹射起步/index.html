@@ -134,7 +134,7 @@
                   
                   <span class="post-meta">
                     <i class="far fa-chart-bar"></i>
-                    1.2k 字
+                    1.3k 字
                   </span>
                 
 
@@ -200,15 +200,21 @@
 <li>消息不保证有序。</li>
 </ul>
 <h3 id="开始使用NSQ"><a href="#开始使用NSQ" class="headerlink" title="开始使用NSQ"></a>开始使用<code>NSQ</code></h3><p>首先我们需要安装NSQ的<code>nsqlookupd</code>组件也就是<code>nsqd</code>程序,浏览器打开<a href="https://nsq.io/deployment/installing.html" target="_blank" rel="noopener">官方下载页面</a>即可得到你对应操作系统的程序。<br><strong><code>nsqd</code>是一个守护进程，它接收、排队并向客户端发送消息。</strong></p>
-<h3 id="nsqd组件"><a href="#nsqd组件" class="headerlink" title="nsqd组件"></a><code>nsqd</code>组件</h3><p>启动 <code>nsqd</code>，指定<code>-broadcast-address=127.0.0.1</code>来配置广播地址</p>
-<pre><code class="shell"> ./nsqd -broadcast-address=127.0.0.1</code></pre>
-<p>如果是在搭配<code>nsqlookupd</code>使用的模式下需要还指定<code>nsqlookupd</code>地址:</p>
-<pre><code class="shell"> ./nsqd -broadcast-address=127.0.0.1 -lookupd-tcp-address=127.0.0.1:4160</code></pre>
-<p>如果是部署了多个<code>nsqlookupd</code>节点的集群，那还可以指定多个<code>-lookupd-tcp-address</code>。</p>
+<h3 id="nsqlookupd组件"><a href="#nsqlookupd组件" class="headerlink" title="nsqlookupd组件"></a><code>nsqlookupd</code>组件</h3><p><code>nsqlookupd</code>相当于集群的管理员所以我们首先启动它</p>
+<pre><code class="shell">$ nsqlookupd</code></pre>
+<h3 id="nsqd组件"><a href="#nsqd组件" class="headerlink" title="nsqd组件"></a><code>nsqd</code>组件</h3><p>启动 <code>nsqd</code>，它相当于集群下的节点，是主要干活的</p>
+<pre><code class="shell">$ nsqd --lookupd-tcp-address=127.0.0.1:4160</code></pre>
 <p><strong><code>nsqlookupd</code>是维护所有<code>nsqd</code>状态、提供服务发现的守护进程。它能为消费者查找特定<code>topic</code>下的<code>nsqd</code>提供了运行时的自动发现服务。 它不维持持久状态，也不需要与任何其他<code>nsqlookupd</code>实例协调以满足查询。因此根据你系统的冗余要求尽可能多地部署<code>nsqlookupd</code>节点。它们消耗的资源很少，可以与其他服务共存。我们的建议是为每个数据中心运行至少3个集群。</strong></p>
 <h3 id="nsqadmin组件"><a href="#nsqadmin组件" class="headerlink" title="nsqadmin组件"></a><code>nsqadmin</code>组件</h3><p>一个实时监控集群状态、执行各种管理任务的Web管理平台。 启动<code>nsqadmin</code>，指定<code>nsqlookupd</code>地址:</p>
 <pre><code class="shell"> ./nsqadmin -lookupd-http-address=127.0.0.1:4161</code></pre>
 <p>我们可以使用浏览器打开<code>http://127.0.0.1:4171/</code>访问如下管理界面。</p>
+<p><img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1gexvk9mzt7j31c00u0b29.jpg" srcset="/img/loading.gif" alt="nsq"></p>
+<h3 id="测试消息"><a href="#测试消息" class="headerlink" title="测试消息"></a>测试消息</h3><p>发送一条消息</p>
+<pre><code class="shell">$ curl -d &#39;hello world 1&#39; &#39;http://127.0.0.1:4151/pub?topic=test&#39;</code></pre>
+<p>即可看到收到了消息<br><img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1gexvqdbqrrj31740u0k9x.jpg" srcset="/img/loading.gif" alt="nsq"><br>把消息写到硬盘的文件里</p>
+<pre><code class="shell">$ nsq_to_file --topic=test --output-dir=/tmp --lookupd-http-address=127.0.0.1:4161</code></pre>
+<p><img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1gexvtcplxej312i0u07c5.jpg" srcset="/img/loading.gif" alt="nsq"><br>文件内容<br><img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1gexvukbk33j31ja0m614z.jpg" srcset="/img/loading.gif" alt="nsq"></p>
+<p><strong>好了如果对你有帮助你可以到本博客的关于页面添加我微信或者在Github联系我，一起推动Golang在中国这片土地生根发芽长成大树！！！Good luck!</strong></p>
 
             <hr>
           </div>
