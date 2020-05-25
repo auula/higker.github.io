@@ -4,6 +4,27 @@
   
   
   <entry>
+    <title>Azure上安装Kafka</title>
+    <link href="/2020/05/25/Azure%E4%B8%8A%E5%AE%89%E8%A3%85Kafka/"/>
+    <url>/2020/05/25/Azure%E4%B8%8A%E5%AE%89%E8%A3%85Kafka/</url>
+    
+    <content type="html"><![CDATA[<p><img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1gf4liai3d3j30k008jt9d.jpg" srcset="/img/loading.gif" alt=""></p><h2 id="什么是Kafka"><a href="#什么是Kafka" class="headerlink" title="什么是Kafka?"></a>什么是Kafka?</h2><p>Kafka 是一种高吞吐量的分布式发布订阅消息系统，它可以处理消费者在网站中的所有动作流数据。 这种动作（网页浏览，搜索和其他用户的行动）是在现代网络上的许多社会功能的一个关键因素。 这些数据通常是由于吞吐量的要求而通过处理日志和日志聚合来解决。<br>对于像 Hadoop 一样的日志数据和离线分析系统，但又要求实时处理的限制，这是一个可行的解决方案。Kafka 的目的是通过 Hadoop 的并行加载机制来统一线上和离线的消息处理，也是为了通过集群来提供实时的消息。<br>Kafka 是由 Apache 软件基金会开发的一个开源流处理平台，由 Scala 和 Java 编写。<br>Kafka 最初是由领英开发，并随后于 2011 年初开源，并于 2012 年 10 月 23 日由 Apache Incubator 孵化出站。2014 年 11 月，几个曾在领英为 Kafka 工作的工程师，创建了名为 Confluent 的新公司，并着眼于 Kafka。根据 2014 年 Quora 的帖子，Jay Kreps 似乎已经将它以作家弗朗茨·卡夫卡命名。Kreps 选择将该系统以一个作家命名是因为，它是“一个用于优化写作的系统”，而且他很喜欢卡夫卡的作品。</p><p><strong>Kafka 存储的消息来自任意多被称为“生产者”（Producer）的进程。数据从而可以被分配到不同的“分区”（Partition）、不同的“Topic”下。在一个分区内，这些消息被索引并连同时间戳存储在一起。其它被称为“消费者”（Consumer）的进程可以从分区查询消息。Kafka 运行在一个由一台或多台服务器组成的集群上，并且分区可以跨集群结点分布。</strong></p><p><strong>Kafka 高效地处理实时流式数据，可以实现与 Storm、HBase 和 Spark 的集成。作为聚类部署到多台服务器上，Kafka 处理它所有的发布和订阅消息系统使用了四个 API，即生产者 API、消费者 API、Stream API 和 Connector API。它能够传递大规模流式消息，自带容错功能，已经取代了一些传统消息系统，如 JMS、AMQP 等。</strong></p><p><strong>Kafka 架构的主要术语包括 Topic、Record 和 Broker。Topic 由 Record 组成，Record 持有不同的信息，而 Broker 则负责复制消息。Kafka 有四个主要 API：</strong></p><ul><li>生产者 API：支持应用程序发布 Record 流。</li><li>消费者 API：支持应用程序订阅 Topic 和处理 Record 流。</li><li>Stream API：将输入流转换为输出流，并产生结果。</li><li>Connector API：执行可重用的生产者和消费者 API，可将 Topic 链接到现有应用程序。</li></ul><p><strong>相关术语</strong></p><ul><li>Topic 用来对消息进行分类，每个进入到 Kafka 的信息都会被放到一个 Topic 下</li><li>Broker 用来实现数据存储的主机服务器</li><li>Partition 每个 Topic 中的消息会被分为若干个 Partition，以提高消息的处理效率</li><li>Producer 消息的生产者</li><li>Consumer 消息的消费者</li><li>Consumer Group 消息的消费群组</li></ul><p>由于其广泛集成到企业级基础设施中，监测 Kafka 在规模运行中的性能成为一个日益重要的问题。监测端到端性能，要求跟踪所有指标，包括 Broker、消费者和生产者。除此之外还要监测 ZooKeeper，Kafka 用它来协调各个消费者。当前有一些监测平台可以跟踪卡夫卡的性能，有开源的，如领英的 Burrow；也有付费的，如 Datadog。除了这些平台之外，收集 Kafka 的数据也可以使用工具来进行，这些工具一般需要 Java，包括 JConsole。</p><h2 id="Get-Started"><a href="#Get-Started" class="headerlink" title="Get Started"></a>Get Started</h2><p>Kafaka是基于是JVM运行的程序，所有我们需要先安装JDK或者JRE。<code>(这里就看到了我们的Golang优势！！！！直接编译二进制啊哈哈哈~)</code></p><p><strong>需要Java 1.7或更高版本。因此，您可以如下安装OpenJDK 8</strong></p><pre><code class="shell">sudo yum install -y java-1.13.0-openjdk-devel</code></pre><p><strong>安装了OpenJDK 8后，请使用以下命令验证结果。</strong></p><pre><code class="shell">java -version</code></pre><p><strong>如果一切顺利，输出应与此类似。</strong></p><pre><code class="shelL">openjdk version &quot;1.8.0_252&quot;OpenJDK Runtime Environment (build 1.8.0_252-b09)OpenJDK 64-Bit Server VM (build 25.252-b09, mixed mode)</code></pre><p><strong>最后，设置JAVA_HOME环境变量。</strong></p><pre><code class="shell">echo &quot;JAVA_HOME=$(readlink -f /usr/bin/java | sed &quot;s:bin/java::&quot;)&quot; | sudo tee -a /etc/profilesource /etc/profile</code></pre><p><strong>安装Kafka</strong></p><pre><code class="shell">wget https://downloads.apache.org/kafka/2.4.1/kafka_2.12-2.4.1.tgz</code></pre><p><strong>解压到opt目录</strong></p><pre><code class="SHELL"> tar -xvf kafka_2.12-2.4.1.tgz -C /opt/</code></pre><p>进入Kafka目录</p><p><code>cd /opt/kafka_2.11-0.9.0.1</code><br>启动Zookeeper服务器</p><p><code>bin/zookeeper-server-start.sh -daemon config/zookeeper.properties</code></p><p>修改Kafka服务器的配置</p><p> <code>vi bin/kafka-server-start.sh</code></p><p>根据您的特定系统参数调整内存使用量。</p><p><code>export KAFKA_HEAP_OPTS=&quot;-Xmx1G -Xms1G&quot;</code></p><p>替换为：</p><p><code>export KAFKA_HEAP_OPTS=&quot;-Xmx256M -Xms128M&quot;</code></p><p>保存退出：</p><p><code>:wq</code></p><p>启动Kafka服务器</p><p><code>bin/kafka-server-start.sh config/server.properties</code></p><p>如果一切顺利，您将看到一些有关Kafka服务器状态的消息，最后一条将显示：</p><p><code>INFO [Kafka Server 0], started (kafka.server.KafkaServer)</code></p><p>这意味着您已经启动了Kafka服务器。</p><p>在新的SSH连接中创建主题“测试”</p><p>打开一个新的SSH连接，使用以下命令创建主题“ test”：</p><pre><code class="shell">cd /opt/kafka_2.11-0.9.0.1bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic test</code></pre><p>您可以使用以下命令查看主题：</p><pre><code class="shell">bin/kafka-topics.sh --list --zookeeper localhost:2181</code></pre><p>在我们的例子中，输出将显示为：</p><pre><code class="shell">test</code></pre><p>使用主题“测试”生成消息</p><pre><code class="shell">bin/kafka-console-producer.sh --broker-list localhost:9092 </code></pre><p><code>--topic test</code><br>使用上面的命令，您可以根据需要输入任意数量的消息，例如：</p><pre><code class="shell">Welcome aboard!Bonjour!</code></pre><p>如果您收到与”WARN Error while fetching metadata with correlation id”输入消息时类似的错误，则需要server.properties使用以下信息更新文件：</p><pre><code class="shell">port = 9092advertised.host.name = localhost </code></pre><p>打开第三个SSH连接，然后运行以下命令：</p><pre><code class="shell">cd /opt/kafka_2.11-0.9.0.1bin/kafka-console-consumer.sh --zookeeper localhost:9092 --topic test --from-beginning</code></pre><ul><li>您先前生成的消息将显示在第三个SSH连接中。当然，如果您现在从第二个SSH连接输入更多消息，您将立即在第三个SSH连接上看到它们。</li></ul><p>最后，您可以在每个SSH连接上按Ctrl + C组合键以停止这些脚本。</p>]]></content>
+    
+    
+    
+    <tags>
+      
+      <tag>Centos7</tag>
+      
+      <tag>Linux</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>NSQ之弹射起步</title>
     <link href="/2020/05/19/NSQ%E4%B9%8B%E5%BC%B9%E5%B0%84%E8%B5%B7%E6%AD%A5/"/>
     <url>/2020/05/19/NSQ%E4%B9%8B%E5%BC%B9%E5%B0%84%E8%B5%B7%E6%AD%A5/</url>
