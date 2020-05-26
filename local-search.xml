@@ -4,6 +4,27 @@
   
   
   <entry>
+    <title>VsCode服务器Web搭建</title>
+    <link href="/2020/05/26/VsCode%E6%9C%8D%E5%8A%A1%E5%99%A8Web%E6%90%AD%E5%BB%BA/"/>
+    <url>/2020/05/26/VsCode%E6%9C%8D%E5%8A%A1%E5%99%A8Web%E6%90%AD%E5%BB%BA/</url>
+    
+    <content type="html"><![CDATA[<p><img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1gf5z665ly1j30dc06o74k.jpg" srcset="/img/loading.gif" alt=""></p><blockquote><p>在我们开发调试程序的时候我们的一些程序部署在服务器上运行，但是很多配置文件，这样我们修改起来比较麻烦，使用我们可以通过vscode服务器版本进行开发。</p></blockquote><h2 id="开始安装"><a href="#开始安装" class="headerlink" title="开始安装"></a>开始安装</h2><p>安装可以通过这个<code>https://github.com/cdr/code-server</code>仓库上面的文件来。</p><p><strong>根据自己对应的系统版本安装</strong></p><h3 id="Debian-Ubuntu"><a href="#Debian-Ubuntu" class="headerlink" title="Debian, Ubuntu"></a>Debian, Ubuntu</h3><pre><code class="shell">curl -sSOL https://github.com/cdr/code-server/releases/download/v3.3.1/code-server_3.3.1_amd64.debsudo dpkg -i code-server_3.3.1_amd64.debsystemctl --user enable --now code-server# Now visit http://127.0.0.1:8080. Your password is in ~/.config/code-server/config.yaml</code></pre><h3 id="Fedora-Red-Hat-SUSE"><a href="#Fedora-Red-Hat-SUSE" class="headerlink" title="Fedora, Red Hat, SUSE"></a>Fedora, Red Hat, SUSE</h3><pre><code class="shell">curl -sSOL https://github.com/cdr/code-server/releases/download/v3.3.1/code-server-3.3.1-amd64.rpmsudo yum install -y code-server-3.3.1-amd64.rpmsystemctl --user enable --now code-server# Now visit http://127.0.0.1:8080. Your password is in ~/.config/code-server/config.yaml</code></pre><h3 id="Arch-Linux"><a href="#Arch-Linux" class="headerlink" title="Arch Linux"></a>Arch Linux</h3><pre><code class="shell"># Installs code-server from the AUR using yay.yay -S code-serversystemctl --user enable --now code-server# Now visit http://127.0.0.1:8080. Your password is in ~/.config/code-server/config.yaml# Installs code-server from the AUR with plain makepkg.git clone https://aur.archlinux.org/code-server.gitcd code-servermakepkg -sisystemctl --user enable --now code-server</code></pre><p>默认访问地址: <code>http://127.0.0.1:8080</code>. 默认密码配置:<code>~/.config/code-server/config.yaml</code></p>]]></content>
+    
+    
+    
+    <tags>
+      
+      <tag>Linux</tag>
+      
+      <tag>vscode</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>Azure上安装Kafka</title>
     <link href="/2020/05/25/Azure%E4%B8%8A%E5%AE%89%E8%A3%85Kafka/"/>
     <url>/2020/05/25/Azure%E4%B8%8A%E5%AE%89%E8%A3%85Kafka/</url>
