@@ -18,7 +18,7 @@
   <meta name="description" content="一个乐于分享技术和知识的程序员博客.">
   <meta name="author" content="Ding Shuo">
   <meta name="keywords" content="爱代码,爱折腾,Java,Go,Golang,Linux,程序员,iByte">
-  <title>归档 - 💗Love code, love toss | iByte📚</title>
+  <title>Code-Server搭建 - 💗Love code, love toss | iByte📚</title>
 
   <link  rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/5.12.1/css/all.min.css" />
 <link  rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/css/bootstrap.min.css" />
@@ -44,7 +44,7 @@
 
 
 <body>
-  <header style="height: 80vh;">
+  <header style="height: 70vh;">
     <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
   <div class="container">
     <a class="navbar-brand"
@@ -111,7 +111,7 @@
   </div>
 </nav>
 
-    <div class="view intro-2" id="background" parallax=true
+    <div class="view intro-2" id="background" false
          style="background: url('/img/default.png') no-repeat center center;
            background-size: cover;">
       <div class="full-bg-img">
@@ -121,6 +121,40 @@
               
             </span>
 
+            
+              
+                <p class="mt-3 post-meta">
+                  <i class="fas fa-calendar-alt" aria-hidden="true"></i>
+                  星期二, 五月 26日 2020, 5:14 下午
+                </p>
+              
+
+              <p class="mt-1">
+                
+                  
+                  <span class="post-meta">
+                    <i class="far fa-chart-bar"></i>
+                    548 字
+                  </span>
+                
+
+                
+                  
+                  <span class="post-meta">
+                      <i class="far fa-clock"></i>
+                      2 分钟
+                  </span>
+                
+
+                
+                  <!-- 不蒜子统计文章PV -->
+                  
+                  <span id="busuanzi_container_page_pv" class="post-meta" style="display: none">
+                    <i class="far fa-eye" aria-hidden="true"></i>
+                    <span id="busuanzi_value_page_pv"></span> 次
+                  </span>
+                
+              </p>
             
           </div>
 
@@ -132,59 +166,141 @@
 
   <main>
     
-      <div class="container nopadding-md">
-        <div class="py-5 z-depth-3" id="board">
-          
-          <div class="container">
-            <div class="row">
-              <div class="col-12 col-md-10 m-auto">
-                
-
-<div class="list-group">
-  <p class="h4">共计 16 篇文章</p>
-  <hr>
-  
-    
       
-      <p class="h5">2020</p>
-    
-    <a href="/2020/04/22/Go%E4%B9%8Bgoroutine%E6%B5%85%E5%85%A5%E4%BA%86%E8%A7%A3/" class="list-group-item list-group-item-action">
-      <span class="archive-post-title">Go之goroutine浅入了解</span>
-      <span style="float: right;">04-22</span>
-    </a>
-  
-    
-    <a href="/2020/03/13/Mac%E4%B8%8A%E9%85%8D%E7%BD%AEGolang%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83/" class="list-group-item list-group-item-action">
-      <span class="archive-post-title">Mac上配置Golang开发环境</span>
-      <span style="float: right;">03-13</span>
-    </a>
-  
-    
-    <a href="/2020/03/08/Hexo%E9%9B%86%E6%88%90gitalk%E8%AF%84%E8%AE%BA%E7%BB%84%E4%BB%B6/" class="list-group-item list-group-item-action">
-      <span class="archive-post-title">Hexo集成gitalk评论组件</span>
-      <span style="float: right;">03-08</span>
-    </a>
-  
-</div>
 
-  <nav aria-label="index posts navigation">
-    <span class="pagination pg-blue justify-content-center mt-5" id="pagination">
-      <a class="extend prev" rel="prev" href="/archives/page/4/"><i class="fas fa-angle-double-left"></i></a><a class="page-number" href="/archives/">1</a><span class="space">&hellip;</span><a class="page-number" href="/archives/page/3/">3</a><a class="page-number" href="/archives/page/4/">4</a><span class="page-number current">5</span><a class="page-number" href="/archives/page/6/">6</a><a class="extend next" rel="next" href="/archives/page/6/"><i class="fas fa-angle-double-right"></i></a>
-    </span>
-  </nav>
-  
-  <script>
-    for (ele of document.getElementById("pagination").getElementsByClassName("page-number")) {
-      ele.href += '#board';
-    }
-  </script>
+<div class="container-fluid">
+  <div class="row">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-md">
+      <div class="py-5 z-depth-3" id="board">
+        <div class="post-content mx-auto" id="post">
+          
+          <div class="markdown-body">
+            <p><img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1gf5z665ly1j30dc06o74k.jpg" srcset="/img/loading.gif" alt=""></p>
+<blockquote>
+<p>在我们开发调试程序的时候我们的一些程序部署在服务器上运行，但是很多配置文件，这样我们修改起来比较麻烦，使用我们可以通过vscode服务器版本进行开发。</p>
+</blockquote>
+<h2 id="开始安装"><a href="#开始安装" class="headerlink" title="开始安装"></a>开始安装</h2><p>安装可以通过这个<code>https://github.com/cdr/code-server</code>仓库上面的文件来。</p>
+<p><strong>根据自己对应的系统版本安装</strong></p>
+<h3 id="Debian-Ubuntu"><a href="#Debian-Ubuntu" class="headerlink" title="Debian, Ubuntu"></a>Debian, Ubuntu</h3><pre><code class="shell">curl -sSOL https://github.com/cdr/code-server/releases/download/v3.3.1/code-server_3.3.1_amd64.deb
+sudo dpkg -i code-server_3.3.1_amd64.deb
+systemctl --user enable --now code-server
+# Now visit http://127.0.0.1:8080. Your password is in ~/.config/code-server/config.yaml</code></pre>
+<h3 id="Fedora-Red-Hat-SUSE"><a href="#Fedora-Red-Hat-SUSE" class="headerlink" title="Fedora, Red Hat, SUSE"></a>Fedora, Red Hat, SUSE</h3><pre><code class="shell">curl -sSOL https://github.com/cdr/code-server/releases/download/v3.3.1/code-server-3.3.1-amd64.rpm
+sudo yum install -y code-server-3.3.1-amd64.rpm
+systemctl --user enable --now code-server
+# Now visit http://127.0.0.1:8080. Your password is in ~/.config/code-server/config.yaml</code></pre>
+<h3 id="Arch-Linux"><a href="#Arch-Linux" class="headerlink" title="Arch Linux"></a>Arch Linux</h3><pre><code class="shell"># Installs code-server from the AUR using yay.
+yay -S code-server
+systemctl --user enable --now code-server
+# Now visit http://127.0.0.1:8080. Your password is in ~/.config/code-server/config.yaml
+# Installs code-server from the AUR with plain makepkg.
+git clone https://aur.archlinux.org/code-server.git
+cd code-server
+makepkg -si
+systemctl --user enable --now code-server</code></pre>
+<p>默认访问地址: <code>http://127.0.0.1:8080</code>. 默认密码配置:<code>~/.config/code-server/config.yaml</code></p>
+<h3 id="Firewall-wall-setting-port"><a href="#Firewall-wall-setting-port" class="headerlink" title="Firewall wall setting port"></a>Firewall wall setting port</h3><p>  <code>–permanent</code> 添加这个参数防火墙永久生效. </p>
+<p>  默认端口是 8080.</p>
+<pre><code>$: firewall-cmd --zone=public --add-port=8080/tcp --permanent
 
+# 刷新配置
 
-              </div>
-            </div>
+$: firewall-cmd --reload</code></pre><h3 id="Edit-config-file"><a href="#Edit-config-file" class="headerlink" title="Edit config file"></a>Edit config file</h3><p>  使用 <code>vi</code> 打开配置文件<code>~/.config/code-server/config.yaml</code></p>
+<pre><code>$: vi  ~/.config/code-server/config.yaml</code></pre><p>  使用键盘<code>i</code> 键进入insert模式</p>
+<pre><code> bind-addr: 127.0.0.1:8080       
+ auth: password
+ password: 706039b9fa******b847cec0c
+ cert: false
+ ~
+ ~
+ -- INSERT --</code></pre><p>   <code>bind-addr</code> 修改为 <code>0.0.0.0:8080</code> (这样就可以远程访问)<br>   <code>password</code> 修改为你自定义密码</p>
+<p>  按键盘上的<code>esc</code> 键输入<code>: wq</code> 保存退出文件</p>
+<h3 id="启动服务器"><a href="#启动服务器" class="headerlink" title="启动服务器"></a>启动服务器</h3><pre><code>$: /usr/bin/code-server</code></pre><p>output:</p>
+<pre><code>[root@vultr ~]# /usr/bin/code-server
+info  Wrote default config file to ~/.config/code-server/config.yaml
+info  Using config file ~/.config/code-server/config.yaml
+info  Using user-data-dir ~/.local/share/code-server
+info  code-server 3.3.1 6f1309795e1cb930edba68cdc7c3dcaa01da0ab3
+info  HTTP server listening on http://127.0.0.1:8080
+info      - Using password from ~/.config/code-server/config.yaml
+info      - To disable use `--auth none`
+info    - Not serving HTTPS</code></pre><p><strong>不需要密码可以添加 <code>-auth none</code> 参数</strong></p>
+<p> <strong>or  start by designated user</strong></p>
+<pre><code>$:  systemctl --user enable --now code-server</code></pre><p> <strong>now visit <a href="http://your.server.address:8080" target="_blank" rel="noopener">http://your.server.address:8080</a>. Good luck~</strong></p>
+
+            <hr>
+          </div>
+          <br>
+          <div>
+            <p>
+            
+              
+              <span>
+                <i class="iconfont icon-tag"></i>
+                
+                  <a class="hover-with-bg" href="/tags/Linux/">Linux</a>
+                
+                  <a class="hover-with-bg" href="/tags/vscode/">vscode</a>
+                
+              </span>
+            
+            </p>
+            
+              <p class="note note-warning">本博客所有文章除特别声明外，均采用 <a href="https://zh.wikipedia.org/wiki/Wikipedia:CC_BY-SA_3.0%E5%8D%8F%E8%AE%AE%E6%96%87%E6%9C%AC" target="_blank" rel="nofollow noopener noopener">CC BY-SA 3.0协议</a> 。转载请注明出处！</p>
+            
           </div>
         </div>
       </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container">
+        <div id="toc">
+  <p class="h5"><i class="far fa-list-alt"></i>&nbsp;目录</p>
+  <div id="tocbot"></div>
+</div>
+      </div>
+    
+  </div>
+</div>
+
+<!-- custom -->
+
+
+<!-- Comments -->
+<div class="col-lg-7 mx-auto nopadding-md">
+  <div class="container comments mx-auto" id="comments">
+    
+      <br><br>
+      
+      
+  <div id="gitalk-container"></div>
+  <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+  <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/blueimp-md5@2.11.1/js/md5.min.js"></script>
+  <script type="text/javascript">
+    var gitalk = new Gitalk({
+      clientID: '22468b62936ae5d73a0b',
+      clientSecret: '918618299c36b1430a0501cd976b82fd48cbfe0c',
+      repo: 'higker.github.io',
+      owner: 'higker',
+      admin: 'higker',
+      id: md5(location.pathname),
+      language: 'zh-CN',
+      perPage: 15,
+      pagerDirection: 'last',
+      createIssueManually: 'true',
+      distractionFreeMode: 'false'
+    });
+
+    gitalk.render('gitalk-container')
+  </script>
+
+
+    
+  </div>
+</div>
+
     
   </main>
 
@@ -275,6 +391,52 @@
 
 
 
+  
+  <script  src="https://cdn.staticfile.org/tocbot/4.10.0/tocbot.min.js" ></script>
+  <script>
+    $(document).ready(function () {
+      var navHeight = $('#navbar').height();
+      var toc = $('#toc');
+      var main = $('main');
+      var tocT = navHeight + (toc.offset().top - main.offset().top);
+      var tocLimMin = main.offset().top - navHeight;
+      var tocLimMax = $('#comments').offset().top - navHeight;
+      $(window).scroll(function () {
+        var scroH = document.body.scrollTop + document.documentElement.scrollTop;
+        if (tocLimMin <= scroH && scroH <= tocLimMax) {
+          toc.css({
+            'display': 'block',
+            'position': 'fixed',
+            'top': tocT,
+          });
+        } else if (scroH <= tocLimMin) {
+          toc.css({
+            'position': '',
+            'top': '',
+          });
+        } else if (scroH > tocLimMax) {
+          toc.css('display', 'none');
+        }
+      });
+      tocbot.init({
+        tocSelector: '#tocbot',
+        contentSelector: '.post-content',
+        headingSelector: 'h1,h2,h3,h4,h5,h6',
+        linkClass: 'tocbot-link',
+        activeLinkClass: 'tocbot-active-link',
+        listClass: 'tocbot-list',
+        isCollapsedClass: 'tocbot-is-collapsed',
+        collapsibleClass: 'tocbot-is-collapsible',
+        scrollSmooth: true,
+      });
+      if ($('.toc-list-item').length > 0) {
+        $('#toc > p').css('visibility', 'visible');
+      }
+    });
+  </script>
+
+
+
 
 
 
@@ -303,7 +465,7 @@
     var typed = new Typed('#subtitle', {
       strings: [
         '  ',
-        "归档&nbsp;",
+        "Code-Server搭建&nbsp;",
       ],
       cursorChar: "_",
       typeSpeed: 120,

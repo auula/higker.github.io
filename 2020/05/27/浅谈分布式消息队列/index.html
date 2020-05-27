@@ -18,7 +18,7 @@
   <meta name="description" content="一个乐于分享技术和知识的程序员博客.">
   <meta name="author" content="Ding Shuo">
   <meta name="keywords" content="爱代码,爱折腾,Java,Go,Golang,Linux,程序员,iByte">
-  <title>归档 - 💗Love code, love toss | iByte📚</title>
+  <title>浅谈分布式消息队列 - 💗Love code, love toss | iByte📚</title>
 
   <link  rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/5.12.1/css/all.min.css" />
 <link  rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/css/bootstrap.min.css" />
@@ -44,7 +44,7 @@
 
 
 <body>
-  <header style="height: 80vh;">
+  <header style="height: 70vh;">
     <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
   <div class="container">
     <a class="navbar-brand"
@@ -111,7 +111,7 @@
   </div>
 </nav>
 
-    <div class="view intro-2" id="background" parallax=true
+    <div class="view intro-2" id="background" false
          style="background: url('/img/default.png') no-repeat center center;
            background-size: cover;">
       <div class="full-bg-img">
@@ -121,6 +121,40 @@
               
             </span>
 
+            
+              
+                <p class="mt-3 post-meta">
+                  <i class="fas fa-calendar-alt" aria-hidden="true"></i>
+                  星期三, 五月 27日 2020, 10:09 晚上
+                </p>
+              
+
+              <p class="mt-1">
+                
+                  
+                  <span class="post-meta">
+                    <i class="far fa-chart-bar"></i>
+                    742 字
+                  </span>
+                
+
+                
+                  
+                  <span class="post-meta">
+                      <i class="far fa-clock"></i>
+                      2 分钟
+                  </span>
+                
+
+                
+                  <!-- 不蒜子统计文章PV -->
+                  
+                  <span id="busuanzi_container_page_pv" class="post-meta" style="display: none">
+                    <i class="far fa-eye" aria-hidden="true"></i>
+                    <span id="busuanzi_value_page_pv"></span> 次
+                  </span>
+                
+              </p>
             
           </div>
 
@@ -132,59 +166,121 @@
 
   <main>
     
-      <div class="container nopadding-md">
-        <div class="py-5 z-depth-3" id="board">
-          
-          <div class="container">
-            <div class="row">
-              <div class="col-12 col-md-10 m-auto">
-                
-
-<div class="list-group">
-  <p class="h4">共计 16 篇文章</p>
-  <hr>
-  
-    
       
-      <p class="h5">2020</p>
-    
-    <a href="/2020/04/22/Go%E4%B9%8Bgoroutine%E6%B5%85%E5%85%A5%E4%BA%86%E8%A7%A3/" class="list-group-item list-group-item-action">
-      <span class="archive-post-title">Go之goroutine浅入了解</span>
-      <span style="float: right;">04-22</span>
-    </a>
-  
-    
-    <a href="/2020/03/13/Mac%E4%B8%8A%E9%85%8D%E7%BD%AEGolang%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83/" class="list-group-item list-group-item-action">
-      <span class="archive-post-title">Mac上配置Golang开发环境</span>
-      <span style="float: right;">03-13</span>
-    </a>
-  
-    
-    <a href="/2020/03/08/Hexo%E9%9B%86%E6%88%90gitalk%E8%AF%84%E8%AE%BA%E7%BB%84%E4%BB%B6/" class="list-group-item list-group-item-action">
-      <span class="archive-post-title">Hexo集成gitalk评论组件</span>
-      <span style="float: right;">03-08</span>
-    </a>
-  
-</div>
 
-  <nav aria-label="index posts navigation">
-    <span class="pagination pg-blue justify-content-center mt-5" id="pagination">
-      <a class="extend prev" rel="prev" href="/archives/page/4/"><i class="fas fa-angle-double-left"></i></a><a class="page-number" href="/archives/">1</a><span class="space">&hellip;</span><a class="page-number" href="/archives/page/3/">3</a><a class="page-number" href="/archives/page/4/">4</a><span class="page-number current">5</span><a class="page-number" href="/archives/page/6/">6</a><a class="extend next" rel="next" href="/archives/page/6/"><i class="fas fa-angle-double-right"></i></a>
-    </span>
-  </nav>
-  
-  <script>
-    for (ele of document.getElementById("pagination").getElementsByClassName("page-number")) {
-      ele.href += '#board';
-    }
-  </script>
+<div class="container-fluid">
+  <div class="row">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-md">
+      <div class="py-5 z-depth-3" id="board">
+        <div class="post-content mx-auto" id="post">
+          
+          <div class="markdown-body">
+            <h2 id="什么消息队列"><a href="#什么消息队列" class="headerlink" title="什么消息队列?"></a>什么消息队列?</h2><p><code>消息队列</code>这个词陌生人一听挖槽好牛逼啊好高大上啊，消息队列，一般我们会简称它为<code>MQ(Message Queue)</code>，嗯，就是很直白的简写。</p>
+<ul>
+<li>队列是一种先进先出的数据结构</li>
+<li>消息队列<code>（MessageQueue）</code>是一种应用间的通信方式</li>
+<li>消息可以非常简单，比如只包含文本字符串，也可以更复杂，可能包含嵌入对象</li>
+<li>消息发送者 可以发送一个消息而无须等待响应。消息发送者 将消息发送到一条 虚拟的通道（主题 或 队列）上，消息接收者 则 订阅 或是 监听 该通道。一条信息可能最终转发给 一个或多个 消息接收者，这些接收者都无需对 消息发送者 做出 同步回应。整个过程都是 异步的。</li>
+</ul>
+<blockquote>
+<p>维基百科上是这么描述的: 在计算机科学中，消息队列是一种进程间通信或同一进程的不同线程间的通信方式，软件的贮列用来处理一系列的输入，通常是来自用户。消息队列提供了异步的通信协议，每一个贮列中的纪录包含详细说明的数据，包含发生的时间，输入设备的种类，以及特定的输入参数，也就是说：消息的发送者和接收者不需要同时与消息队列交互。</p>
+</blockquote>
+<p><strong>我<code>SDing</code>个人总结就是: 消息队列是一个先进先出的数据存储容器，它可以帮助不同的程序之间进行数据的通讯。</strong></p>
+<h2 id="发布-订阅"><a href="#发布-订阅" class="headerlink" title="发布/订阅"></a>发布/订阅</h2><p>说到消息队列就要说到消息队列里面最常用的方式就是发布和订阅了。</p>
+<blockquote>
+<p>维基百科上是这么描述的: 在软件架构中，发布-订阅是一种消息范式，消息的发送者不会将消息直接发送给特定的接收者。而是将发布的消息分为不同的类别，无需了解哪些订阅者可能存在。同样的，订阅者可以表达对一个或多个类别的兴趣，只接收感兴趣的消息，无需了解哪些发布者存在。 发布/订阅是消息队列范式的兄弟，通常是更大的面向消息中间件系统的一部分。 </p>
+</blockquote>
+<ul>
+<li>消息生产者 （生产消息发送到消息队列里）</li>
+<li>消息中间件 <code>(Kafka,Nsq,RabbitMQ)</code></li>
+<li>消息消费者  (从消息队列里面拿取订阅的消息)</li>
+</ul>
+<p><strong>我的一句话总结就是: 消息发布和订阅就是一个架构方式，可以在不同的程序之间获取自己需要的数据，解耦模式。</strong><br><img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1gf7dwe18p4j30hj07vaaq.jpg" srcset="/img/loading.gif" alt="消息队列"></p>
+<p>可以看看这个倔金的文章:<a href="https://juejin.im/post/5cb025fb5188251b0351ef48" target="_blank" rel="noopener">消息队列解耦</a></p>
+<h2 id="常见中间件"><a href="#常见中间件" class="headerlink" title="常见中间件"></a>常见中间件</h2><ol>
+<li>NSQ</li>
+<li>Kafka</li>
+<li>ZeroMQ</li>
+<li>MetaMQ</li>
+<li>RabbitMQ</li>
+<li>RocketMQ</li>
+<li>ActiveMQ</li>
+<li>Redis (主要是缓存但是也可以实现消息队列)</li>
+</ol>
 
-
-              </div>
-            </div>
+            <hr>
+          </div>
+          <br>
+          <div>
+            <p>
+            
+              
+              <span>
+                <i class="iconfont icon-tag"></i>
+                
+                  <a class="hover-with-bg" href="/tags/Go/">Go</a>
+                
+                  <a class="hover-with-bg" href="/tags/%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97/">消息队列</a>
+                
+              </span>
+            
+            </p>
+            
+              <p class="note note-warning">本博客所有文章除特别声明外，均采用 <a href="https://zh.wikipedia.org/wiki/Wikipedia:CC_BY-SA_3.0%E5%8D%8F%E8%AE%AE%E6%96%87%E6%9C%AC" target="_blank" rel="nofollow noopener noopener">CC BY-SA 3.0协议</a> 。转载请注明出处！</p>
+            
           </div>
         </div>
       </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container">
+        <div id="toc">
+  <p class="h5"><i class="far fa-list-alt"></i>&nbsp;目录</p>
+  <div id="tocbot"></div>
+</div>
+      </div>
+    
+  </div>
+</div>
+
+<!-- custom -->
+
+
+<!-- Comments -->
+<div class="col-lg-7 mx-auto nopadding-md">
+  <div class="container comments mx-auto" id="comments">
+    
+      <br><br>
+      
+      
+  <div id="gitalk-container"></div>
+  <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+  <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/blueimp-md5@2.11.1/js/md5.min.js"></script>
+  <script type="text/javascript">
+    var gitalk = new Gitalk({
+      clientID: '22468b62936ae5d73a0b',
+      clientSecret: '918618299c36b1430a0501cd976b82fd48cbfe0c',
+      repo: 'higker.github.io',
+      owner: 'higker',
+      admin: 'higker',
+      id: md5(location.pathname),
+      language: 'zh-CN',
+      perPage: 15,
+      pagerDirection: 'last',
+      createIssueManually: 'true',
+      distractionFreeMode: 'false'
+    });
+
+    gitalk.render('gitalk-container')
+  </script>
+
+
+    
+  </div>
+</div>
+
     
   </main>
 
@@ -275,6 +371,52 @@
 
 
 
+  
+  <script  src="https://cdn.staticfile.org/tocbot/4.10.0/tocbot.min.js" ></script>
+  <script>
+    $(document).ready(function () {
+      var navHeight = $('#navbar').height();
+      var toc = $('#toc');
+      var main = $('main');
+      var tocT = navHeight + (toc.offset().top - main.offset().top);
+      var tocLimMin = main.offset().top - navHeight;
+      var tocLimMax = $('#comments').offset().top - navHeight;
+      $(window).scroll(function () {
+        var scroH = document.body.scrollTop + document.documentElement.scrollTop;
+        if (tocLimMin <= scroH && scroH <= tocLimMax) {
+          toc.css({
+            'display': 'block',
+            'position': 'fixed',
+            'top': tocT,
+          });
+        } else if (scroH <= tocLimMin) {
+          toc.css({
+            'position': '',
+            'top': '',
+          });
+        } else if (scroH > tocLimMax) {
+          toc.css('display', 'none');
+        }
+      });
+      tocbot.init({
+        tocSelector: '#tocbot',
+        contentSelector: '.post-content',
+        headingSelector: 'h1,h2,h3,h4,h5,h6',
+        linkClass: 'tocbot-link',
+        activeLinkClass: 'tocbot-active-link',
+        listClass: 'tocbot-list',
+        isCollapsedClass: 'tocbot-is-collapsed',
+        collapsibleClass: 'tocbot-is-collapsible',
+        scrollSmooth: true,
+      });
+      if ($('.toc-list-item').length > 0) {
+        $('#toc > p').css('visibility', 'visible');
+      }
+    });
+  </script>
+
+
+
 
 
 
@@ -303,7 +445,7 @@
     var typed = new Typed('#subtitle', {
       strings: [
         '  ',
-        "归档&nbsp;",
+        "浅谈分布式消息队列&nbsp;",
       ],
       cursorChar: "_",
       typeSpeed: 120,
