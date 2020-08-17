@@ -142,7 +142,7 @@
                   
                   <span class="post-meta">
                       <i class="far fa-clock"></i>
-                      65 分钟
+                      66 分钟
                   </span>
                 
 
@@ -1662,8 +1662,24 @@ LPUSH: 145560.41 requests per second</code></pre>
 <td>设置KEY多久到期/秒</td>
 </tr>
 <tr>
-<td><code>TTL KEY</code></td>
-<td>查看KEY还有多久到期</td>
+<td><code>INCR KEY</code></td>
+<td>KEY值自加1</td>
+</tr>
+<tr>
+<td><code>DECR KEY</code></td>
+<td>KEY值自减1</td>
+</tr>
+<tr>
+<td><code>INCRBY KEY 5</code></td>
+<td>设置KEY值自增量</td>
+</tr>
+<tr>
+<td><code>GETRANGE KEY 1 5</code></td>
+<td>获取KEY指定区间的值</td>
+</tr>
+<tr>
+<td><code>STRLEN KEY</code></td>
+<td>获取KEY值长度</td>
 </tr>
 </tbody></table>
 
