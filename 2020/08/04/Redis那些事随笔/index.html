@@ -183,17 +183,17 @@
 </blockquote>
 <h3 id="关系型数据库理论-ACID"><a href="#关系型数据库理论-ACID" class="headerlink" title="关系型数据库理论 - ACID"></a>关系型数据库理论 - ACID</h3><p>ACID，是指数据库管理系统（DBMS）在写入或更新资料的过程中，为保证事务（transaction）是正确可靠的，所必须具备的四个特性：原子性（atomicity，或称不可分割性）、一致性（consistency）、隔离性（isolation，又称独立性）、持久性（durability）。</p>
 <ul>
-<li>A – Atomicity – 原子性</li>
+<li><strong>A – Atomicity – 原子性</strong></li>
 </ul>
 <p>一个事务（transaction）中的所有操作，要么全部完成，要么全部不完成，不会结束在中间某个环节。事务在执行过程中发生错误，会被回滚（Rollback）到事务开始前的状态，就像这个事务从来没有被执行过一样。</p>
 <ul>
-<li>C – Consistency – 一致性<br>在事务开始之前和事务结束以后，数据库的完整性没有被破坏。这表示写入的资料必须完全符合所有的预设规则，这包含资料的精确度、串联性以及后续数据库可以自发性地完成预定的工作。</li>
-<li>I – Isolation – 隔离性<br>数据库允许多个并发事务同时对其数据进行读写和修改的能力，隔离性可以防止多个事务并发执行时由于交叉执行而导致数据的不一致。事务隔离分为不同级别，包括读未提交（Read uncommitted）、读提交（read committed）、可重复读（repeatable read）和串行化（Serializable）。</li>
-<li>D – Durability – 持久性<br>事务处理结束后，对数据的修改是永久的，即便系统故障也不会丢失。</li>
+<li><strong>C – Consistency – 一致性</strong><br>在事务开始之前和事务结束以后，数据库的完整性没有被破坏。这表示写入的资料必须完全符合所有的预设规则，这包含资料的精确度、串联性以及后续数据库可以自发性地完成预定的工作。</li>
+<li><strong>I – Isolation – 隔离性</strong><br>数据库允许多个并发事务同时对其数据进行读写和修改的能力，隔离性可以防止多个事务并发执行时由于交叉执行而导致数据的不一致。事务隔离分为不同级别，包括读未提交（Read uncommitted）、读提交（read committed）、可重复读（repeatable read）和串行化（Serializable）。</li>
+<li><strong>D – Durability – 持久性</strong><br>事务处理结束后，对数据的修改是永久的，即便系统故障也不会丢失。</li>
 </ul>
-<p>2.优缺点<br>关系型数据库的优势：</p>
+<p><strong>关系型数据库的优势：</strong></p>
 <p>容易理解: 二维表结构是非常贴近逻辑世界一个概念，关系模型相对网状、层次等其他模型来说更容易理解；<br>保持数据的一致性（事务处理）<br>由于以标准化为前提，数据更新的开销很小（相同的字段基本上都只有一处）<br>支持SQL，可以进行Join等复杂查询（几张表之间）</p>
-<p>关系型数据库的不足：</p>
+<p><strong>关系型数据库的不足：</strong></p>
 <ul>
 <li><p>不擅长的处理</p>
 </li>
@@ -207,22 +207,31 @@
 </li>
 </ul>
 <h3 id="非关系数据库"><a href="#非关系数据库" class="headerlink" title="非关系数据库"></a>非关系数据库</h3><p>结构不固定，集合内数据字段可以不一样，自由度高，可以减少一些时间和空间的开销。</p>
-<p>四大类型：</p>
+<p><strong>四大类型：</strong></p>
 <ul>
 <li>键值对存储（key-value）</li>
 <li>文档存储（document store：mongodb）</li>
 <li>基于列的数据库（column-oriented），还有就是图形数据库（graph database）</li>
 </ul>
 <p><strong>主流的非关系型数据库有 Redis、MongoDB、Cloudant</strong></p>
-<p>特征：</p>
+<p><strong>特征：</strong></p>
 <ul>
 <li>1、使用键值对存储数据；</li>
 <li>2、分布式；</li>
 <li>3、一般不支持ACID特性；</li>
 <li>4、非关系型数据库严格上不是一种数据库，应该是一种数据结构化存储方法的集合。</li>
 </ul>
-<p>优点：<br>1、无需经过sql层的解析，读写性能很高；<br>2、基于键值对，数据没有耦合性，容易扩展；<br>3、存储数据的格式：nosql的存储格式是key,value形式、文档形式、图片形式等等，文档形式、图片形式等等，而关系型数据库则只支持基础类型。</p>
-<p>缺点：<br>1、不提供sql支持，学习和使用成本较高；<br>2、无事务处理，附加功能bi和报表等支持也不好；</p>
+<p><strong>优点：</strong></p>
+<ul>
+<li>1、无需经过sql层的解析，读写性能很高；</li>
+<li>2、基于键值对，数据没有耦合性，容易扩展；</li>
+<li>3、存储数据的格式：nosql的存储格式是key,value形式、文档形式、图片形式等等，文档形式、图片形式等等，而关系型数据库则只支持基础类型。</li>
+</ul>
+<p><strong>缺点：</strong></p>
+<ul>
+<li>1、不提供sql支持，学习和使用成本较高；</li>
+<li>2、无事务处理，附加功能bi和报表等支持也不好；</li>
+</ul>
 <h3 id="数据类型"><a href="#数据类型" class="headerlink" title="数据类型"></a>数据类型</h3><ul>
 <li>String: 字符串</li>
 <li>Hash: 散列</li>
