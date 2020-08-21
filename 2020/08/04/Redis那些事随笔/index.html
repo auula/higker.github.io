@@ -134,7 +134,7 @@
                   
                   <span class="post-meta">
                     <i class="far fa-chart-bar"></i>
-                    1.7k 字
+                    1.8k 字
                   </span>
                 
 
@@ -226,6 +226,8 @@
 <li>1、无需经过sql层的解析，读写性能很高；</li>
 <li>2、基于键值对，数据没有耦合性，容易扩展；</li>
 <li>3、存储数据的格式：nosql的存储格式是key,value形式、文档形式、图片形式等等，文档形式、图片形式等等，而关系型数据库则只支持基础类型。</li>
+<li>4、不支持ACID</li>
+<li>5、不是标准的SQL</li>
 </ul>
 <p><strong>缺点：</strong></p>
 <ul>
@@ -237,9 +239,10 @@
 <li>Hash: 散列 (哈希表)</li>
 <li>List: 列表  (链表)</li>
 <li>Set: 集合</li>
-<li>ZSet: 有序集合</li>
+<li>ZSet: 有序不重复集合</li>
 <li>还有新加的里地理位置等类型</li>
 </ul>
+<p><strong>String常用命令例子:<code>set key value [EX seconds|PX milliseconds] [NX|XX] [KEEPTTL]</code></strong><br>| 命令            | 作用                   |<br>| ————— | ———————- |<br>| key             | 存储key名字            |<br>| value           | 就是可以对应的存储的值 |<br>| EX seconds      | 超时时间秒单位         |<br>| PX milliseconds | 过期时间毫秒单位       |<br>| NX              | key不存在才能成功设置  |<br>| XX              | key存储才做更新        |</p>
 <h3 id="特点和缺点"><a href="#特点和缺点" class="headerlink" title="特点和缺点"></a>特点和缺点</h3><ul>
 <li>内存存储，读写操作快</li>
 <li>效率高，可用于高速缓存</li>
