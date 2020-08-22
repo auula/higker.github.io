@@ -134,7 +134,7 @@
                   
                   <span class="post-meta">
                     <i class="far fa-chart-bar"></i>
-                    1.8k 字
+                    2.8k 字
                   </span>
                 
 
@@ -142,7 +142,7 @@
                   
                   <span class="post-meta">
                       <i class="far fa-clock"></i>
-                      6 分钟
+                      10 分钟
                   </span>
                 
 
@@ -290,6 +290,24 @@ redis&gt; get foo
 
 SET: 146198.83 requests per second
 LPUSH: 145560.41 requests per second</code></pre>
+<h3 id="Redis持久化策略"><a href="#Redis持久化策略" class="headerlink" title="Redis持久化策略"></a>Redis持久化策略</h3><ul>
+<li>RDB 通过内存快照形式持久化，把数据保存到一个dump.rdb文件中，保存策略是通过定时备份，在配置文件中修改策略 <code>save second count</code>策略，并且在通过关机命令关机时也会自动保存，可以开启压缩模式。</li>
+<li>AOF 是把在Redis运行中所做写操作的命令通过日志的形式保存在一个文件里，就是命令集合。</li>
+</ul>
+<p><strong>RDB的优点：</strong></p>
+<p>对性能影响最小。如前文所述，Redis在保存RDB快照时会fork出子进程进行，几乎不影响Redis处理客户端请求的效率。每次快照会生成一个完整的数据快照文件，所以可以辅以其他手段保存多个时间点的快照（例如把每天0点的快照备份至其他存储媒介中），作为非常可靠的灾难恢复手段。使用RDB文件进行数据恢复比使用AOF要快很多。</p>
+<p><strong>RDB的缺点：</strong></p>
+<p>快照是定期生成的，所以在Redis crash时或多或少会丢失一部分数据。如果数据集非常大且CPU不够强（比如单核CPU），Redis在fork子进程时可能会消耗相对较长的时间，影响Redis对外提供服务的能力。</p>
+<p><strong>AOF的优点：</strong></p>
+<p>最安全，在启用appendfsync always时，任何已写入的数据都不会丢失，使用在启用appendfsync everysec也至多只会丢失1秒的数据。AOF文件在发生断电等问题时也不会损坏，即使出现了某条日志只写入了一半的情况，也可以使用redis-check-aof工具轻松修复。AOF文件易读，可修改，在进行了某些错误的数据清除操作后，只要AOF文件没有rewrite，就可以把AOF文件备份出来，把错误的命令删除，然后恢复数据。</p>
+<p><strong>AOF的缺点：</strong></p>
+<p>AOF文件通常比RDB文件更大性能消耗比RDB高数据恢复速度比RDB慢</p>
+<p>数据持久化引发的延迟</p>
+<p>Redis的数据持久化工作本身就会带来延迟，需要根据数据的安全级别和性能要求制定合理的持久化策略：</p>
+<p>AOF + fsync always的设置虽然能够绝对确保数据安全，但每个操作都会触发一次fsync，会对Redis的性能有比较明显的影响AOF + fsync every second是比较好的折中方案，每秒fsync一次AOF + fsync never会提供AOF持久化方案下的最优性能使用RDB持久化通常会提供比使用AOF更高的性能，但需要注意RDB的策略配置每一次RDB快照和AOF Rewrite都需要Redis主进程进行fork操作。fork操作本身可能会产生较高的耗时，与CPU和Redis占用的内存大小有关。根据具体的情况合理配置RDB快照和AOF Rewrite时机，避免过于频繁的fork带来的延迟</p>
+<p>Redis在fork子进程时需要将内存分页表拷贝至子进程，以占用了24GB内存的Redis实例为例，共需要拷贝24GB / 4kB * 8 = 48MB的数据。在使用单Xeon 2.27Ghz的物理机上，这一fork操作耗时216ms。</p>
+<p>可以通过INFO命令返回的latest_fork_usec字段查看上一次fork操作的耗时（微秒）</p>
+<p>不过大多数应用场景下，建议至少开启RDB方式的数据持久化。Redis 对于数据备份是非常友好的， 因为你可以在服务器运行的时候对 RDB 文件进行复制： RDB 文件一旦被创建， 就不会进行任何修改。 当服务器要创建一个新的 RDB 文件时， 它先将文件的内容保存在一个临时文件里面， 当临时文件写入完毕时， 程序才使用 rename(2) 原子地用临时文件替换原来的 RDB 文件。</p>
 <h3 id="常用的命令📓"><a href="#常用的命令📓" class="headerlink" title="常用的命令📓"></a>常用的命令📓</h3><table>
 <thead>
 <tr>
