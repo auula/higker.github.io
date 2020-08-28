@@ -308,6 +308,11 @@ LPUSH: 145560.41 requests per second</code></pre>
 <p>Redis在fork子进程时需要将内存分页表拷贝至子进程，以占用了24GB内存的Redis实例为例，共需要拷贝24GB / 4kB * 8 = 48MB的数据。在使用单Xeon 2.27Ghz的物理机上，这一fork操作耗时216ms。</p>
 <p>可以通过INFO命令返回的latest_fork_usec字段查看上一次fork操作的耗时（微秒）</p>
 <p>不过大多数应用场景下，建议至少开启RDB方式的数据持久化。Redis 对于数据备份是非常友好的， 因为你可以在服务器运行的时候对 RDB 文件进行复制： RDB 文件一旦被创建， 就不会进行任何修改。 当服务器要创建一个新的 RDB 文件时， 它先将文件的内容保存在一个临时文件里面， 当临时文件写入完毕时， 程序才使用 rename(2) 原子地用临时文件替换原来的 RDB 文件。</p>
+<h3 id="Redis分布式几种方案"><a href="#Redis分布式几种方案" class="headerlink" title="Redis分布式几种方案"></a>Redis分布式几种方案</h3><ul>
+<li>主从模式</li>
+<li>哨兵模式</li>
+<li>集群模式</li>
+</ul>
 <h3 id="常用的命令📓"><a href="#常用的命令📓" class="headerlink" title="常用的命令📓"></a>常用的命令📓</h3><table>
 <thead>
 <tr>
