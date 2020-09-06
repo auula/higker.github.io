@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/apple-touch-icon.png">
+  <link rel="icon" type="image/png" href="/img/icons8-d-1000.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+  
+  <meta name="description" content="一个乐于分享技术和知识的程序员博客.">
+  <meta name="author" content="Ding Shuo">
+  <meta name="keywords" content="爱代码,爱折腾,Java,Go,Golang,Linux,程序员,iByte">
+  <title>NSQ之弹射起步 - 💗Love code, love toss | iByte📚</title>
+
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/5.12.1/css/all.min.css" />
+<link  rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/css/bootstrap.min.css" />
+<link  rel="stylesheet" href="https://cdn.staticfile.org/mdbootstrap/4.13.0/css/mdb.min.css" />
+<link  rel="stylesheet" href="https://cdn.staticfile.org/github-markdown-css/3.0.1/github-markdown.min.css" />
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1067060_qzomjdt8bmp.css">
+
+
+
+  <link  rel="stylesheet" href="/lib/prettify/tranquil-heart.min.css" />
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+<!-- 自定义样式保持在最底部 -->
+
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>iByte📚</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/">首页</a>
+          </li>
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/archives/">归档</a>
+          </li>
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/categories/">分类</a>
+          </li>
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/tags/">标签</a>
+          </li>
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/about/">关于</a>
+          </li>
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="view intro-2" id="background" false
+         style="background: url('/img/default.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask rgba-black-light flex-center">
+          <div class="container text-center white-text fadeInUp">
+            <span class="h2" id="subtitle">
+              
+            </span>
+
+            
+              
+                <p class="mt-3 post-meta">
+                  <i class="fas fa-calendar-alt" aria-hidden="true"></i>
+                  星期二, 五月 19日 2020, 4:00 下午
+                </p>
+              
+
+              <p class="mt-1">
+                
+                  
+                  <span class="post-meta">
+                    <i class="far fa-chart-bar"></i>
+                    1.3k 字
+                  </span>
+                
+
+                
+                  
+                  <span class="post-meta">
+                      <i class="far fa-clock"></i>
+                      4 分钟
+                  </span>
+                
+
+                
+                  <!-- 不蒜子统计文章PV -->
+                  
+                  <span id="busuanzi_container_page_pv" class="post-meta" style="display: none">
+                    <i class="far fa-eye" aria-hidden="true"></i>
+                    <span id="busuanzi_value_page_pv"></span> 次
+                  </span>
+                
+              </p>
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-md">
+      <div class="py-5 z-depth-3" id="board">
+        <div class="post-content mx-auto" id="post">
+          
+          <div class="markdown-body">
+            <p><img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1gey1a5ssbvj30p00dw77v.jpg" srcset="/img/loading.gif" alt=""></p>
+<h2 id="NSQ是什么？？？"><a href="#NSQ是什么？？？" class="headerlink" title="NSQ是什么？？？"></a><code>NSQ</code>是什么？？？</h2><p><strong><code>NSQ</code>是<code>Go</code>语言编写的一个开源的实时分布式内存消息队列，其性能十分优异。 NSQ的优势有以下优势：</strong></p>
+<ul>
+<li><code>NSQ</code>提倡分布式和分散的拓扑，没有单点故障，支持容错和高可用性，并提供可靠的消息交付保证</li>
+<li><code>NSQ</code>支持横向扩展，没有任何集中式代理。</li>
+<li><code>NSQ</code>易于配置和部署，并且内置了管理界面。</li>
+</ul>
+<h2 id="什么是消息队列"><a href="#什么是消息队列" class="headerlink" title="什么是消息队列?"></a>什么是消息队列?</h2><p>通俗地解释一下消息队列，你想象一个场景：你到报社订阅了一份报纸，报社每日生产一份新报纸，便将新报纸发往邮局并告诉邮局你的地址，邮递员将你的报纸送往你的邮箱，你便可以愉快地阅读今天的时事新闻了。当然，可能一个人订阅了好几家报社，一家报社也可以被多个人订阅。在这个场景中，消息队列就担任了，邮箱、邮局、邮递员的角色。</p>
+<h2 id="消息队列的作用？"><a href="#消息队列的作用？" class="headerlink" title="消息队列的作用？"></a>消息队列的作用？</h2><ul>
+<li>是减少相应所需的时间和削峰</li>
+<li>降低系统耦合性解耦或提升系统的可拓展性）</li>
+</ul>
+<p><strong>如图下场景:</strong><br><img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1gextpsdc8qj313e0u0wja.jpg" srcset="/img/loading.gif" alt="nsq"><br><strong>通过使用消息队列将不同的业务逻辑解耦，降低系统间的耦合，提高系统的健壮性。后续有其他业务要使用订单数据可直接订阅消息队列，提高系统的灵活性。</strong><br><img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1gextqm9slzj30wi0jg409.jpg" srcset="/img/loading.gif" alt="nsq"><br><strong>还可以帮大并发做流量抗压处理，类似秒杀（大秒）等场景下，某一时间可能会产生大量的请求，使用消息队列能够为后端处理请求提供一定的缓冲区，保证后端服务的稳定性。</strong><br><img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1gextrsvl7uj30xc08uwf9.jpg" srcset="/img/loading.gif" alt="nsq"></p>
+<h2 id="开始NSQ弹射起步🚀"><a href="#开始NSQ弹射起步🚀" class="headerlink" title="开始NSQ弹射起步🚀"></a>开始<code>NSQ</code>弹射起步🚀</h2><p><strong>NSQ工作模式👇</strong><br><img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1gexu2qzvroj31480u0792.jpg" srcset="/img/loading.gif" alt="nsq"></p>
+<p><code>Topic</code>和<code>Channel</code><br>每个<code>nsqd</code>实例旨在一次处理多个数据流。这些数据流称为<code>“topics”</code>，一个<code>topic</code>具有1个或多个<code>“channels”</code>。每个<code>channel</code>都会收到<code>topic</code>所有消息的副本，实际上下游的服务是通过对应的<code>channel</code>来消费<code>topic</code>消息。</p>
+<p><code>topic</code>和<code>channel</code>不是预先配置的。<code>topic</code>在首次使用时创建，方法是将其发布到指定<code>topic</code>，或者订阅指定<code>topic</code>上的<code>channel</code>。<code>channel</code>是通过订阅指定的<code>channel</code>在第一次使用时创建的。</p>
+<p><code>topic</code>和<code>channel</code>都相互独立地缓冲数据，防止缓慢的消费者导致其他<code>chennel</code>的积压（同样适用于<code>topic</code>级别）。</p>
+<p><code>channel</code>可以并且通常会连接多个客户端。假设所有连接的客户端都处于准备接收消息的状态，则每条消息将被传递到随机客户端。例如：<br><img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1gexw4g26pog30bo07tjry.gif" srcset="/img/loading.gif" alt="nsq"><br>总而言之，消息是从<code>topic -&gt; channel</code>（每个<code>channel</code>接收该<code>topic</code>的所有消息的副本）多播的，但是从<code>channel -&gt; consumers</code>均匀分布（每个消费者接收该<code>channel</code>的一部分消息）。<br><strong>NSQ接收和发送消息流程</strong><br><img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1gexu6v1zghj30fc07paah.jpg" srcset="/img/loading.gif" alt=""><br><strong>NSQ特性</strong><br>消息默认不持久化，可以配置成持久化模式。nsq采用的方式时内存+硬盘的模式，当内存到达一定程度时就会将数据持久化到硬盘。</p>
+<ul>
+<li>如果将<code>--mem-queue-size</code>设置为0，所有的消息将会存储到磁盘。</li>
+<li>服务器重启时也会将当时在内存中的消息持久化。</li>
+<li>每条消息至少传递一次。</li>
+<li>消息不保证有序。</li>
+</ul>
+<h3 id="开始使用NSQ"><a href="#开始使用NSQ" class="headerlink" title="开始使用NSQ"></a>开始使用<code>NSQ</code></h3><p>首先我们需要安装NSQ的<code>nsqlookupd</code>组件也就是<code>nsqd</code>程序,浏览器打开<a href="https://nsq.io/deployment/installing.html" target="_blank" rel="noopener">官方下载页面</a>即可得到你对应操作系统的程序。<br><strong><code>nsqd</code>是一个守护进程，它接收、排队并向客户端发送消息。</strong></p>
+<h3 id="nsqlookupd组件"><a href="#nsqlookupd组件" class="headerlink" title="nsqlookupd组件"></a><code>nsqlookupd</code>组件</h3><p><code>nsqlookupd</code>相当于集群的管理员所以我们首先启动它</p>
+<pre><code class="shell">$ nsqlookupd</code></pre>
+<h3 id="nsqd组件"><a href="#nsqd组件" class="headerlink" title="nsqd组件"></a><code>nsqd</code>组件</h3><p>启动 <code>nsqd</code>，它相当于集群下的节点，是主要干活的</p>
+<pre><code class="shell">$ nsqd --lookupd-tcp-address=127.0.0.1:4160</code></pre>
+<p><strong><code>nsqlookupd</code>是维护所有<code>nsqd</code>状态、提供服务发现的守护进程。它能为消费者查找特定<code>topic</code>下的<code>nsqd</code>提供了运行时的自动发现服务。 它不维持持久状态，也不需要与任何其他<code>nsqlookupd</code>实例协调以满足查询。因此根据你系统的冗余要求尽可能多地部署<code>nsqlookupd</code>节点。它们消耗的资源很少，可以与其他服务共存。我们的建议是为每个数据中心运行至少3个集群。</strong></p>
+<h3 id="nsqadmin组件"><a href="#nsqadmin组件" class="headerlink" title="nsqadmin组件"></a><code>nsqadmin</code>组件</h3><p>一个实时监控集群状态、执行各种管理任务的Web管理平台。 启动<code>nsqadmin</code>，指定<code>nsqlookupd</code>地址:</p>
+<pre><code class="shell"> ./nsqadmin -lookupd-http-address=127.0.0.1:4161</code></pre>
+<p>我们可以使用浏览器打开<code>http://127.0.0.1:4171/</code>访问如下管理界面。</p>
+<p><img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1gexvk9mzt7j31c00u0b29.jpg" srcset="/img/loading.gif" alt="nsq"></p>
+<h3 id="测试消息"><a href="#测试消息" class="headerlink" title="测试消息"></a>测试消息</h3><p>发送一条消息</p>
+<pre><code class="shell">$ curl -d &#39;hello world 1&#39; &#39;http://127.0.0.1:4151/pub?topic=test&#39;</code></pre>
+<p>即可看到收到了消息<br><img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1gexvqdbqrrj31740u0k9x.jpg" srcset="/img/loading.gif" alt="nsq"><br>把消息写到硬盘的文件里</p>
+<pre><code class="shell">$ nsq_to_file --topic=test --output-dir=/tmp --lookupd-http-address=127.0.0.1:4161</code></pre>
+<p><img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1gexvtcplxej312i0u07c5.jpg" srcset="/img/loading.gif" alt="nsq"><br>文件内容<br><img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1gexvukbk33j31ja0m614z.jpg" srcset="/img/loading.gif" alt="nsq"></p>
+<p><strong>好了如果对你有帮助你可以到本博客的关于页面添加我微信或者在Github联系我，一起推动Golang在中国这片土地生根发芽长成大树！！！Good luck!</strong></p>
+
+            <hr>
+          </div>
+          <br>
+          <div>
+            <p>
+            
+              
+              <span>
+                <i class="iconfont icon-tag"></i>
+                
+                  <a class="hover-with-bg" href="/tags/Go/">Go</a>
+                
+                  <a class="hover-with-bg" href="/tags/NSQ/">NSQ</a>
+                
+                  <a class="hover-with-bg" href="/tags/%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97/">消息队列</a>
+                
+              </span>
+            
+            </p>
+            
+              <p class="note note-warning">本博客所有文章除特别声明外，均采用 <a href="https://zh.wikipedia.org/wiki/Wikipedia:CC_BY-SA_3.0%E5%8D%8F%E8%AE%AE%E6%96%87%E6%9C%AC" target="_blank" rel="nofollow noopener noopener">CC BY-SA 3.0协议</a> 。转载请注明出处！</p>
+            
+          </div>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container">
+        <div id="toc">
+  <p class="h5"><i class="far fa-list-alt"></i>&nbsp;目录</p>
+  <div id="tocbot"></div>
+</div>
+      </div>
+    
+  </div>
+</div>
+
+<!-- custom -->
+
+
+<!-- Comments -->
+<div class="col-lg-7 mx-auto nopadding-md">
+  <div class="container comments mx-auto" id="comments">
+    
+      <br><br>
+      
+      
+  <div id="gitalk-container"></div>
+  <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+  <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/blueimp-md5@2.11.1/js/md5.min.js"></script>
+  <script type="text/javascript">
+    var gitalk = new Gitalk({
+      clientID: '22468b62936ae5d73a0b',
+      clientSecret: '918618299c36b1430a0501cd976b82fd48cbfe0c',
+      repo: 'higker.github.io',
+      owner: 'higker',
+      admin: 'higker',
+      id: md5(location.pathname),
+      language: 'zh-CN',
+      perPage: 15,
+      pagerDirection: 'last',
+      createIssueManually: 'true',
+      distractionFreeMode: 'false'
+    });
+
+    gitalk.render('gitalk-container')
+  </script>
+
+
+    
+  </div>
+</div>
+
+    
+  </main>
+
+  
+    <a class="z-depth-1" id="scroll-top-button" href="#" role="button">
+      <i class="fa fa-chevron-up scroll-top-arrow" aria-hidden="true"></i>
+    </a>
+  
+
+  
+    <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+  
+
+  
+
+  
+
+  <!--
+ * @Author: BinScholl
+ * @Date: 2020-03-07 11:18:30
+ * @LastEditors: BinScholl
+ * @LastEditTime: 2020-03-07 11:58:12
+ * @Description: 
+ * @Github: https://github.com/BinScholl
+ -->
+<footer class="mt-5">
+  <div class="text-center py-3">
+    <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><b>Hexo</b></a>
+    <i class="iconfont icon-love"></i>
+    <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"> <b>Fluid</b></a>
+
+    
+  <div>
+    
+      <!-- 不蒜子统计PV -->
+      
+      <span id="busuanzi_container_site_pv" style="display: none">
+      总访问量 <span id="busuanzi_value_site_pv"></span> 次
+    </span>
+    
+    
+      <!-- 不蒜子统计UV -->
+      
+      <span id="busuanzi_container_site_uv" style="display: none">
+      总访客数 <span id="busuanzi_value_site_uv"></span> 人
+    </span>
+    
+  </div>
+
+
+    
+
+    <!-- cnzz Analytics icon -->
+    
+    <p>iByte is maintained by Deen.</p>
+  </div>
+</footer>
+
+<!-- SCRIPTS -->
+<script  src="https://cdn.staticfile.org/jquery/3.4.1/jquery.min.js" ></script>
+<script  src="https://cdn.staticfile.org/popper.js/1.16.1/umd/popper.min.js" ></script>
+<script  src="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/js/bootstrap.min.js" ></script>
+<script  src="https://cdn.staticfile.org/mdbootstrap/4.13.0/js/mdb.min.js" ></script>
+<script  src="/js/main.js" ></script>
+
+
+  <script  src="/js/lazyload.js" ></script>
+
+
+
+  
+  <script  src="https://cdn.staticfile.org/tocbot/4.10.0/tocbot.min.js" ></script>
+  <script>
+    $(document).ready(function () {
+      var navHeight = $('#navbar').height();
+      var toc = $('#toc');
+      var main = $('main');
+      var tocT = navHeight + (toc.offset().top - main.offset().top);
+      var tocLimMin = main.offset().top - navHeight;
+      var tocLimMax = $('#comments').offset().top - navHeight;
+      $(window).scroll(function () {
+        var scroH = document.body.scrollTop + document.documentElement.scrollTop;
+        if (tocLimMin <= scroH && scroH <= tocLimMax) {
+          toc.css({
+            'display': 'block',
+            'position': 'fixed',
+            'top': tocT,
+          });
+        } else if (scroH <= tocLimMin) {
+          toc.css({
+            'position': '',
+            'top': '',
+          });
+        } else if (scroH > tocLimMax) {
+          toc.css('display', 'none');
+        }
+      });
+      tocbot.init({
+        tocSelector: '#tocbot',
+        contentSelector: '.post-content',
+        headingSelector: 'h1,h2,h3,h4,h5,h6',
+        linkClass: 'tocbot-link',
+        activeLinkClass: 'tocbot-active-link',
+        listClass: 'tocbot-list',
+        isCollapsedClass: 'tocbot-is-collapsed',
+        collapsibleClass: 'tocbot-is-collapsible',
+        scrollSmooth: true,
+      });
+      if ($('.toc-list-item').length > 0) {
+        $('#toc > p').css('visibility', 'visible');
+      }
+    });
+  </script>
+
+
+
+
+
+
+
+  <script defer src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+<!-- Plugins -->
+
+
+
+  <script  src="https://cdn.staticfile.org/prettify/188.0.0/prettify.min.js" ></script>
+  <script>
+    $(document).ready(function () {
+      $('pre').addClass('prettyprint  ');
+      prettyPrint();
+    })
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/typed.js/2.0.11/typed.min.js" ></script>
+  <script>
+    var typed = new Typed('#subtitle', {
+      strings: [
+        '  ',
+        "NSQ之弹射起步&nbsp;",
+      ],
+      cursorChar: "_",
+      typeSpeed: 120,
+      loop: true,
+    });
+    typed.stop();
+    $(document).ready(function () {
+      $(".typed-cursor").addClass("h2");
+      typed.start();
+    });
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/anchor-js/4.2.2/anchor.min.js" ></script>
+  <script>
+    anchors.options = {
+      placement: "right",
+      visible: "hover",
+      
+      icon: "✨"
+      
+    };
+    var el = "h1,h2,h3,h4,h5,h6".split(",");
+    var res = [];
+    for (item of el) {
+      res.push(".markdown-body > " + item)
+    }
+    anchors.add(res.join(", "))
+  </script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+  <script>
+    var path = "/local-search.xml";
+    var inputArea = document.querySelector("#local-search-input");
+    inputArea.onclick = function () {
+      getSearchFile(path);
+      this.onclick = null
+    }
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.js" ></script>
+  <script>
+    $("#post img:not(.no-zoom img, img[no-zoom])").each(
+      function () {
+        var element = document.createElement("a");
+        $(element).attr("data-fancybox", "images");
+        $(element).attr("href", $(this).attr("src"));
+        $(this).wrap(element);
+      }
+    );
+  </script>
+
+
+
+
+
+  
+  
+    <script type="text/javascript">
+      //定义获取词语下标
+      var a_idx = 0;
+      jQuery(document).ready(function ($) {
+        //点击body时触发事件
+        $("body").click(function (e) {
+          //需要显示的词语
+          var a = new Array("富强", "民主", "文明", "和谐", "自由", "平等", "公正", "法治", "爱国", "敬业", "诚信", "友善");
+          //设置词语给span标签
+          var $i = $("<span/>").text(a[a_idx]);
+          //下标等于原来下标+1  余 词语总数
+          a_idx = (a_idx + 1) % a.length;
+          //获取鼠标指针的位置，分别相对于文档的左和右边缘。
+          //获取x和y的指针坐标
+          var x = e.pageX, y = e.pageY;
+          //在鼠标的指针的位置给$i定义的span标签添加css样式
+          $i.css({
+            "z-index": 999,
+            "top": y - 20,
+            "left": x,
+            "position": "absolute",
+            "font-weight": "bold",
+            "color": rand_color()
+          });
+          // 随机颜色
+          function rand_color() {
+            return "rgb(" + ~~(255 * Math.random()) + "," + ~~(255 * Math.random()) + "," + ~~(255 * Math.random()) + ")"
+          }
+          //在body添加这个标签
+          $("body").append($i);
+          //animate() 方法执行 CSS 属性集的自定义动画。
+          //该方法通过CSS样式将元素从一个状态改变为另一个状态。CSS属性值是逐渐改变的，这样就可以创建动画效果。
+          //详情请看http://www.w3school.com.cn/jquery/effect_animate.asp
+          $i.animate({
+            //将原来的位置向上移动180
+            "top": y - 180,
+            "opacity": 0
+            //1500动画的速度
+          }, 1500, function () {
+            //时间到了自动删除
+            $i.remove();
+          });
+        });
+      })
+      ;
+    </script>
+  
+
+
+
+
+
+
+
+</body>
+</html>

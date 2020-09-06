@@ -1,0 +1,700 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/apple-touch-icon.png">
+  <link rel="icon" type="image/png" href="/img/icons8-d-1000.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+  
+  <meta name="description" content="一个乐于分享技术和知识的程序员博客.">
+  <meta name="author" content="Ding Shuo">
+  <meta name="keywords" content="爱代码,爱折腾,Java,Go,Golang,Linux,程序员,iByte">
+  <title>Testing of Golang - 💗Love code, love toss | iByte📚</title>
+
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/5.12.1/css/all.min.css" />
+<link  rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/css/bootstrap.min.css" />
+<link  rel="stylesheet" href="https://cdn.staticfile.org/mdbootstrap/4.13.0/css/mdb.min.css" />
+<link  rel="stylesheet" href="https://cdn.staticfile.org/github-markdown-css/3.0.1/github-markdown.min.css" />
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1067060_qzomjdt8bmp.css">
+
+
+
+  <link  rel="stylesheet" href="/lib/prettify/tranquil-heart.min.css" />
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+<!-- 自定义样式保持在最底部 -->
+
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>iByte📚</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/">首页</a>
+          </li>
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/archives/">归档</a>
+          </li>
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/categories/">分类</a>
+          </li>
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/tags/">标签</a>
+          </li>
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/about/">关于</a>
+          </li>
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="view intro-2" id="background" false
+         style="background: url('/img/default.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask rgba-black-light flex-center">
+          <div class="container text-center white-text fadeInUp">
+            <span class="h2" id="subtitle">
+              
+            </span>
+
+            
+              
+                <p class="mt-3 post-meta">
+                  <i class="fas fa-calendar-alt" aria-hidden="true"></i>
+                  星期五, 五月 15日 2020, 4:42 下午
+                </p>
+              
+
+              <p class="mt-1">
+                
+                  
+                  <span class="post-meta">
+                    <i class="far fa-chart-bar"></i>
+                    1.3k 字
+                  </span>
+                
+
+                
+                  
+                  <span class="post-meta">
+                      <i class="far fa-clock"></i>
+                      5 分钟
+                  </span>
+                
+
+                
+                  <!-- 不蒜子统计文章PV -->
+                  
+                  <span id="busuanzi_container_page_pv" class="post-meta" style="display: none">
+                    <i class="far fa-eye" aria-hidden="true"></i>
+                    <span id="busuanzi_value_page_pv"></span> 次
+                  </span>
+                
+              </p>
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-md">
+      <div class="py-5 z-depth-3" id="board">
+        <div class="post-content mx-auto" id="post">
+          
+          <div class="markdown-body">
+            <h2 id="GoLang的单元测试"><a href="#GoLang的单元测试" class="headerlink" title="GoLang的单元测试"></a>GoLang的单元测试</h2><p>在我们写代码的过程中要养成一个写注释和写单元测试的习惯，这样可以提高我们的代码健壮性和可读性，今天我们就来介绍一下<code>golang</code>的<code>test</code>这个工具。</p>
+<h2 id="go-test命令介绍"><a href="#go-test命令介绍" class="headerlink" title="go test命令介绍"></a><code>go test</code>命令介绍</h2><p>Go语言中的测试依赖<code>go test</code>命令。编写测试代码和编写普通的Go代码过程是类似的，并不需要学习新的语法、规则或工具。</p>
+<p><code>go test</code>命令是一个按照一定约定和组织的测试代码的驱动程序。在包目录内，所有以<code>_test.go</code>为后缀名的源代码文件都是<code>go test</code>测试的一部分，不会被<code>go build</code>编译到最终的可执行文件中。</p>
+<p>在<code>*_test.go</code>文件中有三种类型的函数，单元测试函数、基准测试函数和示例函数。</p>
+<table>
+<thead>
+<tr>
+<th>类型</th>
+<th>格式</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>测试函数</td>
+<td>函数名前缀为<code>Test</code></td>
+<td>测试程序的一些逻辑行为是否正确</td>
+</tr>
+<tr>
+<td>基准函数</td>
+<td>函数名前缀为<code>Benchmark</code></td>
+<td>测试函数的性能</td>
+</tr>
+<tr>
+<td>示例函数</td>
+<td>函数名前缀为<code>Example</code></td>
+<td>为文档提供示例文档</td>
+</tr>
+</tbody></table>
+<h2 id="测试函数"><a href="#测试函数" class="headerlink" title="测试函数"></a>测试函数</h2><blockquote>
+<p>基本测试的一些方法说明在文档里:<a href="https://studygolang.com/static/pkgdoc/pkg/testing.htm" target="_blank" rel="noopener">https://studygolang.com/static/pkgdoc/pkg/testing.htm</a></p>
+</blockquote>
+<p><strong>本测试的函数<code>math.go</code></strong></p>
+<pre><code class="go">// Copyright (c) 2020 HigKer
+// Open Source: MIT License
+// Author: SDing &lt;deen.job@qq.com&gt;
+// Date: 2020/5/15 - 4:16 下午
+
+package lets_36_testing
+
+func init() {
+    Math := make(map[string]func(n, m int) int, 4)
+    Math[&quot;add&quot;] = Add
+    Math[&quot;sub&quot;] = Sub
+    Math[&quot;multi&quot;] = Multi
+    Math[&quot;div&quot;] = Div
+}
+
+func Add(n, m int) int {
+    return n + m
+}
+func Sub(n, m int) int {
+    return n - m
+}
+func Multi(n, m int) int {
+    return n * m
+}
+func Div(n, m int) int {
+    return n / m
+}
+</code></pre>
+<p><strong>测试函数<code>math_test.go</code>遵循官方命名规范</strong></p>
+<pre><code class="go">// Copyright (c) 2020 HigKer
+// Open Source: MIT License
+// Author: SDing &lt;deen.job@qq.com&gt;
+// Date: 2020/5/15 - 4:21 下午
+
+package lets_36_testing
+
+import &quot;testing&quot;
+
+func TestMath(t *testing.T) {
+    // 自定义测试结构体
+    type MathCase struct {
+        n, m, result int
+    }
+    // 自定义子测试map
+    testGroup := map[string]MathCase{
+        &quot;add&quot;:   {1, 2, 3},
+        &quot;sub&quot;:   {3, 1, 2},
+        &quot;multi&quot;: {3, 2, 6},
+        &quot;div&quot;:   {6, 2, 3},
+    }
+    // 测试执行函数
+    for name, mathCase := range testGroup {
+        t.Run(name, func(t *testing.T) {
+            s := -1
+            switch name {
+            case &quot;add&quot;:
+                s = Add(mathCase.n, mathCase.m)
+            case &quot;sub&quot;:
+                s = Sub(mathCase.n, mathCase.m)
+            case &quot;multi&quot;:
+                s = Multi(mathCase.n, mathCase.m)
+            case &quot;div&quot;:
+                s = Div(mathCase.n, mathCase.m)
+            default:
+                t.Fatalf(&quot;No executable testing name :%s&quot;, name)
+            }
+            if mathCase.result != s {
+                t.Fatalf(&quot; add computer result error， want %d , got %d&quot;, mathCase.result, s)
+            }
+        })
+    }
+}
+</code></pre>
+<p><strong>在自己的terminal输入<code>go test</code>即可看到测试结果</strong></p>
+<pre><code class="go">=== RUN   TestMath
+=== RUN   TestMath/sub
+=== RUN   TestMath/multi
+=== RUN   TestMath/div
+=== RUN   TestMath/add
+--- PASS: TestMath (0.00s)
+    --- PASS: TestMath/sub (0.00s)
+    --- PASS: TestMath/multi (0.00s)
+    --- PASS: TestMath/div (0.00s)
+    --- PASS: TestMath/add (0.00s)
+PASS
+ok      command-line-arguments  0.004s
+</code></pre>
+<blockquote>
+<p>如果是子测试可以加 <code>-run=funcName/TestCase</code>来进行子测试</p>
+</blockquote>
+<h2 id="测试覆盖率"><a href="#测试覆盖率" class="headerlink" title="测试覆盖率"></a>测试覆盖率</h2><p>测试覆盖率是你的代码被测试套件覆盖的百分比。通常我们使用的都是语句的覆盖率，也就是在测试中至少被运行一次的代码占总代码的比例。Go提供内置功能来检查你的代码覆盖率。我们可以使用<code>go test -cover</code>来查看测试覆盖率，例如：</p>
+<pre><code class="go">$: go test -cover
+PASS
+coverage: 100.0% of statements
+ok      Lets_Go/lets_36_testing 0.004s</code></pre>
+<p><strong>可以看到我的代码测试覆盖率是百分之百的~</strong></p>
+<p>Go还提供了一个额外的<code>go test -cover -coverprofile</code>参数，用来将覆盖率相关的记录信息输出到一个文件里:</p>
+<pre><code class="go">$: go test -cover -coverprofile=testInfo.out
+[50 50 50 50 50 50]
+PASS
+coverage: 100.0% of statements
+ok      Lets_Go/lets_36_testing 0.005s
+</code></pre>
+<p><strong>这样我们就把测试的信息输出到一个指定的<code>testInfo.out</code>文件里面了,然后我们通过go语言内置<code>tool</code>工具就可以生产可视化的代码覆盖率检查视图了，使用命令<code>go tool cover -html=testInfo.out</code>例如:</strong><br><img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1getd9mki8bj313u0u0dve.jpg" srcset="/img/loading.gif" alt=""></p>
+<h2 id="基准测试"><a href="#基准测试" class="headerlink" title="基准测试"></a>基准测试</h2><p>基准测试是给你的程序做运行性能的测试,以Benchmark为前缀，需要一个*testing.B类型的参数b，基准测试必须要执行b.N次，这样的测试才有对照性，b.N的值是系统根据实际情况去调整的，从而保证测试的稳定性。</p>
+<pre><code class="go">func BenchmarkAdd(b *testing.B) {
+    for i:=0;i&lt;b.N;i++ {
+        Add(i, b.N)
+        //fmt.Println(add)
+    }
+}</code></pre>
+<p><strong>增加<code>-bench</code>参数，所以我们通过执行<code>go test -bench=Add</code>命令执行基准测试，输出结果如下</strong></p>
+<pre><code class="go">$: go test -bench=Add
+goos: darwin
+goarch: amd64
+pkg: Lets_Go/lets_36_testing
+BenchmarkAdd-4          1000000000               0.281 ns/op
+PASS
+ok      Lets_Go/lets_36_testing 0.320s</code></pre>
+<p><strong>其中BenchmarkAdd-4表示对Split函数进行基准测试，数字4表示GOMAXPROCS的值，这个对于并发基准测试很重要。10000000和203ns/op表示每次调用Add函数耗时0.281ns，这个结果是10000000次调用的平均值。</strong></p>
+<p>还可以添加<code>-benchmem</code>参数来查看被查内存使用情况:</p>
+<pre><code class="go">$: go test -bench=Add -benchmem
+goos: darwin
+goarch: amd64
+pkg: Lets_Go/lets_36_testing
+BenchmarkAdd-4          1000000000               0.292 ns/op           0 B/op          0 allocs/op
+PASS
+ok      Lets_Go/lets_36_testing 0.335s
+</code></pre>
+<p><strong><code>0 B/op</code>表示每次操作内存分配了<code>0</code>字节，<code>0 allocs/op</code>则表示每次操作进行了<code>0</code>次内存分配,因为我写的就是一个简单加法函数😁</strong></p>
+<blockquote>
+<p>Good luck😜~</p>
+</blockquote>
+
+            <hr>
+          </div>
+          <br>
+          <div>
+            <p>
+            
+              
+              <span>
+                <i class="iconfont icon-tag"></i>
+                
+                  <a class="hover-with-bg" href="/tags/Go/">Go</a>
+                
+                  <a class="hover-with-bg" href="/tags/Golang/">Golang</a>
+                
+              </span>
+            
+            </p>
+            
+              <p class="note note-warning">本博客所有文章除特别声明外，均采用 <a href="https://zh.wikipedia.org/wiki/Wikipedia:CC_BY-SA_3.0%E5%8D%8F%E8%AE%AE%E6%96%87%E6%9C%AC" target="_blank" rel="nofollow noopener noopener">CC BY-SA 3.0协议</a> 。转载请注明出处！</p>
+            
+          </div>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container">
+        <div id="toc">
+  <p class="h5"><i class="far fa-list-alt"></i>&nbsp;目录</p>
+  <div id="tocbot"></div>
+</div>
+      </div>
+    
+  </div>
+</div>
+
+<!-- custom -->
+
+
+<!-- Comments -->
+<div class="col-lg-7 mx-auto nopadding-md">
+  <div class="container comments mx-auto" id="comments">
+    
+      <br><br>
+      
+      
+  <div id="gitalk-container"></div>
+  <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+  <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/blueimp-md5@2.11.1/js/md5.min.js"></script>
+  <script type="text/javascript">
+    var gitalk = new Gitalk({
+      clientID: '22468b62936ae5d73a0b',
+      clientSecret: '918618299c36b1430a0501cd976b82fd48cbfe0c',
+      repo: 'higker.github.io',
+      owner: 'higker',
+      admin: 'higker',
+      id: md5(location.pathname),
+      language: 'zh-CN',
+      perPage: 15,
+      pagerDirection: 'last',
+      createIssueManually: 'true',
+      distractionFreeMode: 'false'
+    });
+
+    gitalk.render('gitalk-container')
+  </script>
+
+
+    
+  </div>
+</div>
+
+    
+  </main>
+
+  
+    <a class="z-depth-1" id="scroll-top-button" href="#" role="button">
+      <i class="fa fa-chevron-up scroll-top-arrow" aria-hidden="true"></i>
+    </a>
+  
+
+  
+    <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+  
+
+  
+
+  
+
+  <!--
+ * @Author: BinScholl
+ * @Date: 2020-03-07 11:18:30
+ * @LastEditors: BinScholl
+ * @LastEditTime: 2020-03-07 11:58:12
+ * @Description: 
+ * @Github: https://github.com/BinScholl
+ -->
+<footer class="mt-5">
+  <div class="text-center py-3">
+    <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><b>Hexo</b></a>
+    <i class="iconfont icon-love"></i>
+    <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"> <b>Fluid</b></a>
+
+    
+  <div>
+    
+      <!-- 不蒜子统计PV -->
+      
+      <span id="busuanzi_container_site_pv" style="display: none">
+      总访问量 <span id="busuanzi_value_site_pv"></span> 次
+    </span>
+    
+    
+      <!-- 不蒜子统计UV -->
+      
+      <span id="busuanzi_container_site_uv" style="display: none">
+      总访客数 <span id="busuanzi_value_site_uv"></span> 人
+    </span>
+    
+  </div>
+
+
+    
+
+    <!-- cnzz Analytics icon -->
+    
+    <p>iByte is maintained by Deen.</p>
+  </div>
+</footer>
+
+<!-- SCRIPTS -->
+<script  src="https://cdn.staticfile.org/jquery/3.4.1/jquery.min.js" ></script>
+<script  src="https://cdn.staticfile.org/popper.js/1.16.1/umd/popper.min.js" ></script>
+<script  src="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/js/bootstrap.min.js" ></script>
+<script  src="https://cdn.staticfile.org/mdbootstrap/4.13.0/js/mdb.min.js" ></script>
+<script  src="/js/main.js" ></script>
+
+
+  <script  src="/js/lazyload.js" ></script>
+
+
+
+  
+  <script  src="https://cdn.staticfile.org/tocbot/4.10.0/tocbot.min.js" ></script>
+  <script>
+    $(document).ready(function () {
+      var navHeight = $('#navbar').height();
+      var toc = $('#toc');
+      var main = $('main');
+      var tocT = navHeight + (toc.offset().top - main.offset().top);
+      var tocLimMin = main.offset().top - navHeight;
+      var tocLimMax = $('#comments').offset().top - navHeight;
+      $(window).scroll(function () {
+        var scroH = document.body.scrollTop + document.documentElement.scrollTop;
+        if (tocLimMin <= scroH && scroH <= tocLimMax) {
+          toc.css({
+            'display': 'block',
+            'position': 'fixed',
+            'top': tocT,
+          });
+        } else if (scroH <= tocLimMin) {
+          toc.css({
+            'position': '',
+            'top': '',
+          });
+        } else if (scroH > tocLimMax) {
+          toc.css('display', 'none');
+        }
+      });
+      tocbot.init({
+        tocSelector: '#tocbot',
+        contentSelector: '.post-content',
+        headingSelector: 'h1,h2,h3,h4,h5,h6',
+        linkClass: 'tocbot-link',
+        activeLinkClass: 'tocbot-active-link',
+        listClass: 'tocbot-list',
+        isCollapsedClass: 'tocbot-is-collapsed',
+        collapsibleClass: 'tocbot-is-collapsible',
+        scrollSmooth: true,
+      });
+      if ($('.toc-list-item').length > 0) {
+        $('#toc > p').css('visibility', 'visible');
+      }
+    });
+  </script>
+
+
+
+
+
+
+
+  <script defer src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+<!-- Plugins -->
+
+
+
+  <script  src="https://cdn.staticfile.org/prettify/188.0.0/prettify.min.js" ></script>
+  <script>
+    $(document).ready(function () {
+      $('pre').addClass('prettyprint  ');
+      prettyPrint();
+    })
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/typed.js/2.0.11/typed.min.js" ></script>
+  <script>
+    var typed = new Typed('#subtitle', {
+      strings: [
+        '  ',
+        "Testing of Golang&nbsp;",
+      ],
+      cursorChar: "_",
+      typeSpeed: 120,
+      loop: true,
+    });
+    typed.stop();
+    $(document).ready(function () {
+      $(".typed-cursor").addClass("h2");
+      typed.start();
+    });
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/anchor-js/4.2.2/anchor.min.js" ></script>
+  <script>
+    anchors.options = {
+      placement: "right",
+      visible: "hover",
+      
+      icon: "✨"
+      
+    };
+    var el = "h1,h2,h3,h4,h5,h6".split(",");
+    var res = [];
+    for (item of el) {
+      res.push(".markdown-body > " + item)
+    }
+    anchors.add(res.join(", "))
+  </script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+  <script>
+    var path = "/local-search.xml";
+    var inputArea = document.querySelector("#local-search-input");
+    inputArea.onclick = function () {
+      getSearchFile(path);
+      this.onclick = null
+    }
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.js" ></script>
+  <script>
+    $("#post img:not(.no-zoom img, img[no-zoom])").each(
+      function () {
+        var element = document.createElement("a");
+        $(element).attr("data-fancybox", "images");
+        $(element).attr("href", $(this).attr("src"));
+        $(this).wrap(element);
+      }
+    );
+  </script>
+
+
+
+
+
+  
+  
+    <script type="text/javascript">
+      //定义获取词语下标
+      var a_idx = 0;
+      jQuery(document).ready(function ($) {
+        //点击body时触发事件
+        $("body").click(function (e) {
+          //需要显示的词语
+          var a = new Array("富强", "民主", "文明", "和谐", "自由", "平等", "公正", "法治", "爱国", "敬业", "诚信", "友善");
+          //设置词语给span标签
+          var $i = $("<span/>").text(a[a_idx]);
+          //下标等于原来下标+1  余 词语总数
+          a_idx = (a_idx + 1) % a.length;
+          //获取鼠标指针的位置，分别相对于文档的左和右边缘。
+          //获取x和y的指针坐标
+          var x = e.pageX, y = e.pageY;
+          //在鼠标的指针的位置给$i定义的span标签添加css样式
+          $i.css({
+            "z-index": 999,
+            "top": y - 20,
+            "left": x,
+            "position": "absolute",
+            "font-weight": "bold",
+            "color": rand_color()
+          });
+          // 随机颜色
+          function rand_color() {
+            return "rgb(" + ~~(255 * Math.random()) + "," + ~~(255 * Math.random()) + "," + ~~(255 * Math.random()) + ")"
+          }
+          //在body添加这个标签
+          $("body").append($i);
+          //animate() 方法执行 CSS 属性集的自定义动画。
+          //该方法通过CSS样式将元素从一个状态改变为另一个状态。CSS属性值是逐渐改变的，这样就可以创建动画效果。
+          //详情请看http://www.w3school.com.cn/jquery/effect_animate.asp
+          $i.animate({
+            //将原来的位置向上移动180
+            "top": y - 180,
+            "opacity": 0
+            //1500动画的速度
+          }, 1500, function () {
+            //时间到了自动删除
+            $i.remove();
+          });
+        });
+      })
+      ;
+    </script>
+  
+
+
+
+
+
+
+
+</body>
+</html>
