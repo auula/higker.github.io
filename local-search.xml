@@ -96,9 +96,9 @@
     
     <tags>
       
-      <tag>Centos7</tag>
-      
       <tag>Linux</tag>
+      
+      <tag>Centos7</tag>
       
     </tags>
     
@@ -180,9 +180,9 @@
     
     <tags>
       
-      <tag>Go</tag>
-      
       <tag>Golang</tag>
+      
+      <tag>Go</tag>
       
     </tags>
     
@@ -268,9 +268,9 @@
     
     <tags>
       
-      <tag>Go</tag>
-      
       <tag>golang</tag>
+      
+      <tag>Go</tag>
       
     </tags>
     
@@ -291,9 +291,9 @@
       
       <tag>Golang</tag>
       
-      <tag>goroutine</tag>
-      
       <tag>channel</tag>
+      
+      <tag>goroutine</tag>
       
     </tags>
     
@@ -312,13 +312,13 @@
     
     <tags>
       
-      <tag>go</tag>
-      
-      <tag>golang</tag>
+      <tag>channel</tag>
       
       <tag>goroutine</tag>
       
-      <tag>channel</tag>
+      <tag>go</tag>
+      
+      <tag>golang</tag>
       
     </tags>
     
@@ -337,9 +337,9 @@
     
     <tags>
       
-      <tag>Go</tag>
-      
       <tag>Golang</tag>
+      
+      <tag>Go</tag>
       
       <tag>Mac</tag>
       
