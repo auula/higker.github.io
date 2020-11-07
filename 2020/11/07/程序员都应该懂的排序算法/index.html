@@ -134,7 +134,7 @@
                   
                   <span class="post-meta">
                     <i class="far fa-chart-bar"></i>
-                    662 字
+                    841 字
                   </span>
                 
 
@@ -142,7 +142,7 @@
                   
                   <span class="post-meta">
                       <i class="far fa-clock"></i>
-                      2 分钟
+                      3 分钟
                   </span>
                 
 
@@ -247,6 +247,34 @@ func Selection(arr []int) {
         // 如果pervIndex没有变化说明就不需要操作
         if pervIndex+1 != i {
             numbers[pervIndex+1] = current
+        }
+    }
+}</code></pre>
+<h2 id="4-希尔排序"><a href="#4-希尔排序" class="headerlink" title="4. 希尔排序"></a>4. 希尔排序</h2><ul>
+<li>希尔排序属于缩小增量排序。</li>
+<li>将数据区分成特定间隔的几个小区块。</li>
+<li>每排完一轮数据渐进式变成有序的。</li>
+<li>以插入排序法排完区块内的数据后再渐渐减少间隔的距离。</li>
+</ul>
+<p><strong>动图解析</strong><br><img src="https://tva1.sinaimg.cn/large/0081Kckwgy1gkh1hyq8a5g30qi0exkc0.gif" srcset="/img/loading.gif" alt="shell sort"></p>
+<p><strong>代码实现</strong></p>
+<pre><code class="go">// 希尔排序 O(n log n)
+func Shell(arr []int) {
+    var pervIndex, current int
+    // 1.先把原数据安装自定义步长分组
+    for gap := len(arr) / 2; gap &gt; 0; gap /= 2 {
+        // 2.然后分好组的数据进行选择排序
+        for i := gap; i &lt; len(arr); i++ {
+            // 希尔排序
+            pervIndex = i - gap
+            current = arr[i]
+            for pervIndex &gt;= 0 &amp;&amp; arr[pervIndex] &gt; current {
+                arr[pervIndex+1] = arr[pervIndex]
+                pervIndex--
+            }
+            if pervIndex+1 != i {
+                arr[pervIndex+1] = current
+            }
         }
     }
 }</code></pre>
