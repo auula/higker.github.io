@@ -18,7 +18,7 @@
   <meta name="description" content="一个乐于分享技术和知识的程序员博客.">
   <meta name="author" content="Ding Shuo">
   <meta name="keywords" content="爱代码,爱折腾,Java,Go,Golang,Linux,程序员,iByte">
-  <title>归档 - 💗Love code, love toss | iByte📚</title>
+  <title>程序员都应该懂的排序算法 - 💗Love code, love toss | iByte📚</title>
 
   <link  rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/5.12.1/css/all.min.css" />
 <link  rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/css/bootstrap.min.css" />
@@ -44,7 +44,7 @@
 
 
 <body>
-  <header style="height: 80vh;">
+  <header style="height: 70vh;">
     <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
   <div class="container">
     <a class="navbar-brand"
@@ -111,7 +111,7 @@
   </div>
 </nav>
 
-    <div class="view intro-2" id="background" parallax=true
+    <div class="view intro-2" id="background" false
          style="background: url('/img/default.png') no-repeat center center;
            background-size: cover;">
       <div class="full-bg-img">
@@ -121,6 +121,40 @@
               
             </span>
 
+            
+              
+                <p class="mt-3 post-meta">
+                  <i class="fas fa-calendar-alt" aria-hidden="true"></i>
+                  星期六, 十一月 7日 2020, 9:46 晚上
+                </p>
+              
+
+              <p class="mt-1">
+                
+                  
+                  <span class="post-meta">
+                    <i class="far fa-chart-bar"></i>
+                    662 字
+                  </span>
+                
+
+                
+                  
+                  <span class="post-meta">
+                      <i class="far fa-clock"></i>
+                      2 分钟
+                  </span>
+                
+
+                
+                  <!-- 不蒜子统计文章PV -->
+                  
+                  <span id="busuanzi_container_page_pv" class="post-meta" style="display: none">
+                    <i class="far fa-eye" aria-hidden="true"></i>
+                    <span id="busuanzi_value_page_pv"></span> 次
+                  </span>
+                
+              </p>
             
           </div>
 
@@ -132,59 +166,165 @@
 
   <main>
     
-      <div class="container nopadding-md">
-        <div class="py-5 z-depth-3" id="board">
-          
-          <div class="container">
-            <div class="row">
-              <div class="col-12 col-md-10 m-auto">
-                
-
-<div class="list-group">
-  <p class="h4">共计 18 篇文章</p>
-  <hr>
-  
-    
       
-      <p class="h5">2020</p>
-    
-    <a href="/2020/04/24/Go%E4%B9%8B%E9%AB%98%E9%98%B6%E5%87%BD%E6%95%B0/" class="list-group-item list-group-item-action">
-      <span class="archive-post-title">Go之高阶函数</span>
-      <span style="float: right;">04-24</span>
-    </a>
-  
-    
-    <a href="/2020/04/23/Go%E4%B9%8Bchannel%E6%B5%85%E5%85%A5%E4%BA%86%E8%A7%A3/" class="list-group-item list-group-item-action">
-      <span class="archive-post-title">Go之channel浅入了解</span>
-      <span style="float: right;">04-23</span>
-    </a>
-  
-    
-    <a href="/2020/04/22/Go%E4%B9%8Bgoroutine%E6%B5%85%E5%85%A5%E4%BA%86%E8%A7%A3/" class="list-group-item list-group-item-action">
-      <span class="archive-post-title">Go之goroutine浅入了解</span>
-      <span style="float: right;">04-22</span>
-    </a>
-  
-</div>
 
-  <nav aria-label="index posts navigation">
-    <span class="pagination pg-blue justify-content-center mt-5" id="pagination">
-      <a class="extend prev" rel="prev" href="/archives/2020/page/4/"><i class="fas fa-angle-double-left"></i></a><a class="page-number" href="/archives/2020/">1</a><span class="space">&hellip;</span><a class="page-number" href="/archives/2020/page/3/">3</a><a class="page-number" href="/archives/2020/page/4/">4</a><span class="page-number current">5</span><a class="page-number" href="/archives/2020/page/6/">6</a><a class="extend next" rel="next" href="/archives/2020/page/6/"><i class="fas fa-angle-double-right"></i></a>
-    </span>
-  </nav>
-  
-  <script>
-    for (ele of document.getElementById("pagination").getElementsByClassName("page-number")) {
-      ele.href += '#board';
+<div class="container-fluid">
+  <div class="row">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-md">
+      <div class="py-5 z-depth-3" id="board">
+        <div class="post-content mx-auto" id="post">
+          
+          <div class="markdown-body">
+            <p><strong>作为一个程序员在谈到<code>算法</code>这个词的时候，第一反应就是那些令人头疼的LeetCode题目，那本片文章我们就讲讲程序员几个基础排序算法。</strong></p>
+<ul>
+<li>冒泡排序</li>
+<li>选择排序</li>
+<li>选择排序</li>
+<li>希尔排序</li>
+<li>快速排序</li>
+<li>归并排序</li>
+</ul>
+<p><strong>复杂度对比图</strong><br><img src="https://www.runoob.com/wp-content/uploads/2019/03/sort.png" srcset="/img/loading.gif" alt="算法复杂度"></p>
+<h2 id="1-冒泡排序"><a href="#1-冒泡排序" class="headerlink" title="1.冒泡排序"></a>1.冒泡排序</h2><ul>
+<li>对无序数列进行安装每2个相邻数为一组的比较。</li>
+<li>如果每相邻的2个数,左边比右边大 <code>left &gt; right</code>就交换的位置。</li>
+<li>针对所有的元素重复以上的步骤，除了最后一个。</li>
+<li>持续每次对越来越少的元素重复上面的步骤，直到没有任何一对数字需要比较。</li>
+</ul>
+<p><strong>动图解析</strong><br><img src="https://www.runoob.com/wp-content/uploads/2019/03/bubbleSort.gif" srcset="/img/loading.gif" alt="bubble sort"></p>
+<p><strong>代码实现</strong></p>
+<pre><code class="go">func Bubble(arr []int) {
+    for i := 0; i &lt; len(arr); i++ {
+        // 冒泡是每次相邻的2个元素排
+        for j := 0; j &lt; len(arr)-1-i; j++ {
+            if arr[j] &gt; arr[j+1] {
+                arr[j], arr[j+1] = arr[j+1], arr[j]
+            }
+        }
     }
-  </script>
+}</code></pre>
+<h2 id="2-选择排序"><a href="#2-选择排序" class="headerlink" title="2. 选择排序"></a>2. 选择排序</h2><ul>
+<li>首先在未排序序列中找到最小（大）元素，存放到排序序列的起始位置。</li>
+<li>再从剩余未排序元素中继续寻找最小（大）元素，然后放到已排序序列的末尾。</li>
+<li>重复第二步，直到所有元素均排序完毕。</li>
+</ul>
+<p><strong>动图解析</strong><br><img src="https://www.runoob.com/wp-content/uploads/2019/03/selectionSort.gif" srcset="/img/loading.gif" alt="selection sort"></p>
+<p><strong>代码实现</strong></p>
+<pre><code class="go">// 选择排序 O(n^2)
+func Selection(arr []int) {
+    // 这里的减一是因为需要通过下标方法元素 元素下标是从0开始的
+    // 假设mid是最小值，然后和后面元素进行比较
+    // 如果发现有比mid小的元素，就更新mid坐标
+    for i := 0; i &lt; len(arr)-1; i++ {
+        min := i
+        for j := i + 1; j &lt; len(arr); j++ {
+            if arr[min] &gt; arr[j] {
+                min = j
+            }
+        }
+        // 一轮结束之后交换2个元素位置
+        arr[i], arr[min] = arr[min], arr[i]
+    }
+}</code></pre>
+<h2 id="3-插入排序"><a href="#3-插入排序" class="headerlink" title="3. 插入排序"></a>3. 插入排序</h2><ul>
+<li>将无序数列看成一个有序数列(范围是第一个元素)和无序数列(范围就是第二元素到末尾元素)。</li>
+<li>然后从头到尾扫描无序数列，把扫描到的元素插入到有序数列的适当位置。</li>
+<li>如果待插入的元素与有序序列中的某个元素相等，则将待插入元素插入到相等元素的后面。</li>
+</ul>
+<p><strong>动图解析</strong><br><img src="https://www.runoob.com/wp-content/uploads/2019/03/insertionSort.gif" srcset="/img/loading.gif" alt="insertion sort"></p>
+<p><strong>代码实现</strong></p>
+<pre><code class="go">func Insertion(numbers []int) {
+    for i := 1; i &lt; len(numbers); i++ {
+        pervIndex := i - 1
+        current := numbers[i]
+        // 用上一个元素比较当前的元素
+        for pervIndex &gt;= 0 &amp;&amp; numbers[pervIndex] &gt; current {
+            numbers[pervIndex+1] = numbers[pervIndex]
+            // 向左移动方便下次比较
+            pervIndex -= 1
+        }
+        // 如果pervIndex没有变化说明就不需要操作
+        if pervIndex+1 != i {
+            numbers[pervIndex+1] = current
+        }
+    }
+}</code></pre>
 
-
-              </div>
-            </div>
+            <hr>
+          </div>
+          <br>
+          <div>
+            <p>
+            
+              
+              <span>
+                <i class="iconfont icon-tag"></i>
+                
+                  <a class="hover-with-bg" href="/tags/Go/">Go</a>
+                
+                  <a class="hover-with-bg" href="/tags/sort/">sort</a>
+                
+                  <a class="hover-with-bg" href="/tags/algorithm/">algorithm</a>
+                
+              </span>
+            
+            </p>
+            
+              <p class="note note-warning">本博客所有文章除特别声明外，均采用 <a href="https://zh.wikipedia.org/wiki/Wikipedia:CC_BY-SA_3.0%E5%8D%8F%E8%AE%AE%E6%96%87%E6%9C%AC" target="_blank" rel="nofollow noopener noopener">CC BY-SA 3.0协议</a> 。转载请注明出处！</p>
+            
           </div>
         </div>
       </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container">
+        <div id="toc">
+  <p class="h5"><i class="far fa-list-alt"></i>&nbsp;目录</p>
+  <div id="tocbot"></div>
+</div>
+      </div>
+    
+  </div>
+</div>
+
+<!-- custom -->
+
+
+<!-- Comments -->
+<div class="col-lg-7 mx-auto nopadding-md">
+  <div class="container comments mx-auto" id="comments">
+    
+      <br><br>
+      
+      
+  <div id="gitalk-container"></div>
+  <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+  <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/blueimp-md5@2.11.1/js/md5.min.js"></script>
+  <script type="text/javascript">
+    var gitalk = new Gitalk({
+      clientID: '22468b62936ae5d73a0b',
+      clientSecret: '918618299c36b1430a0501cd976b82fd48cbfe0c',
+      repo: 'higker.github.io',
+      owner: 'higker',
+      admin: 'higker',
+      id: md5(location.pathname),
+      language: 'zh-CN',
+      perPage: 15,
+      pagerDirection: 'last',
+      createIssueManually: 'true',
+      distractionFreeMode: 'false'
+    });
+
+    gitalk.render('gitalk-container')
+  </script>
+
+
+    
+  </div>
+</div>
+
     
   </main>
 
@@ -275,6 +415,52 @@
 
 
 
+  
+  <script  src="https://cdn.staticfile.org/tocbot/4.10.0/tocbot.min.js" ></script>
+  <script>
+    $(document).ready(function () {
+      var navHeight = $('#navbar').height();
+      var toc = $('#toc');
+      var main = $('main');
+      var tocT = navHeight + (toc.offset().top - main.offset().top);
+      var tocLimMin = main.offset().top - navHeight;
+      var tocLimMax = $('#comments').offset().top - navHeight;
+      $(window).scroll(function () {
+        var scroH = document.body.scrollTop + document.documentElement.scrollTop;
+        if (tocLimMin <= scroH && scroH <= tocLimMax) {
+          toc.css({
+            'display': 'block',
+            'position': 'fixed',
+            'top': tocT,
+          });
+        } else if (scroH <= tocLimMin) {
+          toc.css({
+            'position': '',
+            'top': '',
+          });
+        } else if (scroH > tocLimMax) {
+          toc.css('display', 'none');
+        }
+      });
+      tocbot.init({
+        tocSelector: '#tocbot',
+        contentSelector: '.post-content',
+        headingSelector: 'h1,h2,h3,h4,h5,h6',
+        linkClass: 'tocbot-link',
+        activeLinkClass: 'tocbot-active-link',
+        listClass: 'tocbot-list',
+        isCollapsedClass: 'tocbot-is-collapsed',
+        collapsibleClass: 'tocbot-is-collapsible',
+        scrollSmooth: true,
+      });
+      if ($('.toc-list-item').length > 0) {
+        $('#toc > p').css('visibility', 'visible');
+      }
+    });
+  </script>
+
+
+
 
 
 
@@ -303,7 +489,7 @@
     var typed = new Typed('#subtitle', {
       strings: [
         '  ',
-        "归档&nbsp;",
+        "程序员都应该懂的排序算法&nbsp;",
       ],
       cursorChar: "_",
       typeSpeed: 120,
