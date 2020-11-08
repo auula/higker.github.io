@@ -134,7 +134,7 @@
                   
                   <span class="post-meta">
                     <i class="far fa-chart-bar"></i>
-                    928 字
+                    969 字
                   </span>
                 
 
@@ -269,16 +269,16 @@ func Shell(arr []int) {
             pervIndex = i - gap
             current = arr[i]
             for pervIndex &gt;= 0 &amp;&amp; arr[pervIndex] &gt; current {
-                arr[pervIndex+1] = arr[pervIndex]
-                pervIndex--
+                arr[pervIndex+gap] = arr[pervIndex]
+                pervIndex -= gap
             }
-            if pervIndex+1 != i {
-                arr[pervIndex+1] = current
+            if pervIndex+gap != i {
+                arr[pervIndex+gap] = current
             }
         }
     }
 }</code></pre>
-<h2 id="算法对比"><a href="#算法对比" class="headerlink" title="算法对比"></a>算法对比</h2><p><strong>根据个人电脑配置不同耗时不同！！!</strong><br><strong>处理器: 2.3 GHz 双核Intel Core i5</strong><br><strong>内 存:8 GB 2133 MHz LPDDR3</strong></p>
+<h2 id="算法对比"><a href="#算法对比" class="headerlink" title="算法对比"></a>算法对比</h2><p><strong>根据个人电脑配置不同耗时不同！！!</strong><br><strong>处理器: 2.3 GHz 双核Intel Core i5</strong><br><strong>内 存:8 GB 2133 MHz LPDDR3</strong><br><strong>随机数据范围是:<code>rand.Intn(99999) - 9999)</code></strong></p>
 <table>
 <thead>
 <tr>
@@ -293,11 +293,6 @@ func Shell(arr []int) {
 <td>14.118 seconds</td>
 </tr>
 <tr>
-<td>希尔</td>
-<td>10万</td>
-<td>4.56 seconds</td>
-</tr>
-<tr>
 <td>选择</td>
 <td>10万</td>
 <td>8.862 seconds</td>
@@ -306,6 +301,26 @@ func Shell(arr []int) {
 <td>插入</td>
 <td>10万</td>
 <td>1.69 seconds</td>
+</tr>
+<tr>
+<td>希尔</td>
+<td>10万</td>
+<td>0.25 seconds</td>
+</tr>
+<tr>
+<td>希尔</td>
+<td>100万</td>
+<td>0.509 seconds</td>
+</tr>
+<tr>
+<td>希尔</td>
+<td>1000万</td>
+<td>3.314 seconds</td>
+</tr>
+<tr>
+<td>希尔</td>
+<td>1亿</td>
+<td>60s 左右(2次重复测试结果)</td>
 </tr>
 </tbody></table>
 <p><strong>测试源代码连接<a href="https://github.com/higker/go-algorithm/blob/master/sort.go" target="_blank" rel="noopener">查看源代码</a>,别忘了<code>star</code>😯。</strong></p>
