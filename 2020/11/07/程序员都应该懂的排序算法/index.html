@@ -134,7 +134,7 @@
                   
                   <span class="post-meta">
                     <i class="far fa-chart-bar"></i>
-                    1k 字
+                    1.4k 字
                   </span>
                 
 
@@ -142,7 +142,7 @@
                   
                   <span class="post-meta">
                       <i class="far fa-clock"></i>
-                      4 分钟
+                      5 分钟
                   </span>
                 
 
@@ -278,6 +278,74 @@ func Shell(arr []int) {
         }
     }
 }</code></pre>
+<h2 id="5-递归函数"><a href="#5-递归函数" class="headerlink" title="5. 递归函数"></a>5. 递归函数</h2><ul>
+<li>递归函数就是在函数里面调用自己。</li>
+<li>下面就是一个阶乘例子</li>
+</ul>
+<pre><code class="go">// https://zh.wikipedia.org/wiki/%E9%9A%8E%E4%B9%98
+func factorial(n int) int {
+    if n == 1 {
+        return 1
+    }
+    return n * factorial(n-1)
+}</code></pre>
+<h2 id="6-归并排序"><a href="#6-归并排序" class="headerlink" title="6. 归并排序"></a>6. 归并排序</h2><ul>
+<li>该算法是采用<code>分治法（Divide and Conquer）</code>的一个非常典型的应用。</li>
+<li>先将一个无序数列进行分组。</li>
+<li>然后子组也进行分组。</li>
+<li>将已有序的子序列合并，得到完全有序的序列；即先使每个子序列有序，再使子序列段间有序。若将两个有序表合并成一个有序表，称为二路归并。</li>
+</ul>
+<pre><code class="java">package me.ibyte.algorithm.sort;
+
+import me.ibyte.algorithm.Sort;
+
+import java.util.Arrays;
+
+// Go写多了换Java写一些 思路和逻辑是一样的
+public class MergeSort implements Sort {
+
+    public Integer[] sort(Integer[] arr) {
+        // 取到中轴 分组
+        int middle = arr.length / 2;
+        if (arr.length &lt; 2) {
+            return arr;
+        }
+        // 通过中轴分左右组
+        Integer[] left = Arrays.copyOfRange(arr, 0, middle);
+        Integer[] right = Arrays.copyOfRange(arr, middle, arr.length);
+        // 重复分组 直到不能分组为止并且进行小块归并排序
+        return merge(sort(left), sort(right));
+    }
+
+    private Integer[] merge(Integer[] left, Integer[] right) {
+        // 存放排序好的零时数组
+        Integer[] result = new Integer[left.length + right.length];
+        int i = 0;
+        // 不为空就进行排序
+        while (left.length != 0 &amp;&amp; right.length != 0) {
+            if (left[0] &lt;= right[0]) {
+                result[i++] = left[0];
+                // 排好的就减去
+                left = Arrays.copyOfRange(left, 1, left.length);
+            } else {
+                result[i++] = right[0];
+                right = Arrays.copyOfRange(right, 1, right.length);
+            }
+        }
+        // 检测剩下的
+        while (left.length != 0) {
+            result[i++] = left[0];
+            left = Arrays.copyOfRange(left, 1, left.length);
+        }
+        while (right.length != 0) {
+            result[i++] = right[0];
+            right = Arrays.copyOfRange(right, 1, right.length);
+        }
+        return result;
+    }
+}
+</code></pre>
+<p><strong>源代码查看地址<a href="https://github.com/higker/java-algorithm/blob/main/src/main/java/me/ibyte/algorithm/sort/MergeSort.java" target="_blank" rel="noopener">源代码</a></strong></p>
 <h2 id="算法对比"><a href="#算法对比" class="headerlink" title="算法对比"></a>算法对比</h2><p><strong>根据个人电脑配置不同耗时不同！！!</strong><br><strong>处理器: 2.3 GHz 双核Intel Core i5</strong><br><strong>内 存:8 GB 2133 MHz LPDDR3</strong><br><strong>随机数据范围是:<code>rand.Intn(99999) - 9999)</code></strong><br><strong>测试过程中包含了随机数生成逻辑代码，所有算法速度应该减去随机数生成耗时（实际时间应该更短）。</strong></p>
 <table>
 <thead>
