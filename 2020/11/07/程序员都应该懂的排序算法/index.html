@@ -359,6 +359,7 @@ public class MergeSort implements Sort {
     left := arr[:middle]
     right := arr[middle:]
     return func(left, right []int) []int {
+        // 分组不能保证左右各组数据个数是一样的
         for len(left) != 0 &amp;&amp; len(right) != 0 {
             if left[0] &lt;= right[0] {
                 result = append(result, left[0])
@@ -370,6 +371,7 @@ public class MergeSort implements Sort {
         }
         for len(left) != 0 {
             result = append(result, left[0])
+            // 不断减小剩下的
             left = left[1:]
         }
         for len(right) != 0 {
