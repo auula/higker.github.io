@@ -134,7 +134,7 @@
                   
                   <span class="post-meta">
                     <i class="far fa-chart-bar"></i>
-                    1.4k 字
+                    1.5k 字
                   </span>
                 
 
@@ -142,7 +142,7 @@
                   
                   <span class="post-meta">
                       <i class="far fa-clock"></i>
-                      5 分钟
+                      6 分钟
                   </span>
                 
 
@@ -296,6 +296,7 @@ func factorial(n int) int {
 <li>将已有序的子序列合并，得到完全有序的序列；即先使每个子序列有序，再使子序列段间有序。若将两个有序表合并成一个有序表，称为二路归并。</li>
 </ul>
 <p><strong>动图解析</strong><br><img src="https://tva1.sinaimg.cn/large/0081Kckwgy1gkj9pvmv9wj31170qlh0x.jpg" srcset="/img/loading.gif" alt="merge sort"></p>
+<p><strong>1.代码实现</strong></p>
 <pre><code class="java">package me.ibyte.algorithm.sort;
 
 import me.ibyte.algorithm.Sort;
@@ -347,6 +348,37 @@ public class MergeSort implements Sort {
 }
 </code></pre>
 <p><strong>源代码查看地址<a href="https://github.com/higker/java-algorithm/blob/main/src/main/java/me/ibyte/algorithm/sort/MergeSort.java" target="_blank" rel="noopener">源代码</a></strong></p>
+<p><strong>2.Golang实现就想尝试一下go特性高阶函数</strong></p>
+<pre><code class="go">func mergeSort(arr []int) []int {
+    var result []int
+    if len(arr) &lt; 2 {
+        return arr
+    }
+    middle := len(arr) / 2
+    // 注意这是切片 切取的时候是包左 不包右
+    left := arr[:middle]
+    right := arr[middle:]
+    return func(left, right []int) []int {
+        for len(left) != 0 &amp;&amp; len(right) != 0 {
+            if left[0] &lt;= right[0] {
+                result = append(result, left[0])
+                left = left[1:]
+            } else {
+                result = append(result, right[0])
+                right = right[1:]
+            }
+        }
+        for len(left) != 0 {
+            result = append(result, left[0])
+            left = left[1:]
+        }
+        for len(right) != 0 {
+            result = append(result, right[0])
+            right = right[1:]
+        }
+        return result
+    }(mergeSort(left), mergeSort(right))
+}</code></pre>
 <h2 id="算法对比"><a href="#算法对比" class="headerlink" title="算法对比"></a>算法对比</h2><p><strong>根据个人电脑配置不同耗时不同！！!</strong><br><strong>处理器: 2.3 GHz 双核Intel Core i5</strong><br><strong>内 存:8 GB 2133 MHz LPDDR3</strong><br><strong>随机数据范围是:<code>rand.Intn(99999) - 9999)</code></strong><br><strong>测试过程中包含了随机数生成逻辑代码，所有算法速度应该减去随机数生成耗时（实际时间应该更短）。</strong></p>
 <table>
 <thead>
