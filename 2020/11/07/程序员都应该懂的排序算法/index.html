@@ -134,7 +134,7 @@
                   
                   <span class="post-meta">
                     <i class="far fa-chart-bar"></i>
-                    1.6k 字
+                    1.8k 字
                   </span>
                 
 
@@ -142,7 +142,7 @@
                   
                   <span class="post-meta">
                       <i class="far fa-clock"></i>
-                      6 分钟
+                      8 分钟
                   </span>
                 
 
@@ -381,6 +381,53 @@ public class MergeSort implements Sort {
         return result
     }(mergeSort(left), mergeSort(right))
 }</code></pre>
+<h2 id="7-快速排序"><a href="#7-快速排序" class="headerlink" title="7. 快速排序"></a>7. 快速排序</h2><ul>
+<li>该算法是采用<code>分治法（Divide and Conquer）</code>的一个非常典型的应用。</li>
+<li>先将一个无序数列进行分组。</li>
+<li>然后子组也进行分组。</li>
+<li>将已有序的子序列合并，得到完全有序的序列；即先使每个子序列有序，再使子序列段间有序。若将两个有序表合并成一个有序表，称为二路归并。</li>
+</ul>
+<p><strong>视频解析</strong></p>
+<iframe src="//player.bilibili.com/player.html?aid=62621532&bvid=BV1at411T75o&cid=108813206&page=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"> </iframe>
+
+
+<p><strong>代码实现</strong></p>
+<pre><code class="java">package me.ibyte.algorithm.sort;
+
+
+import me.ibyte.algorithm.Sort;
+
+
+// https://www.bilibili.com/video/BV1at411T75o?zw
+public class QuickSort implements Sort {
+    @Override
+    public Integer[] sort(Integer[] arr) {
+        return quickSort(arr,0,arr.length-1);
+    }
+
+    private  Integer[] quickSort(Integer[] arr, int left, int right) {
+        if (left &gt;= right) {
+            return arr;
+        }
+        // L记录开始位置 R记录尾巴位置
+        int pivot = arr[left],L=left,R=right;
+        while(left &lt; right){
+            while (left &lt; right &amp;&amp; arr[right] &gt;= pivot){
+                right--;
+            }
+            arr[left] = arr[right];
+            while(left &lt; right &amp;&amp; arr[left] &lt;= pivot){
+                left++;
+            }
+            arr[right] = arr[left];
+        }
+        arr[left] = pivot;
+        // L =0 left = 是中心轴值的位置 -1 分左右作用
+        quickSort(arr,L,left-1);
+        quickSort(arr,left+1,R);
+        return  arr;
+    }
+}</code></pre>
 <h2 id="算法对比"><a href="#算法对比" class="headerlink" title="算法对比"></a>算法对比</h2><p><strong>根据个人电脑配置不同耗时不同！！!</strong><br><strong>处理器: 2.3 GHz 双核Intel Core i5</strong><br><strong>内 存:8 GB 2133 MHz LPDDR3</strong><br><strong>随机数据范围是:<code>rand.Intn(99999) - 9999)</code></strong><br><strong>测试过程中包含了随机数生成逻辑代码，所有算法速度应该减去随机数生成耗时（实际时间应该更短）。</strong></p>
 <table>
 <thead>
@@ -429,6 +476,11 @@ public class MergeSort implements Sort {
 <td>归并</td>
 <td>100万</td>
 <td>0.752 seconds</td>
+</tr>
+<tr>
+<td>快速</td>
+<td>100万</td>
+<td>0.109 seconds</td>
 </tr>
 </tbody></table>
 <p><strong>测试源代码链接<a href="https://github.com/higker/go-algorithm/blob/master/sort.go" target="_blank" rel="noopener">查看源代码</a>,别忘了<code>star</code>😯。</strong></p>
