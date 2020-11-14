@@ -134,7 +134,7 @@
                   
                   <span class="post-meta">
                     <i class="far fa-chart-bar"></i>
-                    1.8k 字
+                    1.9k 字
                   </span>
                 
 
@@ -383,13 +383,12 @@ public class MergeSort implements Sort {
 }</code></pre>
 <h2 id="7-快速排序"><a href="#7-快速排序" class="headerlink" title="7. 快速排序"></a>7. 快速排序</h2><ul>
 <li>该算法是采用<code>分治法（Divide and Conquer）</code>的一个非常典型的应用。</li>
-<li>先将一个无序数列进行分组。</li>
-<li>然后子组也进行分组。</li>
-<li>将已有序的子序列合并，得到完全有序的序列；即先使每个子序列有序，再使子序列段间有序。若将两个有序表合并成一个有序表，称为二路归并。</li>
+<li>从数列中挑出来一个元素作为基准<code>pivot</code>。</li>
+<li>重新排序数列,所有元素比基准值小的摆放在基准前面,所有元素比基准值大的摆在基准的后面(相同的数可以到任一边)，在这个分区退出之后,该基准就处于数列的中间位置，这个称为分区<code>(partition)</code>操作。</li>
+<li>递归地<code>(recursive)</code>把小于基准值元素的子数列和大于基准值元素的子数列排序。</li>
 </ul>
 <p><strong>视频解析</strong></p>
-<iframe src="//player.bilibili.com/player.html?aid=62621532&bvid=BV1at411T75o&cid=108813206&page=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"> </iframe>
-
+<iframe src="//player.bilibili.com/player.html?aid=62621532&bvid=BV1at411T75o&cid=108813206&page=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true" width="200px" hight="200px" > </iframe>
 
 <p><strong>代码实现</strong></p>
 <pre><code class="java">package me.ibyte.algorithm.sort;
