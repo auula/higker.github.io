@@ -182,7 +182,7 @@
 <p>目前 go 还只是实验性的支持 wasm 以后可能会变更，后面我会尽量跟进。</p>
 <p>另外如果感兴趣的话，推荐一本柴树杉、丁尔男两位大佬的《<code>WebAssembly 标准入门</code>》，估计也快发售了。</p>
 <h2 id="WebAssembly-简介"><a href="#WebAssembly-简介" class="headerlink" title="WebAssembly 简介"></a>WebAssembly 简介</h2><blockquote>
-<p><a href="https://webassembly.org/" target="_blank" rel="noopener" title="WebAssembly">WebAssembly</a> 是一种新兴的网页虚拟机标准，它的设计目标包括高可移植性、高安全性、高效率（包括载入效率和运行效率）、尽可能小的程序体积。本书详尽介绍了 WebAssembly 程序在 JavaScript 环境下的使用方法、WebAssembly 汇编语言和二进制格式，给出了大量简单易懂的示例，同时以 C/C++/Rust/Go 语言开发环境为例，介绍了如何使用其他高级语言开发 WebAssembly 模块。另外WebAssembly有好几个干爹:万维网联盟、 Mozilla、微软、谷歌、 苹果。</p>
+<p><a href="https://webassembly.org/" target="_blank" rel="noopener" title="WebAssembly">WebAssembly</a> 是一种新兴的网页虚拟机标准，它的设计目标包括高可移植性、高安全性、高效率（包括载入效率和运行效率）、尽可能小的程序体积，WebAssembly 程序在 JavaScript 环境下的使用方法、WebAssembly 汇编语言和二进制格式。另外WebAssembly有好几个干爹:万维网联盟、 Mozilla、微软、谷歌、 苹果。</p>
 </blockquote>
 <h2 id="Hello-Wasm"><a href="#Hello-Wasm" class="headerlink" title="Hello Wasm"></a>Hello Wasm</h2><p>由于目前只是实验性的支持，在编写代码时 引用 <code>syscall/js</code> 会爆红 需要在<code>goland</code>中将变量环境 指定为 <code>OS=js ARCH=wasm goland</code> 的设置在 <code>seting -&gt; Go -&gt; Build Tags &amp;&amp; Vendoring</code> 中进行更改。</p>
 <p>浏览器 我使用的是 chrome 包括 js 部分演示我也是在 chrome 下进行。</p>
