@@ -134,7 +134,7 @@
                   
                   <span class="post-meta">
                     <i class="far fa-chart-bar"></i>
-                    1.2k 字
+                    1.7k 字
                   </span>
                 
 
@@ -142,7 +142,7 @@
                   
                   <span class="post-meta">
                       <i class="far fa-clock"></i>
-                      5 分钟
+                      7 分钟
                   </span>
                 
 
@@ -181,13 +181,11 @@
 <p>在这里我想说一下我的感受，在编写代码时应该是主要编写 go 的代码供 JavaScript 调用 而不是在 在 go 中调用 JavaScript 代码。</p>
 <p>目前 go 还只是实验性的支持 wasm 以后可能会变更，后面我会尽量跟进。</p>
 <p>另外如果感兴趣的话，推荐一本柴树杉、丁尔男两位大佬的《<code>WebAssembly 标准入门</code>》，估计也快发售了。</p>
-<ul>
-<li><a href="https://chai2010.cn/post/wasm/wasm-book/" target="_blank" rel="noopener">相关消息</a></li>
-</ul>
 <h2 id="WebAssembly-简介"><a href="#WebAssembly-简介" class="headerlink" title="WebAssembly 简介"></a>WebAssembly 简介</h2><blockquote>
-<p>WebAssembly 是一种新兴的网页虚拟机标准，它的设计目标包括高可移植性、高安全性、高效率（包括载入效率和运行效率）、尽可能小的程序体积。本书详尽介绍了 WebAssembly 程序在 JavaScript 环境下的使用方法、WebAssembly 汇编语言和二进制格式，给出了大量简单易懂的示例，同时以 C/C++/Rust/Go 语言开发环境为例，介绍了如何使用其他高级语言开发 WebAssembly 模块。</p>
+<p><a href="https://webassembly.org/" target="_blank" rel="noopener" title="WebAssembly">WebAssembly</a> 是一种新兴的网页虚拟机标准，它的设计目标包括高可移植性、高安全性、高效率（包括载入效率和运行效率）、尽可能小的程序体积。本书详尽介绍了 WebAssembly 程序在 JavaScript 环境下的使用方法、WebAssembly 汇编语言和二进制格式，给出了大量简单易懂的示例，同时以 C/C++/Rust/Go 语言开发环境为例，介绍了如何使用其他高级语言开发 WebAssembly 模块。另外WebAssembly有好几个干爹:万维网联盟、 Mozilla、微软、谷歌、 苹果。</p>
 </blockquote>
-<h2 id="Hello-Wasm"><a href="#Hello-Wasm" class="headerlink" title="Hello Wasm"></a>Hello Wasm</h2><p>由于目前只是实验性的支持，在编写代码时 引用 syscall/js 会爆红 需要在ide中将变量环境 指定为 OS=js ARCH=wasm goland 的设置在 seting -&gt; Go -&gt; Build Tags &amp;&amp; Vendoring 中进行更改。<br>浏览器 我使用的是 chrome 包括 js 部分演示我也是在 chrome 下进行。</p>
+<h2 id="Hello-Wasm"><a href="#Hello-Wasm" class="headerlink" title="Hello Wasm"></a>Hello Wasm</h2><p>由于目前只是实验性的支持，在编写代码时 引用 <code>syscall/js</code> 会爆红 需要在<code>goland</code>中将变量环境 指定为 <code>OS=js ARCH=wasm goland</code> 的设置在 <code>seting -&gt; Go -&gt; Build Tags &amp;&amp; Vendoring</code> 中进行更改。</p>
+<p>浏览器 我使用的是 chrome 包括 js 部分演示我也是在 chrome 下进行。</p>
 <ol>
 <li>创建一个项目 <code>hello-wasm-go</code></li>
 </ol>
@@ -232,7 +230,7 @@ func main() {
 <p>然后打开 chrome 访问 <code>http://127.0.0.1:8080/</code> 并按下 F12 打开 DevTools 不出意外的话你应该会看到 控制台上输出 <code>Hello, WebAssembly!</code></p>
 <p>接下来就正式开始了，在每次更改 go 代码时 你需要对 go 代码进行重新编译，重启 <code>goexec</code> 并对网页进行刷新。</p>
 <p><img src="https://tva1.sinaimg.cn/large/008eGmZEgy1gmf7ft33buj31470mtdjt.jpg" srcset="/img/loading.gif" alt="GoWebAssembly"></p>
-<h2 id="接下来玩点高级的"><a href="#接下来玩点高级的" class="headerlink" title="接下来玩点高级的"></a>接下来玩点高级的</h2><p>接下来我们玩一点不一样的，go 调用 JavaScript 函数并且回显到前端页面🕶。<br><img src="https://tva1.sinaimg.cn/large/008eGmZEgy1gmf893m644j312x0n0q6x.jpg" srcset="/img/loading.gif" alt="运行效果wasm"></p>
+<h2 id="在js里面调用go的wasm"><a href="#在js里面调用go的wasm" class="headerlink" title="在js里面调用go的wasm"></a>在js里面调用go的wasm</h2><p>接下来我们玩一点不一样的，go 调用 JavaScript 函数并且回显到前端页面，也就是在前端调用我们使用go写的代码逻辑。</p>
 <ol>
 <li>首先我们创建一个<code>main.go</code>和<code>index.html</code></li>
 </ol>
@@ -270,7 +268,7 @@ func main() {
     btnEle.Call(&quot;addEventListener&quot;, &quot;click&quot;, js.FuncOf(sayHello))
     &lt;-done
 }</code></pre>
-<p>下面是index内容</p>
+<p>下面是index.html内容</p>
 <pre><code class="html">&lt;!DOCTYPE html&gt;
 &lt;html lang=&quot;en&quot;&gt;
 &lt;head&gt;
@@ -296,23 +294,79 @@ func main() {
 </li>
 <li><p>复制依赖文件<code>cp &quot;$(go env GOROOT)/misc/wasm/wasm_exec.js&quot; .</code></p>
 </li>
-<li><p>启动静态服务器 <code>goexec &#39;http.ListenAndServe(</code>:8080<code>, http.FileServer(http.Dir(</code>.<code>)))&#39;</code></p>
-</li>
-<li><p>你也可以通过其他方式启动一个服务器来浏览。</p>
+<li><p>启动静态服务器 </p>
 </li>
 </ol>
-<h3 id="挖槽，牛逼，效果👍"><a href="#挖槽，牛逼，效果👍" class="headerlink" title="挖槽，牛逼，效果👍"></a>挖槽，牛逼，效果👍</h3><p><img src="https://tva1.sinaimg.cn/large/008eGmZEgy1gmf893m644j312x0n0q6x.jpg" srcset="/img/loading.gif" alt="运行效果wasm"></p>
+<pre><code class="bash">goexec &#39;http.ListenAndServe(`:8080`, http.FileServer(http.Dir(`.`)))&#39;</code></pre>
+<ol start="5">
+<li>你也可以通过其他方式启动一个服务器来浏览。</li>
+</ol>
+<h3 id="效-果👍"><a href="#效-果👍" class="headerlink" title="效 果👍"></a>效 果👍</h3><p><img src="https://tva1.sinaimg.cn/large/008eGmZEgy1gmghf9sijmj30p80lw419.jpg" srcset="/img/loading.gif" alt="运行效果"></p>
 <h2 id="相关函数解析"><a href="#相关函数解析" class="headerlink" title="相关函数解析"></a>相关函数解析</h2><ul>
 <li>通过 <code>js.Global().Get(&quot;btn&quot;)</code> 或 <code>document.Call(&quot;getElementById&quot;, &quot;hello&quot;)</code>两种方式获取到 DOM 元素。</li>
 <li>btnEle 调用 <code>addEventListener</code> 为 btn 绑定点击事件 <code>sayHello</code>。</li>
 <li>helloEle 调用 <code>Set(&quot;innerHTML&quot;, ...)</code> 渲染计算结果。</li>
+<li>JavaScript代码中<code>WebAssembly.instantiateStreaming(....)</code>是加载我们go代码编译的wasm文件，然后网页就具备我们刚才使用go写的功能了。</li>
 </ul>
-<h2 id="相关资料"><a href="#相关资料" class="headerlink" title="相关资料"></a>相关资料</h2><ul>
-<li>本例子代码仓库<a href="http://github.com/higker/hello-wasm-go" target="_blank" rel="noopener">http://github.com/higker/hello-wasm-go</a></li>
+<h2 id="生命周期"><a href="#生命周期" class="headerlink" title="生命周期"></a>生命周期</h2><p><img src="https://tva1.sinaimg.cn/large/008eGmZEgy1gmffesitljj30os04iq3e.jpg" srcset="/img/loading.gif" alt="WebAssembly生命周期"></p>
+<h2 id="在go里面调用其他语言的wasm"><a href="#在go里面调用其他语言的wasm" class="headerlink" title="在go里面调用其他语言的wasm"></a>在go里面调用其他语言的wasm</h2><p><strong>通过上面的例子可以看出来，我们写的go代码可以编译成wasm扔给浏览器执行我们的逻辑，反之我们也可以通过go来操作其他语言编译的wasm文件，并且调用里面的函数。</strong></p>
+<ol>
+<li>首先我们需要安装一个依赖库</li>
+<li>然后我们开启cgo</li>
+<li>然后把我们准备一个tests.wasm文件<pre><code class="bash"># Enable cgo 启动cgo
+export CGO_ENABLED=1; export CC=gcc;
+# 拉取我们需要的解析库
+github.com/wasmerio/go-ext-wasm</code></pre>
+<blockquote>
+<p>注意这里有一个坑，官方那个github主页是让你去下载<code>go get github.com/wasmerio/wasmer-go</code>，其实目前不是这个了，我感觉是那个老外故意阻挡我们gopher去学习wasm的步伐，想让我们直接入坑rust，啊哈哈哈，开个玩笑拉，✅正确方式去下载这个包<code>github.com/wasmerio/go-ext-wasm/wasmer</code>，不过在你们的看到这个文章的时候我已经发起pr请求准备修复这个坑，啊哈哈</p>
+</blockquote>
+</li>
+</ol>
+<p><em>项目官方地址</em><a href="https://github.com/wasmerio/wasmer-go" target="_blank" rel="noopener">https://github.com/wasmerio/wasmer-go</a></p>
+<p><img src="https://tva1.sinaimg.cn/large/008eGmZEgy1gmgj0b3w5gj30q00egwg9.jpg" srcset="/img/loading.gif" alt="操作步骤截图"></p>
+<ol start="4">
+<li>然后在我们的<code>main.go</code>文件中写入</li>
+</ol>
+<pre><code class="go">package main
+
+import (
+    &quot;fmt&quot;
+
+    wasm &quot;github.com/wasmerio/go-ext-wasm/wasmer&quot;
+)
+
+func main() {
+    // 将WebAssembly模块读取为字节
+    bytes, _ := wasm.ReadBytes(&quot;tests.wasm&quot;)
+
+    // 实例化WebAssembly模块
+    instance, _ := wasm.NewInstance(bytes)
+    defer instance.Close()
+
+    // 从WebAssembly实例获取`sum`导出的函数。
+    sum := instance.Exports[&quot;sum&quot;]
+
+    // 用Go标准值调用导出的函数。WebAssembly
+    // 推断类型，并自动转换值
+    result, _ := sum(11, 11)
+
+    // 结果
+    fmt.Println(result) // 22!
+}
+</code></pre>
+<ol start="5">
+<li>执行<pre><code class="bash">$/Desktop/hello-wasm-go/rand_wasm:
+$ go run main.go 
+22</code></pre>
+</li>
+</ol>
+<h2 id="小-结"><a href="#小-结" class="headerlink" title="小 结"></a>小 结</h2><p>从上面的例子我们可以看出来，wasm应用案例不止于此，例如很多第三方的发送短信的API接口SDK都是不同语言版本的代码实现，如果换成wasm，直接写一套代码编译成wasm，提供一个函数，其他语言加载这个wasm文件就可以了，只需要一个wasm解决了…..</p>
+<h3 id="相关资料"><a href="#相关资料" class="headerlink" title="相关资料"></a>相关资料</h3><ul>
+<li><a href="http://github.com/higker/hello-wasm-go" target="_blank" rel="noopener">http://github.com/higker/hello-wasm-go</a></li>
 <li><a href="https://golang.org/pkg/syscall/js" target="_blank" rel="noopener">https://golang.org/pkg/syscall/js</a></li>
 <li><a href="https://github.com/golang/go/wiki/WebAssembly" target="_blank" rel="noopener">https://github.com/golang/go/wiki/WebAssembly</a></li>
 </ul>
-<h2 id="html里面的相关javascript的API文档"><a href="#html里面的相关javascript的API文档" class="headerlink" title="html里面的相关javascript的API文档"></a>html里面的相关javascript的API文档</h2><ul>
+<h3 id="Javascript的API文档"><a href="#Javascript的API文档" class="headerlink" title="Javascript的API文档"></a>Javascript的API文档</h3><ul>
 <li><a href="https://developer.mozilla.org/zh-cn/docs/web/javascript/reference/global_objects/webassembly/instantiatestreaming" target="_blank" rel="noopener">https://developer.mozilla.org/zh-cn/docs/web/javascript/reference/global_objects/webassembly/instantiatestreaming</a></li>
 </ul>
 
