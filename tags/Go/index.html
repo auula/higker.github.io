@@ -18,7 +18,7 @@
   <meta name="description" content="一个乐于分享技术和知识的程序员博客.">
   <meta name="author" content="Ding Shuo">
   <meta name="keywords" content="爱代码,爱折腾,Java,Go,Golang,Linux,程序员,iByte">
-  <title>标签 - Go - 💗Love code, love toss | ❤️byte</title>
+  <title>标签 - go - 💗Love code, love toss | ❤️byte</title>
 
   <link  rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/5.12.1/css/all.min.css" />
 <link  rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/css/bootstrap.min.css" />
@@ -48,7 +48,7 @@
     <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
   <div class="container">
     <a class="navbar-brand"
-       href="/">&nbsp;<strong>byte Code</strong>&nbsp;</a>
+       href="/">&nbsp;<strong>byteCode</strong>&nbsp;</a>
 
     <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
             data-target="#navbarSupportedContent"
@@ -141,43 +141,28 @@
                 
 
 <div class="list-group">
-<!--  <p class="h4">共计 3 篇文章</p>-->
+<!--  <p class="h4">共计 2 篇文章</p>-->
   <hr>
+  
+    
+      
+      <p class="h5">2021</p>
+    
+    <a href="/2021/01/07/Go%E7%9A%84WebAssembly%E5%BA%94%E7%94%A8/" class="list-group-item list-group-item-action">
+      <span class="archive-post-title">Go的WebAssembly应用</span>
+      <span style="float: right;">01-07</span>
+    </a>
   
     
       
       <p class="h5">2020</p>
     
-    <a href="/2020/11/07/%E7%A8%8B%E5%BA%8F%E5%91%98%E9%83%BD%E5%BA%94%E8%AF%A5%E6%87%82%E7%9A%84%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95/" class="list-group-item list-group-item-action">
-      <span class="archive-post-title">程序员都应该懂的排序算法</span>
-      <span style="float: right;">11-07</span>
-    </a>
-  
-    
-    <a href="/2020/08/04/Redis%E9%82%A3%E4%BA%9B%E4%BA%8B%E9%9A%8F%E7%AC%94/" class="list-group-item list-group-item-action">
-      <span class="archive-post-title">Redis那些事随笔</span>
-      <span style="float: right;">08-04</span>
-    </a>
-  
-    
-    <a href="/2020/05/27/%E6%B5%85%E8%B0%88%E5%88%86%E5%B8%83%E5%BC%8F%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97/" class="list-group-item list-group-item-action">
-      <span class="archive-post-title">浅谈分布式消息队列</span>
-      <span style="float: right;">05-27</span>
+    <a href="/2020/04/22/Go%E4%B9%8Bgoroutine%E6%B5%85%E5%85%A5%E4%BA%86%E8%A7%A3/" class="list-group-item list-group-item-action">
+      <span class="archive-post-title">Go之goroutine浅入了解</span>
+      <span style="float: right;">04-22</span>
     </a>
   
 </div>
-
-  <nav aria-label="index posts navigation">
-    <span class="pagination pg-blue justify-content-center mt-5" id="pagination">
-      <span class="page-number current">1</span><a class="page-number" href="/tags/Go/page/2/">2</a><a class="page-number" href="/tags/Go/page/3/">3</a><a class="page-number" href="/tags/Go/page/4/">4</a><a class="extend next" rel="next" href="/tags/Go/page/2/"><i class="fas fa-angle-double-right"></i></a>
-    </span>
-  </nav>
-  
-  <script>
-    for (ele of document.getElementById("pagination").getElementsByClassName("page-number")) {
-      ele.href += '#board';
-    }
-  </script>
 
 
 
@@ -304,7 +289,7 @@
     var typed = new Typed('#subtitle', {
       strings: [
         '  ',
-        "标签 - Go&nbsp;",
+        "标签 - go&nbsp;",
       ],
       cursorChar: "_",
       typeSpeed: 120,
@@ -391,6 +376,40 @@
             "position": "absolute",
             "font-weight": "bold",
             "color": rand_color()
+          });
+          // 随机颜色
+          function rand_color() {
+            return "rgb(" + ~~(255 * Math.random()) + "," + ~~(255 * Math.random()) + "," + ~~(255 * Math.random()) + ")"
+          }
+          //在body添加这个标签
+          $("body").append($i);
+          //animate() 方法执行 CSS 属性集的自定义动画。
+          //该方法通过CSS样式将元素从一个状态改变为另一个状态。CSS属性值是逐渐改变的，这样就可以创建动画效果。
+          //详情请看http://www.w3school.com.cn/jquery/effect_animate.asp
+          $i.animate({
+            //将原来的位置向上移动180
+            "top": y - 180,
+            "opacity": 0
+            //1500动画的速度
+          }, 1500, function () {
+            //时间到了自动删除
+            $i.remove();
+          });
+        });
+      })
+      ;
+    </script>
+  
+
+
+
+
+
+
+
+</body>
+</html>
+: rand_color()
           });
           // 随机颜色
           function rand_color() {
