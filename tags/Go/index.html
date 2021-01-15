@@ -18,7 +18,7 @@
   <meta name="description" content="一个乐于分享技术和知识的程序员博客.">
   <meta name="author" content="Ding Shuo">
   <meta name="keywords" content="爱代码,爱折腾,Java,Go,Golang,Linux,程序员,iByte">
-  <title>标签 - go - 💗Love code, love toss | iByte📚</title>
+  <title>标签 - go - 💗Love code, love toss | ❤️byte</title>
 
   <link  rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/5.12.1/css/all.min.css" />
 <link  rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/css/bootstrap.min.css" />
@@ -48,7 +48,7 @@
     <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
   <div class="container">
     <a class="navbar-brand"
-       href="/">&nbsp;<strong>iByte📚</strong>&nbsp;</a>
+       href="/">&nbsp;<strong>❤️byte</strong>&nbsp;</a>
 
     <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
             data-target="#navbarSupportedContent"
@@ -376,6 +376,40 @@
             "position": "absolute",
             "font-weight": "bold",
             "color": rand_color()
+          });
+          // 随机颜色
+          function rand_color() {
+            return "rgb(" + ~~(255 * Math.random()) + "," + ~~(255 * Math.random()) + "," + ~~(255 * Math.random()) + ")"
+          }
+          //在body添加这个标签
+          $("body").append($i);
+          //animate() 方法执行 CSS 属性集的自定义动画。
+          //该方法通过CSS样式将元素从一个状态改变为另一个状态。CSS属性值是逐渐改变的，这样就可以创建动画效果。
+          //详情请看http://www.w3school.com.cn/jquery/effect_animate.asp
+          $i.animate({
+            //将原来的位置向上移动180
+            "top": y - 180,
+            "opacity": 0
+            //1500动画的速度
+          }, 1500, function () {
+            //时间到了自动删除
+            $i.remove();
+          });
+        });
+      })
+      ;
+    </script>
+  
+
+
+
+
+
+
+
+</body>
+</html>
+: rand_color()
           });
           // 随机颜色
           function rand_color() {
