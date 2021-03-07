@@ -149,6 +149,72 @@
     
     
       <div class="col-12 col-md-4 m-auto">
+        <a href="/2020/05/12/sync-Mutex-RWMutex%E7%AC%94%E8%AE%B0/" target="_self">
+          <img src="https://tva1.sinaimg.cn/large/007S8ZIlly1gepxosae3gj30t609qjrw.jpg" srcset="/img/loading.gif" alt="sync.Mutex&amp;RWMutex笔记"
+               class="index-img img-fluid rounded index-thumbnails">
+        </a>
+      </div>
+    
+    <div class="col-12 col-md-8 mx-auto index-info">
+      <a href="/2020/05/12/sync-Mutex-RWMutex%E7%AC%94%E8%AE%B0/">
+        <p class="h4 index-header">sync.Mutex&amp;RWMutex笔记</p>
+      </a>
+
+      <a href="/2020/05/12/sync-Mutex-RWMutex%E7%AC%94%E8%AE%B0/">
+        
+        
+          
+        
+        <div class="index-excerpt" >
+          <div class="index-text mb-1">Go 中锁的使用
+互斥锁
+读写锁
+
+
+互斥锁并发程序对公共资源访问的限制最常见的就是使用互斥锁的方式。在Go中，sync.Mutex 提供了互斥锁的实现。
+简单使用示例：
+func main() {
+var mutex sync.Mutex
+count := 0
+
+for r := 0; r &lt; 50; r++ {
+   go func() {
+           mutex.Lock()
+           count += 1
+           mutex.Unlock()
+       }()
+   }
+
+   time.Sleep(time.Second)
+   fmt.</div>
+        </div>
+      </a>
+
+      <div class="index-btm">
+        
+          <i class="iconfont icon-riqi2"></i>&nbsp;2020-05-12&nbsp;&nbsp;
+        
+        
+        
+          <i class="iconfont icon-tag"></i>
+          
+            <a href="/tags/Go/">Go</a>&nbsp;
+          
+            <a href="/tags/%E8%AF%BB%E5%86%99%E9%94%81/">读写锁</a>&nbsp;
+          
+            <a href="/tags/Mutex/">Mutex</a>&nbsp;
+          
+            <a href="/tags/RWMutex/">RWMutex</a>&nbsp;
+          
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+      <div class="col-12 col-md-4 m-auto">
         <a href="/2020/05/11/TCP%E9%BB%8F%E5%8C%85/" target="_self">
           <img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1geooqincbgj30xc0b4t93.jpg" srcset="/img/loading.gif" alt="TCP黏包"
                class="index-img img-fluid rounded index-thumbnails">
@@ -382,57 +448,6 @@ Goroutine是建立在线程之上的轻量级的抽象。它</div>
             <a href="/tags/goroutine/">goroutine</a>&nbsp;
           
             <a href="/tags/channel/">channel</a>&nbsp;
-          
-        
-      </div>
-    </div>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-      <div class="col-12 col-md-4 m-auto">
-        <a href="/2020/03/13/Mac%E4%B8%8A%E9%85%8D%E7%BD%AEGolang%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83/" target="_self">
-          <img src="https://i.loli.net/2020/03/13/JYRMzrxeKlLNp26.jpg" srcset="/img/loading.gif" alt="Mac上配置Golang开发环境"
-               class="index-img img-fluid rounded index-thumbnails">
-        </a>
-      </div>
-    
-    <div class="col-12 col-md-8 mx-auto index-info">
-      <a href="/2020/03/13/Mac%E4%B8%8A%E9%85%8D%E7%BD%AEGolang%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83/">
-        <p class="h4 index-header">Mac上配置Golang开发环境</p>
-      </a>
-
-      <a href="/2020/03/13/Mac%E4%B8%8A%E9%85%8D%E7%BD%AEGolang%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83/">
-        
-        
-          
-        
-        <div class="index-excerpt" >
-          <div class="index-text mb-1">
-
-📝本篇文章记录我本人在Mac上配置Go开发环境的笔记📒
-
-前言
-Go Source Code
-Go是Google开发的一种静态强类型、编译型、并发型，并具有垃圾回收功能的编程语言。 罗伯特·格瑞史莫，罗勃·派克及肯·汤普逊于2007年9月开始设计Go，稍后Ian Lance Taylor、Russ Cox加入项目。Go是基于Inferno操作系统所开发的。
-Go的语法接近C语言，但对于变量的声明有所不同。Go支持垃圾回收功能。Go的并行计算模型是以东尼·霍尔的通信顺序进程（CSP）为基础，采取类似模型的其他语言包括Occam和Limbo，[2]，但它也具有pipeline模型的特征，比</div>
-        </div>
-      </a>
-
-      <div class="index-btm">
-        
-          <i class="iconfont icon-riqi2"></i>&nbsp;2020-03-13&nbsp;&nbsp;
-        
-        
-        
-          <i class="iconfont icon-tag"></i>
-          
-            <a href="/tags/Go/">Go</a>&nbsp;
-          
-            <a href="/tags/Golang/">Golang</a>&nbsp;
-          
-            <a href="/tags/Mac/">Mac</a>&nbsp;
           
         
       </div>

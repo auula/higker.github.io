@@ -149,6 +149,55 @@
     
     
       <div class="col-12 col-md-4 m-auto">
+        <a href="/2020/05/26/Code-Server%E6%90%AD%E5%BB%BA/" target="_self">
+          <img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1gf5z665ly1j30dc06o74k.jpg)" srcset="/img/loading.gif" alt="Code-Server搭建"
+               class="index-img img-fluid rounded index-thumbnails">
+        </a>
+      </div>
+    
+    <div class="col-12 col-md-8 mx-auto index-info">
+      <a href="/2020/05/26/Code-Server%E6%90%AD%E5%BB%BA/">
+        <p class="h4 index-header">Code-Server搭建</p>
+      </a>
+
+      <a href="/2020/05/26/Code-Server%E6%90%AD%E5%BB%BA/">
+        
+        
+          
+        
+        <div class="index-excerpt" >
+          <div class="index-text mb-1">
+
+在我们开发调试程序的时候我们的一些程序部署在服务器上运行，但是很多配置文件，这样我们修改起来比较麻烦，使用我们可以通过vscode服务器版本进行开发。
+
+开始安装安装可以通过这个https://github.com/cdr/code-server仓库上面的文件来。
+根据自己对应的系统版本安装
+Debian, Ubuntucurl -sSOL https://github.com/cdr/code-server/releases/download/v3.3.1/code-server_3.3.1_amd64.deb
+sudo dpkg -i code-server_3.3.1_amd64.d</div>
+        </div>
+      </a>
+
+      <div class="index-btm">
+        
+          <i class="iconfont icon-riqi2"></i>&nbsp;2020-05-26&nbsp;&nbsp;
+        
+        
+        
+          <i class="iconfont icon-tag"></i>
+          
+            <a href="/tags/Linux/">Linux</a>&nbsp;
+          
+            <a href="/tags/vscode/">vscode</a>&nbsp;
+          
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+      <div class="col-12 col-md-4 m-auto">
         <a href="/2020/05/25/Azure%E4%B8%8A%E5%AE%89%E8%A3%85Kafka/" target="_self">
           <img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1gf4liai3d3j30k008jt9d.jpg" srcset="/img/loading.gif" alt="Azure上安装Kafka"
                class="index-img img-fluid rounded index-thumbnails">
@@ -395,72 +444,6 @@ go test命令是一个按照一定约定和组织的测试代码的驱动程序�
             <a href="/tags/Go/">Go</a>&nbsp;
           
             <a href="/tags/Golang/">Golang</a>&nbsp;
-          
-        
-      </div>
-    </div>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-      <div class="col-12 col-md-4 m-auto">
-        <a href="/2020/05/12/sync-Mutex-RWMutex%E7%AC%94%E8%AE%B0/" target="_self">
-          <img src="https://tva1.sinaimg.cn/large/007S8ZIlly1gepxosae3gj30t609qjrw.jpg" srcset="/img/loading.gif" alt="sync.Mutex&amp;RWMutex笔记"
-               class="index-img img-fluid rounded index-thumbnails">
-        </a>
-      </div>
-    
-    <div class="col-12 col-md-8 mx-auto index-info">
-      <a href="/2020/05/12/sync-Mutex-RWMutex%E7%AC%94%E8%AE%B0/">
-        <p class="h4 index-header">sync.Mutex&amp;RWMutex笔记</p>
-      </a>
-
-      <a href="/2020/05/12/sync-Mutex-RWMutex%E7%AC%94%E8%AE%B0/">
-        
-        
-          
-        
-        <div class="index-excerpt" >
-          <div class="index-text mb-1">Go 中锁的使用
-互斥锁
-读写锁
-
-
-互斥锁并发程序对公共资源访问的限制最常见的就是使用互斥锁的方式。在Go中，sync.Mutex 提供了互斥锁的实现。
-简单使用示例：
-func main() {
-var mutex sync.Mutex
-count := 0
-
-for r := 0; r &lt; 50; r++ {
-   go func() {
-           mutex.Lock()
-           count += 1
-           mutex.Unlock()
-       }()
-   }
-
-   time.Sleep(time.Second)
-   fmt.</div>
-        </div>
-      </a>
-
-      <div class="index-btm">
-        
-          <i class="iconfont icon-riqi2"></i>&nbsp;2020-05-12&nbsp;&nbsp;
-        
-        
-        
-          <i class="iconfont icon-tag"></i>
-          
-            <a href="/tags/Go/">Go</a>&nbsp;
-          
-            <a href="/tags/%E8%AF%BB%E5%86%99%E9%94%81/">读写锁</a>&nbsp;
-          
-            <a href="/tags/Mutex/">Mutex</a>&nbsp;
-          
-            <a href="/tags/RWMutex/">RWMutex</a>&nbsp;
           
         
       </div>
