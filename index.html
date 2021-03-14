@@ -149,6 +149,51 @@
     
     
       <div class="col-12 col-md-4 m-auto">
+        <a href="/2021/03/14/csrf%E6%94%BB%E5%87%BB%E5%92%8C%E9%98%B2%E8%8C%83/" target="_self">
+          <img src="https://tva1.sinaimg.cn/large/e6c9d24egy1gojm5usbk6j20p00antfb.jpg" srcset="/img/loading.gif" alt="csrf攻击和防范"
+               class="index-img img-fluid rounded index-thumbnails">
+        </a>
+      </div>
+    
+    <div class="col-12 col-md-8 mx-auto index-info">
+      <a href="/2021/03/14/csrf%E6%94%BB%E5%87%BB%E5%92%8C%E9%98%B2%E8%8C%83/">
+        <p class="h4 index-header">csrf攻击和防范</p>
+      </a>
+
+      <a href="/2021/03/14/csrf%E6%94%BB%E5%87%BB%E5%92%8C%E9%98%B2%E8%8C%83/">
+        
+        
+          
+        
+        <div class="index-excerpt" >
+          <div class="index-text mb-1">概 述随着互联网的高速发展，信息安全问题已经成为企业最为关注的焦点之一，而前端又是引发企业安全问题的高危据点。在移动互联网时代，前端人员除了传统的 XSS、CSRF 等安全问题之外，又时常遭遇网络劫持、非法调用 API 等新型安全问题。当然，浏览器自身也在不断在进化和发展，不断引入 CSP、Same-Site Cookies 等新技术来增强安全性，但是仍存在很多潜在的威胁，这需要我们技术人员不断对系统进行“查漏补缺”。
+废话少说，先看问题为了模拟问题我这边用go写了2个服务端的代码，正常交易系统的API，当然这里只是为了演示漏洞利用，代码比较简单如下:
+transaction.go 内容:
+p</div>
+        </div>
+      </a>
+
+      <div class="index-btm">
+        
+          <i class="iconfont icon-riqi2"></i>&nbsp;2021-03-14&nbsp;&nbsp;
+        
+        
+        
+          <i class="iconfont icon-tag"></i>
+          
+            <a href="/tags/%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8/">信息安全</a>&nbsp;
+          
+            <a href="/tags/csrf/">csrf</a>&nbsp;
+          
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+      <div class="col-12 col-md-4 m-auto">
         <a href="/2021/03/07/%E5%9B%BE%E8%A7%A3%E5%90%84%E7%A7%8D%E9%99%90%E6%B5%81%E7%AE%97%E6%B3%95/" target="_self">
           <img src="https://tva1.sinaimg.cn/large/008eGmZEgy1gn8bgfh0pzj30pt0ii4bx.jpg" srcset="/img/loading.gif" alt="图解各种限流算法"
                class="index-img img-fluid rounded index-thumbnails">
@@ -388,56 +433,6 @@ Redis（Remote Dictionary Server)，即远程字典服务，是一个开源的�
             <a href="/tags/Go/">Go</a>&nbsp;
           
             <a href="/tags/Redis/">Redis</a>&nbsp;
-          
-        
-      </div>
-    </div>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-      <div class="col-12 col-md-4 m-auto">
-        <a href="/2020/05/27/%E6%B5%85%E8%B0%88%E5%88%86%E5%B8%83%E5%BC%8F%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97/" target="_self">
-          <img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1gf7dwe18p4j30hj07vaaq.jpg" srcset="/img/loading.gif" alt="浅谈分布式消息队列"
-               class="index-img img-fluid rounded index-thumbnails">
-        </a>
-      </div>
-    
-    <div class="col-12 col-md-8 mx-auto index-info">
-      <a href="/2020/05/27/%E6%B5%85%E8%B0%88%E5%88%86%E5%B8%83%E5%BC%8F%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97/">
-        <p class="h4 index-header">浅谈分布式消息队列</p>
-      </a>
-
-      <a href="/2020/05/27/%E6%B5%85%E8%B0%88%E5%88%86%E5%B8%83%E5%BC%8F%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97/">
-        
-        
-          
-        
-        <div class="index-excerpt" >
-          <div class="index-text mb-1">什么消息队列?消息队列这个词陌生人一听挖槽好牛逼啊好高大上啊，消息队列，一般我们会简称它为MQ(Message Queue)，嗯，就是很直白的简写。
-
-队列是一种先进先出的数据结构
-消息队列（MessageQueue）是一种应用间的通信方式
-消息可以非常简单，比如只包含文本字符串，也可以更复杂，可能包含嵌入对象
-消息发送者 可以发送一个消息而无须等待响应。消息发送者 将消息发送到一条 虚拟的通道（主题 或 队列）上，消息接收者 则 订阅 或是 监听 该通道。一条信息可能最终转发给 一个或多个 消息接收者，这些接收者都无需对 消息发送者 做出 同步回应。整个过程都是 异步的。
-
-
-维基百科上是这</div>
-        </div>
-      </a>
-
-      <div class="index-btm">
-        
-          <i class="iconfont icon-riqi2"></i>&nbsp;2020-05-27&nbsp;&nbsp;
-        
-        
-        
-          <i class="iconfont icon-tag"></i>
-          
-            <a href="/tags/Go/">Go</a>&nbsp;
-          
-            <a href="/tags/%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97/">消息队列</a>&nbsp;
           
         
       </div>
