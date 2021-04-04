@@ -1,0 +1,715 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/apple-touch-icon.png">
+  <link rel="icon" type="image/png" href="/img/icons8-d-1000.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+  
+  <meta name="description" content="一个乐于分享技术和知识的程序员博客.">
+  <meta name="author" content="Jarvib Ding">
+  <meta name="keywords" content="爱代码,爱折腾,Java,Go,Golang,Linux,程序员,iByte">
+  <title>优雅的写测试Goconvery - 💗Love code, love toss | 一手代码一首诗</title>
+
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/5.12.1/css/all.min.css" />
+<link  rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/css/bootstrap.min.css" />
+<link  rel="stylesheet" href="https://cdn.staticfile.org/mdbootstrap/4.13.0/css/mdb.min.css" />
+<link  rel="stylesheet" href="https://cdn.staticfile.org/github-markdown-css/3.0.1/github-markdown.min.css" />
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1067060_qzomjdt8bmp.css">
+
+
+
+  <link  rel="stylesheet" href="/lib/prettify/tranquil-heart.min.css" />
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+<!-- 自定义样式保持在最底部 -->
+
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>一手代码一手诗</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/">首页</a>
+          </li>
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/archives/">归档</a>
+          </li>
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/categories/">分类</a>
+          </li>
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/tags/">标签</a>
+          </li>
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/about/">关于</a>
+          </li>
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="view intro-2" id="background" false
+         style="background: url('/img/default.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask rgba-black-light flex-center">
+          <div class="container text-center white-text fadeInUp">
+            <span class="h2" id="subtitle">
+              
+            </span>
+
+            
+              
+                <p class="mt-3 post-meta">
+                  <i class="fas fa-calendar-alt" aria-hidden="true"></i>
+                  星期日, 四月 4日 2021, 6:15 晚上
+                </p>
+              
+
+              <p class="mt-1">
+                
+                  
+                  <span class="post-meta">
+                    <i class="far fa-chart-bar"></i>
+                    1.4k 字
+                  </span>
+                
+
+                
+                  
+                  <span class="post-meta">
+                      <i class="far fa-clock"></i>
+                      6 分钟
+                  </span>
+                
+
+                
+                  <!-- 不蒜子统计文章PV -->
+                  
+                  <span id="busuanzi_container_page_pv" class="post-meta" style="display: none">
+                    <i class="far fa-eye" aria-hidden="true"></i>
+                    <span id="busuanzi_value_page_pv"></span> 次
+                  </span>
+                
+              </p>
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-md">
+      <div class="py-5 z-depth-3" id="board">
+        <div class="post-content mx-auto" id="post">
+          
+          <div class="markdown-body">
+            <h2 id="简-介"><a href="#简-介" class="headerlink" title="简 介"></a>简 介</h2><p>相信各位<code>Gopher</code> 在编写代码的时候都离不开编写<code>单元测试</code>，<code>Go</code>语言虽然自带单元测试功能，但是使用起来有点乏味和枯燥。在<code>GoConvey</code>诞生之前也出现了许多第三方辅助库。但没有一个辅助库能够像<code>GoConvey</code>这样优雅地书写代码的单元测试，简洁的语法和舒适的界面能够让一个不爱书写单元测试的开发人员从此爱上<code>单元测试</code>。</p>
+<p><code>GoConvey</code> 是个相当不错的 <code>Go</code> 测试框架，兼容<code>go testing</code>，并且可直接在终端窗口和浏览器上使用。</p>
+<p><img src="https://files.mdnice.com/user/8699/176ba4d4-9997-428d-9109-04e42dd751ab.png" srcset="/img/loading.gif" alt="GoConvey Web UI"></p>
+<h2 id="特-性"><a href="#特-性" class="headerlink" title="特 性"></a>特 性</h2><ul>
+<li>直接整合 <code>go test</code></li>
+<li>丰富的测试断言规则</li>
+<li>可读的彩色控制台输出</li>
+<li>全自动的<code>Web UI</code></li>
+</ul>
+<h2 id="快速体验"><a href="#快速体验" class="headerlink" title="快速体验"></a>快速体验</h2><p><strong>快速体验，先看看我们的代码</strong></p>
+<pre><code class="go">func TestSpec(t *testing.T) {
+    Convey(&quot;给出一个带有起始值的整数&quot;, t, func() {
+        x := 1
+
+        Convey(&quot;当整数递增时&quot;, func() {
+            x++
+
+            Convey(&quot;该值的结果应是大于&gt;1 ?&quot;, func() {
+                So(x, ShouldEqual, 2)
+            })
+        })
+    })
+}</code></pre>
+<p>然后跑起来：<code>go test -v</code></p>
+<p><img src="https://files.mdnice.com/user/8699/14db4781-7f5e-4398-bf36-cdb8f103e37c.png" srcset="/img/loading.gif" alt="测试结果"></p>
+<p><code>So</code>函数的第一个参数<code>你自己被测试逻辑函数</code>，第二个参数 <code>断言规则</code>，第三个参数<code>预计结果</code>，可以看到层次清晰，并且兼容<code>go test -v</code>命令。</p>
+<h2 id="快速上手"><a href="#快速上手" class="headerlink" title="快速上手"></a>快速上手</h2><ul>
+<li>在你的项目安装<code>goconvey</code></li>
+<li>在<code>Go testing</code>文件里面编写测试代码</li>
+<li>运行即可看到测试结果</li>
+</ul>
+<ol>
+<li>在项目下面安装<code>goconery</code></li>
+</ol>
+<pre><code class="go">go get github.com/smartystreets/goconvey</code></pre>
+<ol start="2">
+<li>在项目下创建一个<code>operator.go</code>文件，这个文件只是为了演示单元测试使用的例子</li>
+</ol>
+<p><strong>operator.go</strong>文件</p>
+<pre><code class="go">package testing
+
+import(
+      &quot;errors&quot;
+)
+
+// 为了测试编写的加减乘除函数
+func Add(x,y int) int {
+    return x + y
+}
+
+func  Subtract(x,y int) int {
+    return x - y
+}
+
+func Division(x,y int)(int,error){
+    if y == 0 {
+        return 0,errors.New(&quot;被除数不能为零&quot;)
+    }
+    return x / y,nil
+}
+
+func Multiply(x,y int) int{
+    return x * y
+}</code></pre>
+<ol start="3">
+<li>创建一个单元测试并且使用<code>goconery</code>进行单元测试</li>
+</ol>
+<p><strong>operator_test.go</strong>文件</p>
+<pre><code class="go">// 单元测试函数和普通go测试命名一样
+func TestAdd(t *testing.T) {
+
+    //  Convey 函数 第一个参数是测试名称
+    //  t = *testing.T
+    //     func = 自定义测试逻辑
+    Convey(&quot;两数相加测试，11 + 11 = 22 ？&quot;, t, func() {
+        x, y := 11, 11
+        // So 函数比较结果 ShouldEqual 是相等的意思
+        So(Add(x,y), ShouldEqual, 22)
+    })
+}</code></pre>
+<p>注意: 在默认的<code>testing</code>包之外还要导入一个<code>. &quot;github.com/smartystreets/goconvey/convey&quot;</code>包！！！</p>
+<p>然后测试看看：</p>
+<pre><code class="go">go test -v
+=== RUN   TestAdd
+
+  两数相加测试 ✔
+
+
+1 total assertion
+
+--- PASS: TestAdd (0.00s)
+PASS
+ok      github.com/higker/testing    0.005s</code></pre>
+<p><img src="https://files.mdnice.com/user/8699/5c2c7e59-986a-4272-9565-d8a5f71c7987.png" srcset="/img/loading.gif" alt="正确✅"></p>
+<p>接下来我们多写几个函数测试一下：</p>
+<pre><code class="go">func TestSubtract(t *testing.T) {
+    Convey(&quot;测试两数相减，22 - 11 != 22 ？&quot;, t, func() {
+        x, y := 22, 11
+        // So 函数比较结果 ShouldNotEqual 是不相等的意思
+        So(Subtract(x,y), ShouldNotEqual, 22)
+    })
+}
+
+func TestMultiply(t *testing.T) {
+    Convey(&quot;将两数相乘，11 * 2 = 22 ？&quot;, t, func() {
+        x, y := 11, 2
+        So(Multiply(x,y), ShouldEqual, 22)
+    })
+}</code></pre>
+<p>新加了2个函数，我们在下面目录启动命令行输入<code>goconvey</code>，这个时候就可以启动<code>web界面</code>了</p>
+<p><img src="https://files.mdnice.com/user/8699/05a8508c-5655-4a0c-a8ce-ef083600f217.png" srcset="/img/loading.gif" alt="goconvey命令启动web ui"></p>
+<ol start="5">
+<li>然后在浏览器打开<code>http://127.0.0.1:8080/</code>，即可看到我们刚刚编写的测试结果通过界面的方式展示出来了</li>
+</ol>
+<p><img src="https://files.mdnice.com/user/8699/91fb76a9-7367-4433-a72d-62544785757d.png" srcset="/img/loading.gif" alt="http://127.0.0.1:8080/"></p>
+<p>是不是很<code>cool</code>很哇塞😜。。</p>
+<p>现在我在测试故意加入一个运算错误的逻辑，看看会怎么样。</p>
+<pre><code class="go">func TestDivision(t *testing.T) {
+    Convey(&quot;将两数相除&quot;, t, func() {
+      x, y := 10, 2
+      Convey(&quot;除以非 0 数&quot;, func() {
+          n,_ := Division(x, y)
+          So(n, ShouldEqual, 5)
+      })
+
+      Convey(&quot;除以 0&quot;, func() {
+          y = 0 // 我们将被除数设置为0
+          _,err := Division(x, y)
+          So(err, ShouldNotBeNil)
+      })
+    })
+}</code></pre>
+<p><img src="https://files.mdnice.com/user/8699/6fe2a434-d629-4219-aec1-4c19e9fbbcac.png" srcset="/img/loading.gif" alt="结果"></p>
+<p>只要<code>GoConvey</code>正在运行，测试结果就会在您的浏览器窗口中自动更新。该设计是响应式的，因此如果需要将其放在代码旁边，则可以将浏览器紧紧压缩，这时我不需要手动跑我们的测试，因为我刚刚通过<code>goconvey</code>起来了一个进程，它会监测我们的代码改动，并且实时在<code>web界面</code>上展示我的测试结果。</p>
+<p><strong>上面的<code>TestDivision</code>函数我做了处理，所以不会抛异常，如果异常了就是下面的👇截图</strong></p>
+<p><img src="https://files.mdnice.com/user/8699/1f34a3a5-34f4-4d71-b13a-85120939c654.png" srcset="/img/loading.gif" alt="可以看到界面error了显示成红色了"></p>
+<p><img src="https://files.mdnice.com/user/8699/2a48c724-9e00-4df8-855f-d252eeaa8082.png" srcset="/img/loading.gif" alt="相关的错误信息"></p>
+<p>好了相关的演示到此为止了，<code>goconery</code>通过很多测试规则和断言规则，也可以自定义规则，大家可以在他的官方网站是查到相关的资料，大家可以自己动手试试，搞起来！！！</p>
+<h2 id="界面一些帮助信息"><a href="#界面一些帮助信息" class="headerlink" title="界面一些帮助信息"></a>界面一些帮助信息</h2><p><img src="https://files.mdnice.com/user/8699/c802784a-68c9-439c-9cfe-cb80d93d5fc6.png" srcset="/img/loading.gif" alt="ui图解"></p>
+<h2 id="Assertions-内置的断言"><a href="#Assertions-内置的断言" class="headerlink" title="Assertions 内置的断言"></a>Assertions 内置的断言</h2><p><strong>General Equality</strong></p>
+<pre><code class="go">So(thing, ShouldEqual, thing2)
+So(thing, ShouldNotEqual, thing2)
+So(thing, ShouldResemble, thing2)
+So(thing, ShouldNotResemble, thing2)
+So(thing, ShouldPointTo, thing2)
+So(thing, ShouldNotPointTo, thing2)
+So(thing, ShouldBeNil, thing2)
+So(thing, ShouldNotBeNil, thing2)
+So(thing, ShouldBeTrue)
+So(thing, ShouldBeFalse)</code></pre>
+<p><strong>Numeric Quantity comparison</strong></p>
+<pre><code class="go">So(1, ShouldBeGreaterThan, 0)
+So(1, ShouldBeGreaterThanOrEqualTo, 0)
+So(1, ShouldBeLessThan, 2)
+So(1, ShouldBeLessThanOrEqualTo, 2)
+So(1.1, ShouldBeBetween, .8, 1.2)
+So(1.1, ShouldNotBeBetween, 2, 3)
+So(1.1, ShouldBeBetweenOrEqual, .9, 1.1)
+So(1.1, ShouldNotBeBetweenOrEqual, 1000, 2000)</code></pre>
+<p><strong>Collections</strong></p>
+<pre><code class="go">So([]int{2, 4, 6}, ShouldContain, 4)
+So([]int{2, 4, 6}, ShouldNotContain, 5)
+So(4, ShouldBeIn, ...[]int{2, 4, 6})
+So(4, ShouldNotBeIn, ...[]int{1, 3, 5})</code></pre>
+<p><strong>Strings</strong></p>
+<pre><code class="go">So(&quot;asdf&quot;, ShouldStartWith, &quot;as&quot;)
+So(&quot;asdf&quot;, ShouldNotStartWith, &quot;df&quot;)
+So(&quot;asdf&quot;, ShouldEndWith, &quot;df&quot;)
+So(&quot;asdf&quot;, ShouldNotEndWith, &quot;df&quot;)
+So(&quot;asdf&quot;, ShouldContain, &quot;sd&quot;)  // optional &#39;expected occurences&#39; arguments?
+So(&quot;asdf&quot;, ShouldNotContain, &quot;er&quot;)
+So(&quot;adsf&quot;, ShouldBeBlank)
+So(&quot;asdf&quot;, ShouldNotBeBlank)</code></pre>
+<p><strong>panic</strong></p>
+<pre><code>So(func(), ShouldPanic)
+So(func(), ShouldNotPanic)
+So(func(), ShouldPanicWith, &quot;&quot;) // or errors.New(&quot;something&quot;)
+So(func(), ShouldNotPanicWith, &quot;&quot;) // or errors.New(&quot;something&quot;)</code></pre><h2 id="总-结"><a href="#总-结" class="headerlink" title="总 结"></a>总 结</h2><p><code>goconery</code>会让一个不爱写单元测试的<code>gopher</code>爱上写测试！！写出优雅的测试代码。</p>
+<h2 id="相关资料"><a href="#相关资料" class="headerlink" title="相关资料"></a>相关资料</h2><p>goconvey: <a href="https://github.com/smartystreets/goconvey" target="_blank" rel="noopener">https://github.com/smartystreets/goconvey</a></p>
+<p>本例子仓库：<a href="https://github.com/higker/goconvey-example" target="_blank" rel="noopener">https://github.com/higker/goconvey-example</a></p>
+
+            <hr>
+          </div>
+          <br>
+          <div>
+            <p>
+            
+              
+              <span>
+                <i class="iconfont icon-tag"></i>
+                
+                  <a class="hover-with-bg" href="/tags/Golang/">Golang</a>
+                
+                  <a class="hover-with-bg" href="/tags/Goconvery/">Goconvery</a>
+                
+              </span>
+            
+            </p>
+            
+              <p class="note note-warning">本博客所有文章除特别声明外，均采用 <a href="https://zh.wikipedia.org/wiki/Wikipedia:CC_BY-SA_3.0%E5%8D%8F%E8%AE%AE%E6%96%87%E6%9C%AC" target="_blank" rel="nofollow noopener noopener">CC BY-SA 3.0协议</a> 。转载请注明出处！</p>
+            
+          </div>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container">
+        <div id="toc">
+  <p class="h5"><i class="far fa-list-alt"></i>&nbsp;目录</p>
+  <div id="tocbot"></div>
+</div>
+      </div>
+    
+  </div>
+</div>
+
+<!-- custom -->
+
+
+<!-- Comments -->
+<div class="col-lg-7 mx-auto nopadding-md">
+  <div class="container comments mx-auto" id="comments">
+    
+      <br><br>
+      
+      
+  <div id="gitalk-container"></div>
+  <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+  <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/blueimp-md5@2.11.1/js/md5.min.js"></script>
+  <script type="text/javascript">
+    var gitalk = new Gitalk({
+      clientID: '22468b62936ae5d73a0b',
+      clientSecret: '918618299c36b1430a0501cd976b82fd48cbfe0c',
+      repo: 'higker.github.io',
+      owner: 'higker',
+      admin: 'higker',
+      id: md5(location.pathname),
+      language: 'zh-CN',
+      perPage: 15,
+      pagerDirection: 'last',
+      createIssueManually: 'true',
+      distractionFreeMode: 'false'
+    });
+
+    gitalk.render('gitalk-container')
+  </script>
+
+
+    
+  </div>
+</div>
+
+    
+  </main>
+
+  
+    <a class="z-depth-1" id="scroll-top-button" href="#" role="button">
+      <i class="fa fa-chevron-up scroll-top-arrow" aria-hidden="true"></i>
+    </a>
+  
+
+  
+    <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+  
+
+  
+
+  
+
+  <!--
+ * @Author: BinScholl
+ * @Date: 2020-03-07 11:18:30
+ * @LastEditors: BinScholl
+ * @LastEditTime: 2020-03-07 11:58:12
+ * @Description: 
+ * @Github: https://github.com/BinScholl
+ -->
+<footer class="mt-5">
+  <div class="text-center py-3">
+    <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><b>Hexo</b></a>
+    <i class="iconfont icon-love"></i>
+    <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"> <b>Fluid</b></a>
+
+    
+  <div>
+    
+      <!-- 不蒜子统计PV -->
+      
+      <span id="busuanzi_container_site_pv" style="display: none">
+      总访问量 <span id="busuanzi_value_site_pv"></span> 次
+    </span>
+    
+    
+      <!-- 不蒜子统计UV -->
+      
+      <span id="busuanzi_container_site_uv" style="display: none">
+      总访客数 <span id="busuanzi_value_site_uv"></span> 人
+    </span>
+    
+  </div>
+
+
+    
+
+    <!-- cnzz Analytics icon -->
+    
+    <p>iByte is maintained by Deen.</p>
+  </div>
+</footer>
+
+<!-- SCRIPTS -->
+<script  src="https://cdn.staticfile.org/jquery/3.4.1/jquery.min.js" ></script>
+<script  src="https://cdn.staticfile.org/popper.js/1.16.1/umd/popper.min.js" ></script>
+<script  src="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/js/bootstrap.min.js" ></script>
+<script  src="https://cdn.staticfile.org/mdbootstrap/4.13.0/js/mdb.min.js" ></script>
+<script  src="/js/main.js" ></script>
+
+
+  <script  src="/js/lazyload.js" ></script>
+
+
+
+  
+  <script  src="https://cdn.staticfile.org/tocbot/4.10.0/tocbot.min.js" ></script>
+  <script>
+    $(document).ready(function () {
+      var navHeight = $('#navbar').height();
+      var toc = $('#toc');
+      var main = $('main');
+      var tocT = navHeight + (toc.offset().top - main.offset().top);
+      var tocLimMin = main.offset().top - navHeight;
+      var tocLimMax = $('#comments').offset().top - navHeight;
+      $(window).scroll(function () {
+        var scroH = document.body.scrollTop + document.documentElement.scrollTop;
+        if (tocLimMin <= scroH && scroH <= tocLimMax) {
+          toc.css({
+            'display': 'block',
+            'position': 'fixed',
+            'top': tocT,
+          });
+        } else if (scroH <= tocLimMin) {
+          toc.css({
+            'position': '',
+            'top': '',
+          });
+        } else if (scroH > tocLimMax) {
+          toc.css('display', 'none');
+        }
+      });
+      tocbot.init({
+        tocSelector: '#tocbot',
+        contentSelector: '.post-content',
+        headingSelector: 'h1,h2,h3,h4,h5,h6',
+        linkClass: 'tocbot-link',
+        activeLinkClass: 'tocbot-active-link',
+        listClass: 'tocbot-list',
+        isCollapsedClass: 'tocbot-is-collapsed',
+        collapsibleClass: 'tocbot-is-collapsible',
+        scrollSmooth: true,
+      });
+      if ($('.toc-list-item').length > 0) {
+        $('#toc > p').css('visibility', 'visible');
+      }
+    });
+  </script>
+
+
+
+
+
+
+
+  <script defer src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+<!-- Plugins -->
+
+
+
+  <script  src="https://cdn.staticfile.org/prettify/188.0.0/prettify.min.js" ></script>
+  <script>
+    $(document).ready(function () {
+      $('pre').addClass('prettyprint  ');
+      prettyPrint();
+    })
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/typed.js/2.0.11/typed.min.js" ></script>
+  <script>
+    var typed = new Typed('#subtitle', {
+      strings: [
+        '  ',
+        "优雅的写测试Goconvery&nbsp;",
+      ],
+      cursorChar: "_",
+      typeSpeed: 120,
+      loop: true,
+    });
+    typed.stop();
+    $(document).ready(function () {
+      $(".typed-cursor").addClass("h2");
+      typed.start();
+    });
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/anchor-js/4.2.2/anchor.min.js" ></script>
+  <script>
+    anchors.options = {
+      placement: "right",
+      visible: "hover",
+      
+      icon: "✨"
+      
+    };
+    var el = "h1,h2,h3,h4,h5,h6".split(",");
+    var res = [];
+    for (item of el) {
+      res.push(".markdown-body > " + item)
+    }
+    anchors.add(res.join(", "))
+  </script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+  <script>
+    var path = "/local-search.xml";
+    var inputArea = document.querySelector("#local-search-input");
+    inputArea.onclick = function () {
+      getSearchFile(path);
+      this.onclick = null
+    }
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.js" ></script>
+  <script>
+    $("#post img:not(.no-zoom img, img[no-zoom])").each(
+      function () {
+        var element = document.createElement("a");
+        $(element).attr("data-fancybox", "images");
+        $(element).attr("href", $(this).attr("src"));
+        $(this).wrap(element);
+      }
+    );
+  </script>
+
+
+
+
+
+  
+  
+    <script type="text/javascript">
+      //定义获取词语下标
+      var a_idx = 0;
+      jQuery(document).ready(function ($) {
+        //点击body时触发事件
+        $("body").click(function (e) {
+          //需要显示的词语
+          var a = new Array("富强", "民主", "文明", "和谐", "自由", "平等", "公正", "法治", "爱国", "敬业", "诚信", "友善");
+          //设置词语给span标签
+          var $i = $("<span/>").text(a[a_idx]);
+          //下标等于原来下标+1  余 词语总数
+          a_idx = (a_idx + 1) % a.length;
+          //获取鼠标指针的位置，分别相对于文档的左和右边缘。
+          //获取x和y的指针坐标
+          var x = e.pageX, y = e.pageY;
+          //在鼠标的指针的位置给$i定义的span标签添加css样式
+          $i.css({
+            "z-index": 999,
+            "top": y - 20,
+            "left": x,
+            "position": "absolute",
+            "font-weight": "bold",
+            "color": rand_color()
+          });
+          // 随机颜色
+          function rand_color() {
+            return "rgb(" + ~~(255 * Math.random()) + "," + ~~(255 * Math.random()) + "," + ~~(255 * Math.random()) + ")"
+          }
+          //在body添加这个标签
+          $("body").append($i);
+          //animate() 方法执行 CSS 属性集的自定义动画。
+          //该方法通过CSS样式将元素从一个状态改变为另一个状态。CSS属性值是逐渐改变的，这样就可以创建动画效果。
+          //详情请看http://www.w3school.com.cn/jquery/effect_animate.asp
+          $i.animate({
+            //将原来的位置向上移动180
+            "top": y - 180,
+            "opacity": 0
+            //1500动画的速度
+          }, 1500, function () {
+            //时间到了自动删除
+            $i.remove();
+          });
+        });
+      })
+      ;
+    </script>
+  
+
+
+
+
+
+
+
+</body>
+</html>
