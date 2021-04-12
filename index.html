@@ -149,6 +149,55 @@
     
     
       <div class="col-12 col-md-4 m-auto">
+        <a href="/2021/04/12/%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81redis%E7%9A%84%E5%9D%91/" target="_self">
+          <img src="https://tva1.sinaimg.cn/large/008eGmZEgy1gpg66tcks2j31900u07wi.jpg" srcset="/img/loading.gif" alt="分布式锁redis的坑"
+               class="index-img img-fluid rounded index-thumbnails">
+        </a>
+      </div>
+    
+    <div class="col-12 col-md-8 mx-auto index-info">
+      <a href="/2021/04/12/%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81redis%E7%9A%84%E5%9D%91/">
+        <p class="h4 index-header">分布式锁redis的坑</p>
+      </a>
+
+      <a href="/2021/04/12/%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81redis%E7%9A%84%E5%9D%91/">
+        
+        
+          
+        
+        <div class="index-excerpt" >
+          <div class="index-text mb-1">
+前 言谈到分布式应用那必然离不开分布式锁🔐的问题，分布式锁在分布式应用中应用广泛，本文就讲讲基于redis实现的分布式锁的一些问题。
+锁可能各位coder接触最多的还是在多线程的环境下，为了保证一个代码块在同一时间只能由一个线程访问情况，例如下图：
+
+对于单进程的并发场景，可以使用编程语言及相应的类库提供的锁，如Java中的 synchronized 语法以及 ReentrantLock，Golang中的sync包下面的mutex，Rust中的async_std::sync::Mutex，避免并发问题，这实际上是本地锁的方式。
+分布式锁但是现在流行的分布式架构，在分布式环境下，如何保证不同</div>
+        </div>
+      </a>
+
+      <div class="index-btm">
+        
+          <i class="iconfont icon-riqi2"></i>&nbsp;2021-04-12&nbsp;&nbsp;
+        
+        
+        
+          <i class="iconfont icon-tag"></i>
+          
+            <a href="/tags/Redis/">Redis</a>&nbsp;
+          
+            <a href="/tags/Rust/">Rust</a>&nbsp;
+          
+            <a href="/tags/%E5%88%86%E5%B8%83%E5%BC%8F/">分布式</a>&nbsp;
+          
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+      <div class="col-12 col-md-4 m-auto">
         <a href="/2021/04/04/%E5%AE%9E%E7%8E%B0web%E4%B8%AD%E9%97%B4%E4%BB%B6session/" target="_self">
           <img src="https://tva1.sinaimg.cn/large/008eGmZEgy1gp7wfx751qj30xc0hggnb.jpg" srcset="/img/loading.gif" alt="实现web中间件session"
                class="index-img img-fluid rounded index-thumbnails">
@@ -381,59 +430,11 @@ transaction.go 内容:
     </div>
   </div>
 
-  <div class="row mx-auto index-card">
-    
-    
-      <div class="col-12 col-md-4 m-auto">
-        <a href="/2021/01/07/Go%E7%9A%84WebAssembly%E5%BA%94%E7%94%A8/" target="_self">
-          <img src="https://tva1.sinaimg.cn/large/008eGmZEgy1gmfcr3hkdjj31mx0u07oa.jpg" srcset="/img/loading.gif" alt="Go的WebAssembly应用"
-               class="index-img img-fluid rounded index-thumbnails">
-        </a>
-      </div>
-    
-    <div class="col-12 col-md-8 mx-auto index-info">
-      <a href="/2021/01/07/Go%E7%9A%84WebAssembly%E5%BA%94%E7%94%A8/">
-        <p class="h4 index-header">Go的WebAssembly应用</p>
-      </a>
-
-      <a href="/2021/01/07/Go%E7%9A%84WebAssembly%E5%BA%94%E7%94%A8/">
-        
-        
-          
-        
-        <div class="index-excerpt" >
-          <div class="index-text mb-1">
-介 绍  在 go 1.11 的时候 go 官方向 go 实验性的添加了 WebAssembly 支持，也就是说 golang 可以编译 为 wasm 以供 JavaScript 进行调用。
-在这里我想说一下我的感受，在编写代码时应该是主要编写 go 的代码供 JavaScript 调用 而不是在 在 go 中调用 JavaScript 代码。
-目前 go 还只是实验性的支持 wasm 以后可能会变更，后面我会尽量跟进。
-另外如果感兴趣的话，推荐一本柴树杉、丁尔男两位大佬的《WebAssembly 标准入门》，估计也快发售了。
-WebAssembly 简介
-WebAssembly 是一种新兴</div>
-        </div>
-      </a>
-
-      <div class="index-btm">
-        
-          <i class="iconfont icon-riqi2"></i>&nbsp;2021-01-07&nbsp;&nbsp;
-        
-        
-        
-          <i class="iconfont icon-tag"></i>
-          
-            <a href="/tags/go/">go</a>&nbsp;
-          
-            <a href="/tags/webassembly/">webassembly</a>&nbsp;
-          
-        
-      </div>
-    </div>
-  </div>
-
 
 
   <nav aria-label="index posts navigation">
     <span class="pagination pg-blue justify-content-center mt-5" id="pagination">
-      <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/2/"><i class="fas fa-angle-double-right"></i></a>
+      <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/2/"><i class="fas fa-angle-double-right"></i></a>
     </span>
   </nav>
   
