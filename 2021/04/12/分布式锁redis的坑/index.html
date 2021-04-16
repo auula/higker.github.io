@@ -179,11 +179,11 @@
             <p><img src="https://tva1.sinaimg.cn/large/008eGmZEgy1gpg66tcks2j31900u07wi.jpg" srcset="/img/loading.gif" alt="本篇文章讲Redis翻车事件😜"></p>
 <h2 id="前-言"><a href="#前-言" class="headerlink" title="前 言"></a>前 言</h2><p>谈到分布式应用那必然离不开<code>分布式锁🔐</code>的问题，分布式锁在分布式应用中应用广泛，本文就讲讲基于<code>redis</code>实现的分布式锁的一些问题。</p>
 <h2 id="锁"><a href="#锁" class="headerlink" title="锁"></a>锁</h2><p>可能各位<code>coder</code>接触最多的还是在多线程的环境下，为了保证一个代码块在同一时间只能由一个线程访问情况，例如下图：</p>
-<p><img src="https://files.mdnice.com/user/8699/c9a6d135-8035-401f-8f6a-2d8725aa5187.png" srcset="/img/loading.gif" alt="多线程下的锁"></p>
+<p><img src="https://tva1.sinaimg.cn/large/008eGmZEgy1gpg3xezja4j30ei09bdg1.jpg" srcset="/img/loading.gif" alt="多线程下的锁"></p>
 <p>对于单进程的并发场景，可以使用编程语言及相应的类库提供的锁，如<code>Java</code>中的 <code>synchronized</code> 语法以及 <code>ReentrantLock</code>，<code>Golang</code>中的<code>sync</code>包下面的<code>mutex</code>，<code>Rust</code>中的<code>async_std::sync::Mutex</code>，避免并发问题，这实际上是本地锁的方式。</p>
 <h2 id="分布式锁"><a href="#分布式锁" class="headerlink" title="分布式锁"></a>分布式锁</h2><p>但是现在流行的分布式架构，在分布式环境下，如何保证不同节点的线程同步执行呢？或者共享资源怎么上锁呢？？？</p>
 <p>在将应用拆分为分布式应用之前的单机系统中，对一些并发场景读取公共资源时如扣库存，卖车票之类的需求可以简单的使用同步或者是加锁就可以实现，但是应用分布式了之后系统由以前的单进程多线程的程序变为了多进程多线程，这时使用以上的解决方案明显就不够了。</p>
-<p><img src="https://files.mdnice.com/user/8699/e50ede7a-a7f5-4e27-ac61-b9fb1cae89c4.png" srcset="/img/loading.gif" alt="分布式架构下"></p>
+<p><img src="https://tva1.sinaimg.cn/large/008eGmZEgy1gpg4abm4d0j30ek0e8t91.jpg" srcset="/img/loading.gif" alt="分布式架构下"></p>
 <p><strong>一般业界有几种解决方:</strong></p>
 <ul>
 <li>基于 <code>DB</code> 的唯一索引</li>
