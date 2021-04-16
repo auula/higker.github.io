@@ -196,7 +196,7 @@
 <p>如果在分布式场景中，实现不同客户端的线程对代码和资源的同步访问，保证在多线程下处理共享数据的安全性，就需要用到分布式锁技术，我就来写写基于<code>Redis</code>的一些坑😁。</p>
 </blockquote>
 <p>在分布式时，在程序中修改已有数据时，需要先读取，然后进行修改保存，此时很容易遇到并发问题。由于修改和保存不是原子操作，在并发场景下，部分对数据的操作可能会丢失，本地锁无法在多个服务器之间生效，这时候保证数据的一致性就需要分布式锁来实现。</p>
-<p><img src="https://files.mdnice.com/user/8699/cfee4d0d-8bb0-4d0f-a562-4a0f165992e3.png" srcset="/img/loading.gif" alt="并行操作Redis示意图"></p>
+<p><img src="https://tva1.sinaimg.cn/large/008eGmZEgy1gplwu8c6m2j30l70ifaax.jpg" srcset="/img/loading.gif" alt="并行操作Redis示意图"></p>
 <p><code>Redis</code> 锁主要利用 <code>Redis</code> 的 <code>setnx</code> 命令实现，</p>
 <ul>
 <li>加锁命令：<code>SETNX key value</code>，当键不存在时，对键进行设置操作并返回成功，否则返回失败,<code>KEY</code> 是锁的唯一标识，一般按业务来决定命名。</li>
@@ -228,10 +228,10 @@ fn expire(key: &amp;&#39;static str, num: i8) {
 <ol>
 <li><code>SETNX</code> 和 <code>EXPIRE</code> 非原子性</li>
 </ol>
-<p><img src="https://files.mdnice.com/user/8699/cd2e96e5-7944-4a89-961e-1a9ee2857f3f.png" srcset="/img/loading.gif" alt="过程"></p>
+<p><img src="https://tva1.sinaimg.cn/large/008eGmZEgy1gplwus33c9j30qm08cdg2.jpg" srcset="/img/loading.gif" alt="过程"></p>
 <p>如果 <code>SETNX</code> 成功，在设置锁超时时间后，服务器挂掉、重启或网络问题等，导致 <code>EXPIRE</code> 命令没有执行，锁没有设置超时时间变成死锁。</p>
 <hr>
-<ol start="2">
+<ol>
 <li>锁误解除</li>
 </ol>
 <p>如果线程 <code>A</code> 成功获取到了锁，并且设置了过期时间<code>30</code> 秒，但线程 <code>A</code>执行时间超过了 <code>30</code> 秒，锁过期自动释放，此时线程<code>B</code> 获取到了锁；随后 <code>A</code> 执行完成，线程 <code>A</code> 使用 <code>DEL</code> 命令来释放锁，但此时线程 <code>B</code> 加的锁还没有执行完成，线程<code>A</code>实际释放的线程是 <code>B</code> 加的锁，从而导致锁混乱，然后导致实际逻辑代码混乱和乃至关键数据丢失。</p>
